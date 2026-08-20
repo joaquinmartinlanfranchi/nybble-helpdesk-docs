@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Comportamiento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <b>Nybble AI Help Desk</b>
+    <span>Functional Source of Truth</span>
+  </div>
+  <div class="grp">Producto</div>
+  <a href="index.html#overview"><i>1</i>Product Overview</a>
+  <a href="index.html#roles"><i>2</i>Users &amp; Roles</a>
+  <a href="index.html#access"><i>3</i>Access &amp; Explore</a>
+  <a href="index.html#concepts"><i>4</i>Core Concepts</a>
+  <div class="grp is-here">Comportamiento</div>
+  <a href="#lifecycle"><i>5</i>Incident Lifecycle</a>
+  <a href="#flows"><i>6</i>Functional Flows</a>
+  <div class="grp">Medición</div>
+  <a href="medicion.html#kpis"><i>7</i>KPIs &amp; Metrics</a>
+  <a href="medicion.html#e2e"><i>8</i>End-to-End Logic</a>
+  <div class="grp">Referencia</div>
+  <a href="medicion.html#limits"><i>·</i>Límites conocidos V1</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Comportamiento</div>
+    <h1>Comportamiento</h1>
+    <p>Cómo se mueve una incidencia de punta a punta: el ciclo de vida de estados y las reglas de cierre del chat (05), y los 11 flujos funcionales concretos que implementan ese comportamiento (06).</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 5. INCIDENT LIFECYCLE ============ -->
+<section id="lifecycle" style="--accent:var(--c-lifecycle)">
+  <div class="shead"><div><h2>Incident Lifecycle <span class="num">05</span></h2><p>La sección más importante: de dónde nace una incidencia, por dónde pasa y cómo termina.</p></div></div>
+  <div class="sbody">
+
+    <div class="callout c-info">
+      <b>De dónde sale esta definición</b>
+      El origen canónico es <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-504" target="_blank">LABS-504</a> (comentario de Hernán Nadotti, 01-jul), refinado en el comentario de Jimena Pettinato del 07-jul en <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a> — el mejor diagrama de eventos que existe — y ratificado con ejemplos concretos en <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a> (“perfecto los estados, exacto”, Jimena, 31-jul). El 13/08 se cerró la lista del dropdown del operador. Todo lo que sigue está trazado a esas tres fuentes.
+    </div>
+
+    <h3>Máquina de estados</h3>
+    <div class="legend">
+      <i><span class="sw"></span> transición automática o por acción directa</i>
+      <i><span class="sw d"></span> transición manual / atributo de trazabilidad</i>
+      <i style="color:var(--tbd)">gris = acordado pero no implementado</i>
+    </div>
+    <div class="diagbox">
+      <svg viewBox="0 0 1140 510" xmlns="http://www.w3.org/2000/svg" font-family="Sora, Montserrat, -apple-system, Segoe UI, sans-serif">
+        <defs>
+          <marker id="a1" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5 z" fill="#5C7080"/></marker>
+          <marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5 z" fill="#9A7BE8"/></marker>
+        </defs>
+
+        <!-- START -->
+        <rect x="20" y="196" width="170" height="58" rx="10" fill="#F2F5F7" stroke="#A4B5C2" stroke-width="1.5"/>
+        <text x="105" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#2E3946">Consulta en el chat</text>
+        <text x="105" y="238" text-anchor="middle" font-size="10.5" fill="#5C7080">el usuario pregunta al bot</text>
+
+        <!-- RESUELTO POR IA -->
+        <rect x="300" y="26" width="180" height="58" rx="10" fill="#E4F4F8" stroke="#0E7490" stroke-width="1.5"/>
+        <text x="390" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#0E7490">Resuelto por IA</text>
+        <text x="390" y="68" text-anchor="middle" font-size="10.5" fill="#0E7490">terminal · nunca llega a un humano</text>
+
+        <!-- PENDIENTE -->
+        <rect x="300" y="196" width="160" height="58" rx="10" fill="#FDF1E4" stroke="#C2610A" stroke-width="1.5"/>
+        <text x="380" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#C2610A">Pendiente</text>
+        <text x="380" y="238" text-anchor="middle" font-size="10.5" fill="#C2610A">en la cola, sin tomar</text>
+
+        <!-- EN REVISION -->
+        <rect x="570" y="196" width="160" height="58" rx="10" fill="#E7F1F8" stroke="#1873A8" stroke-width="1.5"/>
+        <text x="650" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#1873A8">En Revisión</text>
+        <text x="650" y="238" text-anchor="middle" font-size="10.5" fill="#1873A8">tomada por un operador</text>
+
+        <!-- RETORNADA -->
+        <rect x="850" y="36" width="160" height="58" rx="10" fill="#F1EBFD" stroke="#6D28D9" stroke-width="1.5"/>
+        <text x="930" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="#6D28D9">Retornada</text>
+        <text x="930" y="78" text-anchor="middle" font-size="10.5" fill="#6D28D9">espera acción del usuario</text>
+
+        <!-- RESUELTO -->
+        <rect x="850" y="196" width="160" height="58" rx="10" fill="#E6F4EC" stroke="#157F4B" stroke-width="1.5"/>
+        <text x="930" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#157F4B">Resuelto</text>
+        <text x="930" y="238" text-anchor="middle" font-size="10.5" fill="#157F4B">cerrada por el operador</text>
+
+        <!-- RECHAZADO -->
+        <rect x="850" y="330" width="160" height="58" rx="10" fill="#FDEBEB" stroke="#b91c1c" stroke-width="1.5"/>
+        <text x="930" y="354" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c">Rechazado</text>
+        <text x="930" y="372" text-anchor="middle" font-size="10.5" fill="#b91c1c">no aplica / alucinación</text>
+
+        <!-- JIRA -->
+        <rect x="555" y="350" width="190" height="58" rx="10" fill="#E7EEF4" stroke="#0F4569" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <text x="650" y="374" text-anchor="middle" font-size="13" font-weight="700" fill="#0F4569">Ticket creado en Jira</text>
+        <text x="650" y="392" text-anchor="middle" font-size="10.5" fill="#0F4569">¿estado o atributo? ver nota</text>
+
+        <!-- CANCELADA -->
+        <rect x="850" y="440" width="160" height="52" rx="10" fill="#EDF1F4" stroke="#9AAEBB" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <text x="930" y="462" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6E8494">Cancelada</text>
+        <text x="930" y="479" text-anchor="middle" font-size="10.5" fill="#6E8494">acordada, NO implementada</text>
+
+        <!-- EDGES -->
+        <path d="M190,208 C250,200 252,60 296,56" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="196" y="120" font-size="10.5" fill="#43596B">el bot encuentra respuesta</text>
+        <text x="196" y="134" font-size="10.5" fill="#43596B">en la KB y el usuario confirma</text>
+        <text x="196" y="148" font-size="10.5" fill="#43596B">(o vencen 45 / 60 min)</text>
+
+        <path d="M190,238 L294,228" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="150" y="286" font-size="10.5" fill="#43596B">3 intentos fallidos de KB,</text>
+        <text x="150" y="300" font-size="10.5" fill="#43596B">palabra clave crítica, o el usuario</text>
+        <text x="150" y="314" font-size="10.5" fill="#43596B">pide hablar con un humano</text>
+
+        <path d="M460,225 L564,225" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="472" y="216" font-size="10.5" font-weight="600" fill="#2E3946">Tomar caso</text>
+        <text x="466" y="272" font-size="10" fill="#5C7080">gana el primer clic</text>
+
+        <path d="M730,204 C792,196 812,118 846,90" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="748" y="178" font-size="10.5" font-weight="600" fill="#2E3946">Confirmar</text>
+        <text x="748" y="191" font-size="10.5" font-weight="600" fill="#2E3946">retorno</text>
+
+        <path d="M852,48 C748,16 640,50 652,190" fill="none" stroke="#9A7BE8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a2)"/>
+        <text x="476" y="152" font-size="10" fill="#6D28D9">MANUAL en la POC: el operador</text>
+        <text x="476" y="165" font-size="10" fill="#6D28D9">cambia el estado a mano cuando</text>
+        <text x="476" y="178" font-size="10" fill="#6D28D9">verifica que el usuario contestó</text>
+
+        <path d="M730,225 L844,225" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="744" y="216" font-size="10.5" font-weight="600" fill="#2E3946">Resuelto</text>
+
+        <path d="M730,246 C790,260 800,330 844,352" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="762" y="300" font-size="10.5" font-weight="600" fill="#2E3946">Rechazar</text>
+
+        <path d="M650,254 L650,344" fill="none" stroke="#5C7080" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a1)"/>
+        <text x="360" y="330" font-size="10.5" font-weight="600" fill="#2E3946">Aprobar y crear en Jira</text>
+        <text x="360" y="344" font-size="10" fill="#5C7080">guarda el n° de ticket</text>
+
+        <!-- required field note -->
+        <rect x="20" y="360" width="300" height="66" rx="8" fill="#FDF4E8" stroke="#EDD3AA"/>
+        <text x="34" y="382" font-size="11" font-weight="700" fill="#8A4409">Campo obligatorio en TODA salida</text>
+        <text x="34" y="399" font-size="10.5" fill="#8A4409">“Tiempo de resolución” (horas y minutos) es</text>
+        <text x="34" y="413" font-size="10.5" fill="#8A4409">requerido para Resuelto, Rechazar y Aprobar.</text>
+      </svg>
+    </div>
+
+    <h3>Los estados, uno por uno</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:150px">Estado</th><th style="width:120px">Quién lo produce</th><th>Definición (texto de la fuente)</th><th style="width:230px">Ejemplo canónico</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="st st-pend">Pendiente</span></td>
+            <td><span class="b b-bot">bot</span> automático</td>
+            <td>“Escalamientos que no han sido tomados”. Nace cuando el bot no puede resolver y el usuario acepta la creación, o cuando el usuario pide un humano.</td>
+            <td>“Carlos reporta que el POS no imprime tickets. El bot no puede resolverlo y escala automáticamente tras 3 intentos fallidos. Todavía ningún agente lo tomó de la Bandeja.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-rev">En Revisión</span></td>
+            <td><span class="b b-agente">operador</span></td>
+            <td>“Escalamientos tomados por un operador pero aún en proceso de resolución” — todavía no lo resolvió, ni rechazó, ni retornó, ni creó ticket en Jira.</td>
+            <td>“María no puede acceder al sistema de facturación… El agente Juan lo toma desde la Bandeja y está investigando el caso.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-ret">Retornada</span></td>
+            <td><span class="b b-agente">operador</span></td>
+            <td>“Si la incidencia no se puede avanzar porque requiere una acción del usuario que la reportó, cambia de estado a <i>Retornada</i>.” Es el único estado que <b>requiere acción del usuario</b>.</td>
+            <td>El operador necesita un dato o un paso del usuario y explica el motivo en el cuadro de texto de “Retornar”.</td>
+          </tr>
+          <tr>
+            <td><span class="st st-res">Resuelto</span></td>
+            <td><span class="b b-agente">operador</span></td>
+            <td>“El operador resolvió el ticket sin escalar ni crear un ticket en Jira.” Suma 1 al contador “resuelto por mí”.</td>
+            <td>“Un usuario no podía resetear su contraseña. El agente lo ayuda directamente por chat, sin necesidad de crear un ticket en Jira, y marca el caso como resuelto.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-rec">Rechazado</span></td>
+            <td><span class="b b-agente">operador</span></td>
+            <td>“Para casos que no apliquen acción de ningún tipo (alucinaciones o temáticas que no corresponden)”.</td>
+            <td>“Un usuario escala una consulta sobre el clima porque el bot no entendió bien la pregunta. Un agente revisa el caso y lo rechaza porque no es un problema real del sistema.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-ia">Resuelto por IA</span></td>
+            <td><span class="b b-bot">bot</span> / timer</td>
+            <td>“Resuelto por el BOT/Agente IA”. Estado <b>terminal</b> de una consulta que nunca se convirtió en incidencia. No requiere ninguna acción del usuario.</td>
+            <td>“Un usuario pregunta el horario de atención. El bot responde correctamente desde la base de conocimiento y el usuario confirma que le sirvió — nunca llega a un agente.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-jira">Ticket creado en Jira</span></td>
+            <td><span class="b b-agente">operador</span> aprueba</td>
+            <td>El operador no puede resolverlo y aprueba la derivación a la plataforma externa de tickets. El nombre se eligió para que sea <b>independiente de la herramienta</b> (reemplazó a “Escalada a Ticket”).</td>
+            <td>“Un usuario reporta que el sistema de inventario está caído para todo su local. El agente no puede resolverlo directamente y aprueba la creación de un ticket en Jira para que IT lo atienda.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-off">Cancelada</span></td>
+            <td>—</td>
+            <td>“Si la incidencia no corresponde.” <b>Acordada verbalmente pero nunca implementada</b>: “Falta el cancelado que también lo charlamos”. Conceptualmente se superpone con <i>Rechazado</i>.</td>
+            <td><span class="mark m-amb">Ambiguo</span> No la trates como estado existente.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-bad">
+      <b>Contradicción a tener presente: ¿“Ticket creado en Jira” es un estado?</b>
+      Las fuentes no coinciden y no hay resolución. <b>(a)</b> El comentario más elaborado de la máquina de estados dice explícitamente que crear el ticket <b>no cambia el estado</b>: “no cambia de estado, pero se agrega el nro de Ticket para mantener la trazabilidad” <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. <b>(b)</b> Pero la definición de estados ratificada por la PO lo lista como uno de los seis estados <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a>, aparece en el dropdown de filtros, es un tipo de resolución (<code>JIRA_CREATED</code>) y se pidió como KPI. <b>En la práctica funciona como estado terminal.</b> Si tenés que implementar algo que dependa de esto, confirmá con Jimena antes.
+    </div>
+
+    <h3>Transiciones: quién, cuándo, con qué condición</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:150px">Desde</th><th style="width:150px">Hacia</th><th style="width:140px">Actor</th><th style="width:170px">Disparador</th><th>Condición / efecto</th></tr></thead>
+        <tbody>
+          <tr><td>Chat abierto</td><td><span class="st st-ia">Resuelto por IA</span></td><td><span class="b b-bot">bot</span> + usuario</td><td>El usuario responde <b>Sí</b> a “¿te sirvió?”</td><td>Solo si <b>no</b> hubo escalamiento y la respuesta salió de la KB. Se registra un ticket cerrado en la bandeja.</td></tr>
+          <tr><td>Chat abierto</td><td><span class="st st-ia">Resuelto por IA</span></td><td>timer</td><td>No contesta la pregunta de utilidad</td><td><b>45 min</b> → cierra, limpia contexto y <b>asume que sí fue útil</b>. (Una fuente anterior fijaba <b>1 minuto</b> — ver nota de timers.)</td></tr>
+          <tr><td>Chat abierto</td><td><span class="st st-ia">Resuelto por IA</span></td><td>timer</td><td>Inactividad en la ventana de chat</td><td><b>60 min</b> → cierra y limpia historial; <b>si hubo match con la KB</b> se toma como resuelto por el bot.</td></tr>
+          <tr><td>Chat abierto</td><td><span class="st st-pend">Pendiente</span></td><td><span class="b b-bot">bot</span></td><td>3 intentos fallidos de KB</td><td>Escalamiento automático con razón <code>MAX_ATTEMPTS</code>, adjuntando resumen IA con el historial completo. <b>El chat se cierra en ese mismo momento</b> y no se pregunta si fue útil.</td></tr>
+          <tr><td>Chat abierto</td><td><span class="st st-pend">Pendiente</span></td><td><span class="b b-usuario">usuario</span></td><td>Pide explícitamente hablar con un humano</td><td>Mismo efecto: cierre inmediato del chat + entrada en la cola.</td></tr>
+          <tr><td>Chat abierto</td><td><span class="st st-pend">Pendiente</span></td><td><span class="b b-bot">bot</span></td><td>Palabra clave crítica detectada</td><td>Red de seguridad previa al LLM: escala de inmediato.</td></tr>
+          <tr><td><span class="st st-pend">Pendiente</span></td><td><span class="st st-rev">En Revisión</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Tomar caso</b></td><td><b>Gana el primer clic.</b> Queda “Tomado por &lt;nombre del agente&gt;”; el segundo operador ve el error y el botón se actualiza. Solo puede tomarlo si el cliente le está asignado.</td></tr>
+          <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-res">Resuelto</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Resuelto</b></td><td>Requiere tiempo de resolución. Suma 1 a “resuelto por mí”. No abre cuadro de texto.</td></tr>
+          <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-rec">Rechazado</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Rechazar</b></td><td>Requiere tiempo de resolución. <b>El usuario no recibe notificación automática</b>: comunicar el motivo es responsabilidad del operador (<code>BR-034</code>).</td></tr>
+          <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-ret">Retornada</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Retornar</b> → <b>Confirmar retorno</b></td><td>Abre cuadro de texto para el motivo y lo que debe hacer el usuario. <b>No permite adjuntos.</b> El usuario no puede responder desde la plataforma.</td></tr>
+          <tr><td><span class="st st-ret">Retornada</span></td><td><span class="st st-rev">En Revisión</span></td><td><span class="b b-agente">operador</span></td><td><b>Manual</b></td><td>“cuando el operador verifica que el cliente contestó lo que necesitaba, cambia manualmente el estado, luego lo evolucionamos.” Decisión consciente para la POC.</td></tr>
+          <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-jira">Ticket creado en Jira</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Aprobar y crear en Jira</b></td><td>Da por cerrada la interacción en la mesa, crea el ticket con los campos mapeados y guarda la referencia. El usuario recibe confirmación con el número (<code>BR-033</code>). El operador puede sobrescribir la prioridad de la IA acá.</td></tr>
+          <tr><td colspan="5" style="background:#fafbfc;color:var(--ink3);font-size:12.5px"><b>Sin transición documentada:</b> reapertura de una incidencia cerrada, cancelación por el usuario, reasignación entre operadores, y devolución de <span class="st st-rec">Rechazado</span> a la cola. <span class="mark m-tbd">TBD</span> — no lo inventes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Reglas de cierre de la conversación</h3>
+    <p>Esto es el corazón del comportamiento del chat y está definido palabra por palabra en <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-537" target="_blank">LABS-537</a> (comentario de Hernán Nadotti, 05-ago, ratificado por Jimena y verificado por QA el 13/08).</p>
+    <div class="grid g2">
+      <div class="card">
+        <h5>1 · Aparición del botón de cierre</h5>
+        <p class="mini">Recién <b>después de que el bot responde el primer mensaje</b> (sea del tipo que sea) aparece un <b>botón rojo abajo</b> que permite finalizar el chat y limpiar el contexto.</p>
+      </div>
+      <div class="card">
+        <h5>2 · Cierre manual → pregunta de utilidad</h5>
+        <p class="mini">Cuando el usuario cierra la conversación aparece la pregunta de si fue útil la ayuda, con botones <b>Sí / No</b>. Lo mismo aplica <b>si el usuario cierra el chat desde la cruz</b>.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--c-lifecycle)">
+        <h5>2.1 · El escalamiento ya es un cierre</h5>
+        <p class="mini">Si el bot decide escalar, o el usuario pide un humano, <b>el chat se cierra automáticamente en ese momento</b> y <b>no se muestra</b> la pregunta de utilidad — “porque un escalamiento ya es un cierre en sí mismo”. La incidencia figura en Mis Consultas como <span class="st st-pend">Pendiente</span>.</p>
+      </div>
+      <div class="card">
+        <h5>2.2 · Camino a Resuelto por IA</h5>
+        <p class="mini">Si el usuario responde que fue útil <b>y no se creó ningún escalamiento porque la respuesta salió de la KB</b>, el caso entra en la categoría <span class="st st-ia">Resuelto por IA</span>.</p>
+      </div>
+      <div class="card">
+        <h5>2.3 · Timer de 45 minutos</h5>
+        <p class="mini">Si no responde la pregunta de utilidad y pasan <b>45 minutos</b>: se cierra el chat, se limpia el contexto y se <b>asume que sí fue útil</b>.</p>
+      </div>
+      <div class="card">
+        <h5>3 · Timer de 60 minutos</h5>
+        <p class="mini">Con <b>60 minutos de inactividad</b> en la ventana de chat: se cierra, se limpia historial y contexto, y <b>si hubo algún match con la KB se toma como resuelto por el bot</b>. Es también el intervalo de refresco de la sesión.</p>
+      </div>
+    </div>
+    <h3>Lo que el usuario ve de todo esto</h3>
+    <p>En <b>Mis Consultas</b> los filtros son <b>fijos, no dropdown</b>, y son los cuatro que le importan al usuario: <span class="st st-pend">Pendiente</span> <span class="st st-rev">En Revisión</span> <span class="st st-res">Resuelto</span> <span class="st st-ia">Resuelto por IA</span> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. Quedó como pregunta abierta en la fuente si el usuario final necesita saber que se creó un ticket en Jira o no.</p>
+    <div class="grid g2">
+      <div class="card"><h5>Orden actual <span class="mark m-imp">vigente</span></h5><p class="mini">Por <b>fecha de creación descendente</b>. Curiosidad relevante: ese criterio proviene de <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-509" target="_blank">LABS-509</a>, un ticket que quedó en estado <b>No go</b>.</p></div>
+      <div class="card"><h5>Orden decidido <span class="mark m-draft">no implementado</span></h5><p class="mini">Priorizar <b>los estados que requieren acción</b> del usuario (o sea <span class="st st-ret">Retornada</span>) por encima de la fecha, combinando estado + fecha <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-567" target="_blank">LABS-567</a>. Decidido el 19/08.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. FUNCTIONAL FLOWS ============ -->
+<section id="flows" style="--accent:var(--c-flows)">
+  <div class="shead"><div><h2>Main Functional Flows <span class="num">06</span></h2><p>Qué tiene que pasar funcionalmente cuando alguien hace algo. Formato: Actor → Trigger → Pasos → Reglas → Resultado.</p></div></div>
+  <div class="sbody">
+
+    <details class="flowcard" open>
+      <summary class="fh"><span class="fh-row"><h5>F1 · Consulta resuelta por la IA <span style="font-weight:400;color:var(--ink3)">— el camino que el producto quiere maximizar</span></h5><span class="mark m-imp">Implementado</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-usuario">Usuario</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Escribe una pregunta</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Busca en KB</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Responde</div><div class="a">→</div>
+          <div class="n"><b>Usuario</b>Confirma útil</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b><span class="st st-ia">Resuelto por IA</span></div>
+        </div>
+        <div class="frow"><div class="lab">Pasos</div><div><ol>
+          <li>El usuario escribe en el chat. El bot decide qué herramienta usar (no hay pipeline fijo).</li>
+          <li>Llama a <code>searchKnowledgeBase</code> sobre la KB del tenant y de su compañía.</li>
+          <li>Si el resultado supera el umbral de confianza, responde <b>solo con lo que devolvió la KB</b>.</li>
+          <li>Aparece el botón rojo de finalizar. Cuando el usuario cierra, se le pregunta si fue útil, con botones Sí / No.</li>
+          <li>Responde <b>Sí</b> → se registra un ticket cerrado en la bandeja con estado Resuelto por IA.</li>
+        </ol></div></div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>La KB es la <b>única</b> fuente de datos: “NUNCA respondas preguntas usando datos de este resumen — SIEMPRE llama a searchKnowledgeBase”.</li>
+          <li>Umbral de confianza <b>70%</b>; guía de interpretación: <code>0.7+</code> fuerte, <code>&lt;0.3</code> débil.</li>
+          <li>Solo cuenta como Resuelto por IA si <b>no hubo escalamiento</b>.</li>
+          <li>No contestar la pregunta de utilidad también cuenta como Sí (45 min).</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Resultado</div><div><p>Consulta terminal, sin costo humano. Alimenta el KPI de deflección y la métrica de eficiencia de matching de KB.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard" open>
+      <summary class="fh"><span class="fh-row"><h5>F2 · Escalamiento a un humano</h5><span class="mark m-imp">Implementado</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-bot">Bot</span> o <span class="b b-usuario">Usuario</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>3 fallos, keyword crítica, o pedido explícito</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Genera resumen + clasifica</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Cierra el chat</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b><span class="st st-pend">Pendiente</span> en la cola</div>
+        </div>
+        <div class="frow"><div class="lab">Pasos</div><div><ol>
+          <li>Se cumple una de las tres condiciones de escalamiento.</li>
+          <li>El bot llama a <code>escalateToAgent</code> generando un <b>resumen de toda la conversación</b> (“El usuario consultó sobre…”).</li>
+          <li>El triage enriquece la incidencia con <b>prioridad, categoría y módulo</b>.</li>
+          <li>El chat se cierra automáticamente. <b>No</b> se muestra la pregunta de utilidad.</li>
+          <li>La incidencia entra en la cola compartida del cliente correspondiente y figura como Pendiente en Mis Consultas.</li>
+        </ol></div></div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>Contador de intentos: se incrementa cuando la búsqueda en KB devuelve 0 resultados o todos por debajo del umbral. Al llegar a <code>maxAttempts</code> (default <b>3</b>, configurable 2–5 por tenant) fuerza el escalamiento con razón <code>MAX_ATTEMPTS</code>.</li>
+          <li>Las consultas <b>off-topic no incrementan</b> el contador: son otra categoría.</li>
+          <li>Tope de mensajes por sesión: al alcanzarlo el bot avisa y <b>solo</b> ofrece escalar o crear ticket.</li>
+          <li>El resumen debe acompañar siempre: sin descripción ni contexto “el ticket que se crea para el operador llega sin contexto y eso genera fricciones”.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Defecto</div><div><p class="mini" style="color:var(--bad)"><b>Bug conocido:</b> al escalar, la conversación previa se borra y se reinicia, lo que rompe la continuidad del historial hacia el agente humano (reportado 12/08).</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F3 · Toma de caso (asignación)</h5><span class="mark m-imp">Implementado</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Operador</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Clic en “Tomar caso”</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Bloqueo exclusivo en BD</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b><span class="st st-rev">En Revisión</span> · “Tomado por &lt;agente&gt;”</div>
+        </div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li><b>No hay asignación automática ni ruteo.</b> Todos los operadores habilitados comparten una única “bolsa de tickets” y toman a demanda. El ruteo por especialidad está diferido a post-MVP (<code>BR-039</code>).</li>
+          <li><b>Gana el primer clic.</b> El segundo operador ve la leyenda de error “Tomado por &lt;nombre del agente&gt;” y el botón se actualiza al nuevo estado en ese momento.</li>
+          <li>La bandeja está filtrada por <code>clientId IN (clientes asignados al agente)</code>. Un operador con un solo cliente asignado ve solo los escalamientos de ese cliente.</li>
+          <li>La cola se ordena por prioridad: <b>CRITICAL &gt; HIGH &gt; MEDIUM &gt; LOW</b>.</li>
+          <li>No puede tomar casos de tenants o clientes <b>finalizados</b>.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F4 · Atención y resolución directa</h5><span class="mark m-open">Con una limitación estructural</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Operador</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Revisa el caso tomado</div><div class="a">→</div>
+          <div class="n"><b>Fuera de la app</b>Contacta por Slack / mail</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Exige tiempo de resolución</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b><span class="st st-res">Resuelto</span></div>
+        </div>
+        <div class="frow"><div class="lab">Pasos</div><div><ol>
+          <li>Abre la incidencia (aparece <b>debajo</b> de la lista; hoy hay que scrollear).</li>
+          <li>Lee la <b>consulta literal</b> del usuario y el <b>resumen de la IA</b>, más prioridad, categoría, módulo, cliente y contacto.</li>
+          <li>Si necesita hablar con el usuario, lo hace <b>por fuera de la plataforma</b> (Slack o mail).</li>
+          <li>Completa el <b>tiempo de resolución</b> (horas y minutos) y marca <b>Resuelto</b>.</li>
+        </ol></div></div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>El tiempo de resolución es <b>obligatorio</b> para cualquiera de las acciones de cierre.</li>
+          <li>Resuelto suma 1 al contador “resuelto por mí”. La variante “resuelto con workaround” fue <b>eliminada</b>.</li>
+          <li>Después de cada CTA la pantalla recarga para que la acción impacte en las métricas.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Límite</div><div><p class="mini" style="color:var(--bad)">La definición de Resuelto dice “el agente lo ayuda directamente por chat”, pero <b>ese chat no existe en la plataforma</b>. En la práctica el operador solo puede anotar horas y cambiar el estado. Decisión del 19/08: queda fuera de V1 y se documenta.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F5 · Retorno al usuario</h5><span class="mark m-open">Funciona a medias por diseño</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Operador</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Necesita algo del usuario</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Cuadro de texto del motivo</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>“Confirmar retorno”</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b><span class="st st-ret">Retornada</span></div>
+        </div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>Es el <b>único</b> CTA del operador que abre cuadro de texto — para explicar el motivo del retorno y qué debe hacer el usuario. <b>No permite adjuntar archivos.</b></li>
+          <li>El usuario <b>no tiene forma de accionar ni responder</b> desde la plataforma.</li>
+          <li>La vuelta de <span class="st st-ret">Retornada</span> a <span class="st st-rev">En Revisión</span> es <b>manual</b>: el operador la cambia cuando verifica, por el canal que sea, que el usuario contestó.</li>
+          <li>Es el único estado que “requiere acción del usuario”, y por eso debería aparecer primero en Mis Consultas (decidido, no implementado).</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Pendientes</div><div><p class="mini">El botón <b>“Confirmar retorno”</b> está en rojo y se decidió pasarlo a <b>verde</b> por consistencia semántica con otros CTAs de confirmación <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-566" target="_blank">LABS-566</a>. <span class="mark m-draft">Draft</span></p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F6 · Rechazo</h5><span class="mark m-imp">Implementado</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Operador</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>El caso no aplica</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Pide tiempo de resolución</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b><span class="st st-rec">Rechazado</span> · sin notificación</div>
+        </div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>Aplica a “casos que no apliquen acción de ningún tipo (alucinaciones o temáticas que no corresponden)”.</li>
+          <li><code>BR-034</code> — <i>“Si el agente rechaza el ticket, el usuario no recibe notificación automática. El agente es responsable de comunicar el motivo.”</i> Esta regla es la que obliga a que exista un canal externo.</li>
+          <li>No abre cuadro de texto. El tiempo de resolución sigue siendo obligatorio.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F7 · Clasificación y priorización (triage) <span style="font-weight:400;color:var(--ink3)">— transversal, sin UI propia</span></h5><span class="mark m-imp">Implementado</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-sys">Triage</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Se genera un borrador o un escalamiento</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Aplica rúbrica de prioridad y categoría</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b>prioridad + categoría + módulo</div>
+        </div>
+        <div class="frow"><div class="lab">Casos de uso canónicos</div><div>
+          <div class="tw" style="margin:0">
+            <table>
+              <thead><tr><th style="width:70px">ID</th><th>Consulta</th><th style="width:110px">Prioridad</th><th style="width:150px">Categoría</th></tr></thead>
+              <tbody>
+                <tr><td>UC-T01</td><td>“El sistema de facturación está caído, no podemos operar”</td><td><b>CRITICAL</b></td><td>Error de sistema</td></tr>
+                <tr><td>UC-T02</td><td>“No puedo iniciar sesión desde hace 2 días”</td><td><b>HIGH</b></td><td>Acceso</td></tr>
+                <tr><td>UC-T04</td><td>“Este reporte tarda mucho pero puedo usar el otro”</td><td><b>MEDIUM</b></td><td>Error de sistema</td></tr>
+                <tr><td>UC-T03</td><td>“¿Cómo cambio la configuración de notificaciones?”</td><td><b>LOW</b></td><td>Configuración</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div></div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>Rúbrica <b>única y compartida</b> por el generador de borradores, el generador de resúmenes de escalamiento y el clasificador de urgencia. Personalizar la rúbrica por tenant está <b>fuera de alcance</b>.</li>
+          <li>El operador puede sobrescribir la prioridad al aprobar; el delta se acumula como insumo para mejorar el clasificador.</li>
+          <li>El enriquecimiento se aplica <b>tanto al camino de ticket como al de escalamiento</b>.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F8 · Carga y alcance del conocimiento</h5><span class="mark m-imp">Implementado y verificado</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-kb">KB Manager</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Sube un documento</div><div class="a">→</div>
+          <div class="n"><b>Decisión</b>¿Compañías asignadas?</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Indexa</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Regenera el resumen de temas</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b>Disponible con su alcance</div>
+        </div>
+        <div class="frow"><div class="lab">Regla de alcance</div><div><blockquote>“si al documento no se le asigna una compañia es tenant-wide (acceso general, todas las compañias del tenant). Si se le asigna alguna compañia, su alcance se limita a la/s compañias asignadas.”<em>LABS-517, Hernán Nadotti · verificado por QA el 12/08 con dos pruebas de aislamiento independientes</em></blockquote></div></div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li>Estados de indexación: <code>PENDING → INDEXING → INDEXED / ERROR</code>, con etiquetas <b>Indexando / Listo / Error</b> visibles por documento.</li>
+          <li>El <b>resumen de temas se regenera automáticamente</b> ante cualquier modificación de la KB (alta, sync con Drive, cambio de estado). El admin además puede regenerarlo a mano.</li>
+          <li>El resumen debe contener <b>solo etiquetas de tema, sin datos ni números</b> — p. ej. “vacaciones pagadas (15-30 días según antigüedad)” pasa a ser “Política de vacaciones”. Es una salvaguarda contra que el bot responda desde el resumen.</li>
+          <li>Aislamiento: KB por tenant en namespace separado (<code>BR-018</code>, <code>BR-083</code>), refinado a nivel compañía por este flujo.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Pendientes</div><div><p class="mini">PDF falla al subir (<code>matrix is not defined</code>); el KB Manager no puede abrir los documentos <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a>; alcance para fuentes externas tipo Google Drive e índices por compañía: <span class="mark m-tbd">TBD post-POC</span>.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F9 · Alta de organización (onboarding de tenant)</h5><span class="mark m-open">In Progress</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-admin">Admin</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>“New Organization”</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Valida</div><div class="a">→</div>
+          <div class="n"><b>Resultado</b>Tenant + admin inicial</div>
+        </div>
+        <div class="frow"><div class="lab">Validaciones</div><div><blockquote>“Un formulario es valido si: el nombre del tenant no es igual a ningun otro · el correo del superadmin no es igual a ninguno existente · el pass [tiene al menos] 8 caracteres.”<em>LABS-532, Hernán Nadotti. La contraseña de menos de 8 caracteres es el error; el bullet está escrito invertido en la fuente.</em></blockquote></div></div>
+        <div class="frow"><div class="lab">Después del alta</div><div><ul>
+          <li>Se crea la <b>compañía/empresa</b> dentro del tenant (ej. tenant <i>Nybble Labs</i> → compañía <i>NYBO</i>).</li>
+          <li>Se crean los usuarios de cada rol. El <b>usuario KB</b> lo crea el Admin del tenant.</li>
+          <li>Se define el <b>mapeo de campos hacia Jira</b>, que es parte del onboarding (<code>BR-035</code>).</li>
+          <li>Se carga la KB inicial y se genera el resumen de temas.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Bugs</div><div><p class="mini" style="color:var(--bad)">Los errores se muestran de a uno; al corregir el mail el error del mail queda pegado si la contraseña sigue mal (bug bloqueante); el validador imprime <code>adminEmail</code> en lugar de un mensaje.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F10 · Adjuntos</h5><span class="mark m-open">Re-open · no cumple el criterio original</span></span></summary>
+      <div class="fb">
+        <div class="frow"><div class="lab">Lo pedido</div><div><p><b>Ideal:</b> poder subir y <b>pegar</b> imágenes siempre, y que el bot las lea e interprete como una herramienta más para resolver. <b>Mínimo aceptable:</b> permitir subir archivos sin que el bot los use, pero que queden adjuntos a la incidencia y se vean en el detalle. Pedido por el equipo de Business Solutions como vital para vender la mesa como producto <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a>.</p></div></div>
+        <div class="frow"><div class="lab">Lo que hay</div><div><ul>
+          <li>Se puede adjuntar <b>solo después</b> de que el bot responda el primer mensaje.</li>
+          <li>Solo con el botón <code>+</code>: <b>no se puede pegar</b> una imagen.</li>
+          <li><b>El bot no interpreta imágenes</b>, ni siquiera capturas de contenido que está en la propia KB.</li>
+          <li>El operador <b>no puede adjuntar</b> nada al retornar o resolver <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a>.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Regla que sí está definida</div><div><p class="mini">Todo adjunto debe registrar <b>quién lo subió</b> y ser visible por <b>cualquier rol con permiso de ver esa incidencia o consulta</b>. Aún no verificable.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F11 · Derivación a Jira</h5><span class="mark m-tbd">no verificado end-to-end</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Operador</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>“Aprobar y crear en Jira”</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Mapea campos por tenant</div><div class="a">→</div>
+          <div class="n"><b>Sistema</b>Crea el ticket y guarda la referencia</div><div class="a">→</div>
+          <div class="n"><b>Usuario</b>Recibe el n° de ticket</div>
+        </div>
+        <div class="frow"><div class="lab">Reglas</div><div><ul>
+          <li><code>BR-033</code> — <i>“Solo cuando el agente aprueba, el ticket se crea formalmente en Jira con todos los campos mapeados. El usuario recibe confirmación con el número de ticket de Jira.”</i></li>
+          <li><code>BR-035</code> — <i>“El sistema mapea los campos del borrador a los campos de Jira. El mapeo es configurable por tenant (definido durante el onboarding).”</i></li>
+          <li>El nombre del estado se eligió platform-agnostic a propósito: “Escalada a Ticket” se reemplazó por “creado en Jira” para reflejar la acción independientemente de la herramienta de tickets que se use.</li>
+          <li>El ticket se apoya en <b>el resumen generado por la IA</b>.</li>
+          <li>Este CTA <b>no abre cuadro de texto ni permite adjuntos</b>.</li>
+          <li>Es el momento en que el operador puede <b>sobrescribir la prioridad</b> asignada por la IA; el sistema registra el delta como insumo para mejorar el clasificador.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Ojo</div><div><p class="mini">QA no pudo comprobar que efectivamente cree el ticket: no hay visibilidad del board destino. <b>El board de Jira que recibe estos tickets no está documentado en ninguna fuente.</b> <span class="mark m-tbd">TBD</span></p></div></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="pager">
+  <a class="prev" href="index.html#concepts"><span class="d">Anterior</span><span class="t">← Producto</span></a>
+  <a class="next" href="medicion.html#kpis"><span class="d">Siguiente</span><span class="t">Medición →</span></a>
+</div>
+
+<footer>
+  <p style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</p>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Arriba</a>
+<script src="assets/steps.js"></script>
+</body>
+</html>

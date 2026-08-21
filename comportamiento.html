@@ -57,7 +57,6 @@
     <div class="legend">
       <i><span class="sw"></span> transición automática o por acción directa</i>
       <i><span class="sw d"></span> transición manual / atributo de trazabilidad</i>
-      <i style="color:var(--tbd)">gris = acordado pero no implementado</i>
     </div>
     <div class="diagbox">
       <svg viewBox="0 0 1140 510" xmlns="http://www.w3.org/2000/svg" font-family="Sora, Montserrat, -apple-system, Segoe UI, sans-serif">
@@ -102,14 +101,9 @@
         <text x="930" y="372" text-anchor="middle" font-size="10.5" fill="#b91c1c">no aplica / alucinación</text>
 
         <!-- JIRA -->
-        <rect x="555" y="350" width="190" height="58" rx="10" fill="#E7EEF4" stroke="#0F4569" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <rect x="555" y="350" width="190" height="58" rx="10" fill="#E7EEF4" stroke="#0F4569" stroke-width="1.5"/>
         <text x="650" y="374" text-anchor="middle" font-size="13" font-weight="700" fill="#0F4569">Ticket creado en Jira</text>
-        <text x="650" y="392" text-anchor="middle" font-size="10.5" fill="#0F4569">¿estado o atributo? ver nota</text>
-
-        <!-- CANCELADA -->
-        <rect x="850" y="440" width="160" height="52" rx="10" fill="#EDF1F4" stroke="#9AAEBB" stroke-width="1.5" stroke-dasharray="6 4"/>
-        <text x="930" y="462" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6E8494">Cancelada</text>
-        <text x="930" y="479" text-anchor="middle" font-size="10.5" fill="#6E8494">acordada, NO implementada</text>
+        <text x="650" y="392" text-anchor="middle" font-size="10.5" fill="#0F4569">estado terminal, confirmado</text>
 
         <!-- EDGES -->
         <path d="M190,208 C250,200 252,60 296,56" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
@@ -200,19 +194,8 @@
             <td>El operador no puede resolverlo y aprueba la derivación a la plataforma externa de tickets. El nombre se eligió para que sea <b>independiente de la herramienta</b> (reemplazó a “Escalada a Ticket”).</td>
             <td>“Un usuario reporta que el sistema de inventario está caído para todo su local. El agente no puede resolverlo directamente y aprueba la creación de un ticket en Jira para que IT lo atienda.”</td>
           </tr>
-          <tr>
-            <td><span class="st st-off">Cancelada</span></td>
-            <td>—</td>
-            <td>“Si la incidencia no corresponde.” <b>Acordada verbalmente pero nunca implementada</b>: “Falta el cancelado que también lo charlamos”. Conceptualmente se superpone con <i>Rechazado</i>.</td>
-            <td><span class="mark m-amb">Ambiguo</span> No la trates como estado existente.</td>
-          </tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="callout c-bad">
-      <b>Contradicción a tener presente: ¿“Ticket creado en Jira” es un estado?</b>
-      Las fuentes no coinciden y no hay resolución. <b>(a)</b> El comentario más elaborado de la máquina de estados dice explícitamente que crear el ticket <b>no cambia el estado</b>: “no cambia de estado, pero se agrega el nro de Ticket para mantener la trazabilidad” <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. <b>(b)</b> Pero la definición de estados ratificada por la PO lo lista como uno de los seis estados <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a>, aparece en el dropdown de filtros, es un tipo de resolución (<code>JIRA_CREATED</code>) y se pidió como KPI. <b>En la práctica funciona como estado terminal.</b> Si tenés que implementar algo que dependa de esto, confirmá con Jimena antes.
     </div>
 
     <h3>Transiciones: quién, cuándo, con qué condición</h3>
@@ -267,6 +250,7 @@
     </div>
     <h3>Lo que el usuario ve de todo esto</h3>
     <p>En <b>Mis Consultas</b> los filtros son <b>fijos, no dropdown</b>, y son los cuatro que le importan al usuario: <span class="st st-pend">Pendiente</span> <span class="st st-rev">En Revisión</span> <span class="st st-res">Resuelto</span> <span class="st st-ia">Resuelto por IA</span> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. Quedó como pregunta abierta en la fuente si el usuario final necesita saber que se creó un ticket en Jira o no.</p>
+    <p class="mini" style="color:var(--bad)"><b>Bug conocido:</b> son específicamente las incidencias en estado <span class="st st-pend">Pendiente</span> las que muestran en la card del usuario la clasificación interna que la IA genera para el operador (p. ej. una consulta catalogada como <code>low</code>) — información pensada para triage del operador, no para el usuario final. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-574" target="_blank">LABS-574</a></p>
     <div class="grid g2">
       <div class="card"><h5>Orden actual <span class="mark m-imp">vigente</span></h5><p class="mini">Por <b>fecha de creación descendente</b>. Curiosidad relevante: ese criterio proviene de <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-509" target="_blank">LABS-509</a>, un ticket que quedó en estado <b>No go</b>.</p></div>
       <div class="card"><h5>Orden decidido <span class="mark m-draft">no implementado</span></h5><p class="mini">Priorizar <b>los estados que requieren acción</b> del usuario (o sea <span class="st st-ret">Retornada</span>) por encima de la fecha, combinando estado + fecha <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-567" target="_blank">LABS-567</a>. Decidido el 19/08.</p></div>
@@ -330,7 +314,7 @@
           <li>Tope de mensajes por sesión: al alcanzarlo el bot avisa y <b>solo</b> ofrece escalar o crear ticket.</li>
           <li>El resumen debe acompañar siempre: sin descripción ni contexto “el ticket que se crea para el operador llega sin contexto y eso genera fricciones”.</li>
         </ul></div></div>
-        <div class="frow"><div class="lab">Defecto</div><div><p class="mini" style="color:var(--bad)"><b>Bug conocido:</b> al escalar, la conversación previa se borra y se reinicia, lo que rompe la continuidad del historial hacia el agente humano (reportado 12/08).</p></div></div>
+        <div class="frow"><div class="lab">Defecto</div><div><p class="mini" style="color:var(--bad)"><b>Bug conocido:</b> al escalar, la conversación previa se borra y se reinicia, lo que rompe la continuidad del historial hacia el agente humano (reportado 12/08). <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-572" target="_blank">LABS-572</a></p></div></div>
       </div>
     </details>
 
@@ -463,7 +447,7 @@
           <li>El resumen debe contener <b>solo etiquetas de tema, sin datos ni números</b> — p. ej. “vacaciones pagadas (15-30 días según antigüedad)” pasa a ser “Política de vacaciones”. Es una salvaguarda contra que el bot responda desde el resumen.</li>
           <li>Aislamiento: KB por tenant en namespace separado (<code>BR-018</code>, <code>BR-083</code>), refinado a nivel compañía por este flujo.</li>
         </ul></div></div>
-        <div class="frow"><div class="lab">Pendientes</div><div><p class="mini">PDF falla al subir (<code>matrix is not defined</code>); el KB Manager no puede abrir los documentos <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a>; alcance para fuentes externas tipo Google Drive e índices por compañía: <span class="mark m-tbd">TBD post-POC</span>.</p></div></div>
+        <div class="frow"><div class="lab">Pendientes</div><div><p class="mini">PDF falla al subir (<code>matrix is not defined</code>) <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-573" target="_blank">LABS-573</a>; el KB Manager no puede abrir los documentos <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a>; alcance para fuentes externas tipo Google Drive e índices por compañía: <span class="mark m-tbd">TBD post-POC</span>.</p></div></div>
       </div>
     </details>
 

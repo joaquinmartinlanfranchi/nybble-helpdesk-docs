@@ -178,9 +178,10 @@
             <li>Menú restringido a Mis Consultas y Mis Incidencias; <b>“Mis Incidencias” no es alcanzable por URL directa</b> (devuelve 404, verificado)</li>
             <li>El panel de configuración del perfil <b>está oculto</b> porque no funcionaba, incluyendo el selector de idioma y la preferencia de “recibir mail cuando el ticket cambia de estado” <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-552" target="_blank">LABS-552</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-511" target="_blank">LABS-511</a></li>
             <li>No puede iniciar sesión en un cliente en estado <b>finalizado</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-486" target="_blank">LABS-486</a></li>
+            <li>En incidencias <b>Pendientes</b>, la card expone la clasificación interna que la IA genera para el operador (p. ej. prioridad <code>low</code>) — pensada para triage, no para el usuario final <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-574" target="_blank">LABS-574</a></li>
           </ul></div>
         </div>
-        <div class="callout c-bad" style="margin-top:12px"><b>Restricción crítica</b>
+        <div class="callout c-warn" style="margin-top:12px"><b>Restricción crítica</b>
           Cuando el operador le <span class="st st-ret">Retorna</span> una incidencia, <b>el usuario no tiene forma de accionar ni de continuar la conversación</b> dentro de la plataforma <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a>. El ida y vuelta ocurre por fuera (Slack / mail). Es el hueco funcional más importante del producto.
         </div>
       </div>
@@ -233,7 +234,7 @@
           </ul></div>
           <div class="card"><h5>Problemas abiertos</h5><ul class="mini" style="margin-bottom:0">
             <li><b>No puede abrir ni leer los archivos cargados</b> desde la plataforma <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a> <span class="mark m-draft">Draft</span></li>
-            <li>La carga de <b>PDF falla</b> con <code>matrix is not defined</code>; los <code>.doc</code> funcionan (reportado 12/08)</li>
+            <li>La carga de <b>PDF falla</b> con <code>matrix is not defined</code> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-573" target="_blank">LABS-573</a>; los <code>.doc</code> funcionan (reportado 12/08)</li>
             <li>Restringir la asignación a una única compañía quedó en backlog</li>
             <li>Alcance de KB alimentada por fuentes externas (Google Drive) e índices por compañía: <span class="mark m-tbd">TBD post-POC</span></li>
           </ul></div>

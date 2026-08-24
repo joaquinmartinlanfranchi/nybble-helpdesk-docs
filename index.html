@@ -18,7 +18,7 @@
     <span>Functional Source of Truth</span>
   </div>
   <div class="grp is-here">Producto</div>
-  <a href="#overview"><i>1</i>Product Overview</a>
+  <a href="#overview"><i>1</i>Product Vision</a>
   <a href="#roles"><i>2</i>Users &amp; Roles</a>
   <a href="#access"><i>3</i>Access &amp; Explore</a>
   <a href="#concepts"><i>4</i>Core Concepts</a>
@@ -51,7 +51,7 @@
 
 <!-- ============ 1. PRODUCT OVERVIEW ============ -->
 <section id="overview" style="--accent:var(--c-product)">
-  <div class="shead"><div><h2>Product Overview <span class="num">01</span></h2><p>Qué es, qué problema resuelve, para quién, y hasta dónde llega hoy.</p></div></div>
+  <div class="shead"><div><h2>Product Vision <span class="num">01</span></h2><p>Qué es, qué problema resuelve, para quién, y hasta dónde llega hoy.</p></div></div>
   <div class="sbody">
 
     <p class="lead">El AI Help Desk es una <b>mesa de ayuda multi-tenant con un agente de IA en la primera línea</b>. El usuario conversa por chat; el bot busca la respuesta en una base de conocimiento cargada y aprobada por el cliente; si la encuentra, responde y el caso se cierra solo; si no, el caso se convierte en una <b>incidencia</b> que entra en una cola y la toma un <b>operador humano</b>.</p>
@@ -89,7 +89,7 @@
             <td><b>3 · Producto vendible</b></td>
             <td>La mesa comercializada a un cliente, que aporta sus propios usuarios, su KB y hasta su propio equipo de soporte. Explica el tenant demo <code>ACME Corp</code> con varias compañías y aislamiento de KB por compañía.</td>
             <td>El cliente, o Nybble como servicio</td>
-            <td>Requiere endurecer UX antes <span class="mark m-inf">Inferido</span></td>
+            <td>Requiere endurecer UX antes</td>
           </tr>
         </tbody>
       </table>
@@ -125,18 +125,36 @@
       </div>
     </div>
 
+    <h3>Módulos / áreas funcionales</h3>
+
     <details>
-      <summary>Módulos / áreas funcionales</summary>
-      <div class="dbody">
-        <div class="grid g3">
-          <div class="card tint"><h5>Asistente IA <span class="b b-bot">bot</span></h5><p class="mini">Chat, búsqueda en KB, clasificación de triage, generación de resumen, decisión de escalar, rechazo de off-topic.</p></div>
-          <div class="card tint"><h5>Portal del usuario <span class="b b-usuario">usuario</span></h5><p class="mini">Chat, <b>Mis Consultas</b> con filtros por estado, FAQ, perfil (con el panel de configuración oculto).</p></div>
-          <div class="card tint"><h5>Bandeja de escalamientos <span class="b b-agente">operador</span></h5><p class="mini">Cola de incidencias, KPIs, toma de caso, detalle con consulta literal + resumen IA, cuatro CTAs de resolución.</p></div>
-          <div class="card tint"><h5>Rendimiento del operador <span class="b b-agente">operador</span></h5><p class="mini"><b>Mis Tickets</b> y <b>Mi Rendimiento</b>: casos por tipo de resolución, resueltos por semana, tiempos.</p></div>
-          <div class="card tint"><h5>Base de conocimiento <span class="b b-kb">kb</span></h5><p class="mini">Carga de documentos, alcance por compañía, estado de indexación, resumen de temas por compañía.</p></div>
-          <div class="card tint"><h5>Administración del tenant <span class="b b-admin">admin</span></h5><p class="mini">Métricas globales del tenant, configuración del bot, Observabilidad IA (tokens, costo, calidad), alta de usuarios KB, alta de organizaciones/tenants, acceso lectura a tenants finalizados.</p></div>
-        </div>
-      </div>
+      <summary><span class="b b-bot">bot</span> Asistente IA</summary>
+      <div class="dbody"><p class="mini">Chat, búsqueda en KB, clasificación de triage, generación de resumen, decisión de escalar, rechazo de off-topic.</p></div>
+    </details>
+
+    <details>
+      <summary><span class="b b-usuario">usuario</span> Portal del usuario</summary>
+      <div class="dbody"><p class="mini">Chat, <b>Mis Consultas</b> con filtros por estado, FAQ, perfil (con el panel de configuración oculto).</p></div>
+    </details>
+
+    <details>
+      <summary><span class="b b-agente">operador</span> Bandeja de escalamientos</summary>
+      <div class="dbody"><p class="mini">Cola de incidencias, KPIs, toma de caso, detalle con consulta literal + resumen IA, cuatro CTAs de resolución.</p></div>
+    </details>
+
+    <details>
+      <summary><span class="b b-agente">operador</span> Rendimiento del operador</summary>
+      <div class="dbody"><p class="mini"><b>Mis Tickets</b> y <b>Mi Rendimiento</b>: casos por tipo de resolución, resueltos por semana, tiempos.</p></div>
+    </details>
+
+    <details>
+      <summary><span class="b b-kb">kb</span> Base de conocimiento</summary>
+      <div class="dbody"><p class="mini">Carga de documentos, alcance por compañía, estado de indexación, resumen de temas por compañía.</p></div>
+    </details>
+
+    <details>
+      <summary><span class="b b-admin">admin</span> Administración del tenant</summary>
+      <div class="dbody"><p class="mini">Métricas globales del tenant, configuración del bot, Observabilidad IA (tokens, costo, calidad), alta de usuarios KB, alta de organizaciones/tenants, acceso lectura a tenants finalizados.</p></div>
     </details>
   </div>
 </section>

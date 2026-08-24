@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Guía KB Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <b>Nybble AI Help Desk</b>
+    <span>Functional Source of Truth</span>
+  </div>
+  <div class="grp">Producto</div>
+  <a href="index.html#overview"><i>1</i>Product Overview</a>
+  <a href="index.html#roles"><i>2</i>Users &amp; Roles</a>
+  <a href="index.html#access"><i>3</i>Access &amp; Explore</a>
+  <a href="index.html#concepts"><i>4</i>Core Concepts</a>
+  <div class="grp">Comportamiento</div>
+  <a href="comportamiento.html#lifecycle"><i>5</i>Incident Lifecycle</a>
+  <a href="comportamiento.html#flows"><i>6</i>Functional Flows</a>
+  <div class="grp">Medición</div>
+  <a href="medicion.html#kpis"><i>7</i>KPIs &amp; Metrics</a>
+  <a href="medicion.html#e2e"><i>8</i>End-to-End Logic</a>
+  <div class="grp">Referencia</div>
+  <a href="medicion.html#limits"><i>·</i>Límites conocidos V1</a>
+  <div class="grp is-here">Guías</div>
+  <a href="guia-kb-manager.html" class="is-here"><i>★</i>KB Manager · Carga de KB</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Guía KB Manager</div>
+    <h1>Guía rápida · KB Manager <span class="b b-kb" style="vertical-align:middle">kb</span></h1>
+    <p>Cómo cargar y mantener la Base de Conocimiento que usa el bot para responder. Pensada para tener abierta en una pestaña mientras trabajás en la plataforma en la otra — no hace falta leerla de punta a punta antes de empezar.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="callout c-info">
+  <b>Por qué importa lo que subís acá</b>
+  El bot <b>solo responde con lo que encuentra en la Base de Conocimiento</b> — nunca inventa una respuesta ni completa con conocimiento general. Si un documento no está cargado, o está desactualizado, esa consulta va a terminar escalada a un operador humano. Documentación clara y vigente es lo que hace que la mesa sea asertiva.
+</div>
+
+<h3>Paso a paso</h3>
+<div class="steps" data-steps>
+  <div class="steps-nav" role="tablist" aria-label="Pasos para cargar la Base de Conocimiento">
+    <button class="steps-tab is-active" role="tab" aria-selected="true" data-step="1"><span class="steps-tab-n">1</span>Entrar a la KB</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="2"><span class="steps-tab-n">2</span>Subir un documento</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="3"><span class="steps-tab-n">3</span>Definir el alcance</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="4"><span class="steps-tab-n">4</span>Confirmar indexación</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="5"><span class="steps-tab-n">5</span>Mantenerla al día</button>
+  </div>
+
+  <div class="steps-panel is-active" role="tabpanel" data-step-panel="1">
+    <h5>Paso 1 · Entrar a la Base de Conocimiento <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>Iniciá sesión con tu usuario de <b>KB Manager</b>.</li>
+      <li>En el menú, entrá a la sección <b>Base de conocimiento</b>.</li>
+      <li>Ahí vas a ver la lista de todo lo ya cargado, con su <b>estado de indexación</b> por documento.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">Si no te aparece esta sección en el menú, tu usuario no tiene el rol de KB Manager asignado — pedile al Admin del tenant que te lo habilite.</p>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="2">
+    <h5>Paso 2 · Subir un documento <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>Desde la Base de conocimiento, buscá la opción para <b>subir un documento nuevo</b> y seleccioná el archivo.</li>
+      <li>Formato recomendado: <code>.doc</code> / <code>.docx</code>. <b>Evitá PDF por ahora</b> — hay un bug conocido en la carga (ver "Antes de subir" más abajo).</li>
+      <li>La carga es de <b>un documento a la vez</b>. Repetí el paso para cada archivo.</li>
+      <li>Después de subir, la mesa dispara sola la indexación — no hace falta ninguna acción adicional de tu parte.</li>
+    </ol>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="3">
+    <h5>Paso 3 · Definir el alcance <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>Al subir, podés <b>asignar el documento a una o varias compañías</b> del tenant.</li>
+      <li>Si <b>no asignás ninguna</b>, el documento queda <b>tenant-wide</b>: disponible para todas las compañías del tenant.</li>
+      <li>Si le asignás una o más compañías, el bot <b>solo</b> lo va a usar para responder consultas de esas compañías puntuales.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">Usalo para separar contenido que no debería cruzarse entre clientes o áreas — por ejemplo, políticas internas de una compañía específica.</p>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="4">
+    <h5>Paso 4 · Confirmar que indexó bien <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>Cada documento pasa por: <b>Pendiente → Indexando → Listo</b> (o <b>Error</b>).</li>
+      <li>Un documento recién subido <b>no está disponible para el bot hasta que llega a "Listo"</b>.</li>
+      <li>Si queda en <b>Error</b>: no se va a usar para responder. Revisá el formato del archivo y volvé a intentar la carga.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">El resumen de temas de la KB (lo que ve el bot para saber qué está fuera de alcance) se regenera solo cada vez que subís, sincronizás o cambia el estado de un documento — no tenés que hacer nada manual para eso.</p>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="5">
+    <h5>Paso 5 · Mantenerla al día <span class="b b-kb">kb</span></h5>
+    <ul>
+      <li><b>Contenido claro y vigente:</b> el bot responde literalmente con lo que hay ahí adentro, así que un documento ambiguo produce una respuesta ambigua.</li>
+      <li><b>Evitá contenido contradictorio</b> entre dos documentos sobre el mismo tema — el bot no tiene forma de elegir cuál es el correcto.</li>
+      <li><b>¿Cambió una política o un proceso?</b> Volvé a subir la versión actualizada; no hay edición inline del contenido ya cargado.</li>
+      <li>Revisá de tanto en tanto que no queden documentos en estado <b>Error</b> sin resolver.</li>
+    </ul>
+  </div>
+
+  <div class="steps-footer">
+    <button class="steps-prev" disabled>← Anterior</button>
+    <span class="steps-progress">Paso <b data-step-current>1</b> de 5</span>
+    <button class="steps-next">Siguiente →</button>
+  </div>
+</div>
+
+<h3>Antes de subir, tené esto en cuenta</h3>
+<div class="callout c-warn">
+  <b>Problemas conocidos durante el piloto</b>
+  <ul style="margin:6px 0 0">
+    <li>La carga de <b>PDF falla</b> con el error <code>matrix is not defined</code>. <b>Usá <code>.doc</code> / <code>.docx</code> mientras este bug esté abierto.</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-573" target="_blank">LABS-573</a></li>
+    <li>Una vez subido, <b>no se puede reabrir ni leer un documento desde la plataforma</b> para revisar su contenido — guardá una copia de lo que subís en otro lado como referencia. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a></li>
+    <li>Restringir un documento a <b>una única compañía</b> (en vez de una o varias) todavía no está disponible; quedó en backlog.</li>
+    <li>Cargar la KB desde fuentes externas (Google Drive) todavía no está definido para el piloto.</li>
+  </ul>
+</div>
+
+<h3>Chequeo rápido</h3>
+<div class="grid g2">
+  <div class="card acc">
+    <h5>Hacé esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Subí en <code>.doc</code> / <code>.docx</code></li>
+      <li>Un documento por tema, sin contradicciones entre archivos</li>
+      <li>Verificá que el documento llegó a estado <b>Listo</b></li>
+      <li>Guardá una copia propia de cada archivo que subís</li>
+    </ul>
+  </div>
+  <div class="card" style="border-left:4px solid var(--bad)">
+    <h5>Evitá esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Subir en <b>PDF</b> (falla la carga)</li>
+      <li>Dar por cargado un documento que quedó en <b>Error</b></li>
+      <li>Esperar poder reabrir un documento ya subido desde la plataforma</li>
+    </ul>
+  </div>
+</div>
+
+<div class="pager">
+  <a class="prev" href="index.html"><span class="d">Volver</span><span class="t">← Nybble AI Help Desk</span></a>
+  <span></span>
+</div>
+
+<footer>
+  <p style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</p>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Arriba</a>
+<script src="assets/steps.js"></script>
+</body>
+</html>

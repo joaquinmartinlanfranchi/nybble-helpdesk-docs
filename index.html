@@ -20,8 +20,8 @@
   <div class="grp is-here">Producto</div>
   <a href="#overview"><i>1</i>Product Vision</a>
   <a href="#roles"><i>2</i>Users &amp; Roles</a>
-  <a href="#access"><i>3</i>Access &amp; Explore</a>
-  <a href="#concepts"><i>4</i>Core Concepts</a>
+  <a href="#concepts"><i>3</i>Core Concepts</a>
+  <a href="#access"><i>4</i>Access &amp; Explore</a>
   <div class="grp">Comportamiento</div>
   <a href="comportamiento.html#lifecycle"><i>5</i>Incident Lifecycle</a>
   <a href="comportamiento.html#flows"><i>6</i>Functional Flows</a>
@@ -39,9 +39,9 @@
   <div class="wrap">
     <div class="kicker">Documentación funcional · Onboarding de producto</div>
     <h1>Nybble AI Help Desk</h1>
-    <p class="sub">Mesa de ayuda asistida por IA: responde consultas de primera línea desde una base de conocimiento aprobada, clasifica y prioriza, y escala a un operador humano cuando no puede resolver. Este documento reconstruye <b>cómo funciona el producto</b> — no cómo está construido.</p>
+    <p class="sub">Mesa de ayuda asistida por IA: responde consultas de primera línea desde una base de conocimiento aprobada, clasifica y prioriza, y escala a un operador humano cuando no puede resolver. <b>Este documento reconstruye cómo funciona el producto.</b></p>
     <div class="metabar">
-      <span>Estado: <b>POC / V3 en DEV, camino a producción</b></span>
+      <span>Estado: <b>Versión 1</b></span>
       <span>Backlog: <a href="https://nybblegroup.atlassian.net/browse/LABS" target="_blank" style="color:#fff;text-decoration:underline"><b>Jira LABS</b></a></span>
     </div>
   </div>
@@ -54,7 +54,7 @@
   <div class="shead"><div><h2>Product Vision <span class="num">01</span></h2><p>Qué es, qué problema resuelve, para quién, y hasta dónde llega hoy.</p></div></div>
   <div class="sbody">
 
-    <p class="lead">El AI Help Desk es una <b>mesa de ayuda multi-tenant con un agente de IA en la primera línea</b>. El usuario conversa por chat; el bot busca la respuesta en una base de conocimiento cargada y aprobada por el cliente; si la encuentra, responde y el caso se cierra solo; si no, el caso se convierte en una <b>incidencia</b> que entra en una cola y la toma un <b>operador humano</b>.</p>
+    <p class="lead">El AI Help Desk es una <b>mesa de ayuda multi-tenant con un agente de IA en la primera línea</b>. El <span class="b b-usuario">Usuario</span> conversa por chat; el <span class="b b-bot">Bot / Agente IA</span> busca la respuesta en la base de conocimiento que carga y mantiene el <span class="b b-kb">KB Manager</span>, bajo la configuración del <span class="b b-admin">Admin del tenant</span>. Si la encuentra, responde y el caso se cierra solo; si no, se convierte en una <b>incidencia</b> que entra en una cola y la toma un <span class="b b-agente">Agente / Operador</span> humano.</p>
 
     <div class="grid g2" style="margin:16px 0">
       <div class="card acc">
@@ -71,24 +71,27 @@
     <p>Hay <b>tres destinos</b> del mismo producto, y conviene tenerlos claros porque explican decisiones de diseño (multi-tenancy, aislamiento por compañía, roles del lado del cliente).</p>
     <div class="tw">
       <table>
-        <thead><tr><th style="width:150px">Destino</th><th>Qué es</th><th style="width:190px">Quién opera</th><th style="width:110px">Cuándo</th></tr></thead>
+        <thead><tr><th style="width:150px">Destino</th><th>Qué es</th><th style="width:190px">Quién opera</th><th style="width:170px">Quién es KB</th><th style="width:110px">Cuándo</th></tr></thead>
         <tbody>
           <tr>
             <td><b>1 · Soporte interno NYBO</b></td>
             <td>Canal oficial de soporte interno para el framework de desarrollo AI-first <b>NYBO</b>. Cualquier persona de Nybble que use NYBO consulta a la mesa; si no se resuelve, escala al equipo de Innovación. Se da de alta la <i>Organización Nybble</i> con una única compañía.</td>
             <td><span class="b b-agente">Operador</span> Federico Frigeri y/o Hernán Nadotti (Innovación)</td>
+            <td><span class="b b-kb">kb</span> Líder de proyecto Nybble</td>
             <td>Objetivo del sprint actual <span class="mark m-doc">Doc</span></td>
           </tr>
           <tr>
             <td><b>2 · Soporte Business Solutions</b></td>
             <td>Mesa de soporte para los proyectos de <b>Odoo</b> de Business Solutions. Es el caso para el que está escrito el deck comercial (KPIs de implementación de ERP, go-live y hypercare).</td>
             <td><span class="b b-agente">Operador</span> del equipo de mesa de ayuda de Odoo / BS</td>
+            <td><span class="b b-kb">kb</span> Líder de proyecto Nybble</td>
             <td>Sprint siguiente <span class="mark m-doc">Doc</span></td>
           </tr>
           <tr>
             <td><b>3 · Producto vendible</b></td>
             <td>La mesa comercializada a un cliente, que aporta sus propios usuarios, su KB y hasta su propio equipo de soporte. Explica el tenant demo <code>ACME Corp</code> con varias compañías y aislamiento de KB por compañía.</td>
             <td>El cliente, o Nybble como servicio</td>
+            <td><span class="b b-kb">kb</span> Cliente o Nybbler</td>
             <td>Requiere endurecer UX antes</td>
           </tr>
         </tbody>
@@ -125,37 +128,71 @@
       </div>
     </div>
 
-    <h3>Módulos / áreas funcionales</h3>
+    <h3>Flujo Core</h3>
+    <div class="diagbox">
+      <svg viewBox="0 0 1080 300" xmlns="http://www.w3.org/2000/svg" font-family="Sora, Montserrat, -apple-system, Segoe UI, sans-serif">
+        <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#A4B5C2"/></marker></defs>
+        <rect x="20" y="20" width="1040" height="260" rx="12" fill="#FAFBFC" stroke="#DCE4EA"/>
+        <text x="36" y="42" font-size="11" fill="#A4B5C2" letter-spacing="1">TENANT</text>
+        <rect x="36" y="52" width="230" height="60" rx="8" fill="#E7EEF4" stroke="#BCCEDC"/>
+        <text x="151" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#0F4569">Tenant</text>
+        <text x="151" y="96" text-anchor="middle" font-size="11" fill="#0F4569">KB aislada · config de bot · métricas</text>
 
-    <details>
-      <summary><span class="b b-bot">bot</span> Asistente IA</summary>
-      <div class="dbody"><p class="mini">Chat, búsqueda en KB, clasificación de triage, generación de resumen, decisión de escalar, rechazo de off-topic.</p></div>
-    </details>
+        <rect x="36" y="140" width="108" height="52" rx="8" fill="#fff" stroke="#C3D0D9"/>
+        <text x="90" y="162" text-anchor="middle" font-size="12" font-weight="600">Compañía A</text>
+        <text x="90" y="178" text-anchor="middle" font-size="10" fill="#5C7080">docs KB propios</text>
+        <rect x="158" y="140" width="108" height="52" rx="8" fill="#fff" stroke="#C3D0D9"/>
+        <text x="212" y="162" text-anchor="middle" font-size="12" font-weight="600">Compañía B</text>
+        <text x="212" y="178" text-anchor="middle" font-size="10" fill="#5C7080">docs KB propios</text>
+        <line x1="151" y1="112" x2="151" y2="136" stroke="#A4B5C2" marker-end="url(#ar2)"/>
 
-    <details>
-      <summary><span class="b b-usuario">usuario</span> Portal del usuario</summary>
-      <div class="dbody"><p class="mini">Chat, <b>Mis Consultas</b> con filtros por estado, FAQ, perfil (con el panel de configuración oculto).</p></div>
-    </details>
+        <rect x="36" y="216" width="230" height="48" rx="8" fill="#E7F1F8" stroke="#B5D3E6"/>
+        <text x="151" y="236" text-anchor="middle" font-size="12" font-weight="700" fill="#1873A8">Usuario</text>
+        <text x="151" y="252" text-anchor="middle" font-size="10" fill="#1873A8">1 tenant · 1 compañía · 1 rol</text>
+        <line x1="151" y1="192" x2="151" y2="212" stroke="#A4B5C2" marker-end="url(#ar2)"/>
 
-    <details>
-      <summary><span class="b b-agente">operador</span> Bandeja de escalamientos</summary>
-      <div class="dbody"><p class="mini">Cola de incidencias, KPIs, toma de caso, detalle con consulta literal + resumen IA, cuatro CTAs de resolución.</p></div>
-    </details>
+        <rect x="320" y="130" width="150" height="70" rx="8" fill="#fff" stroke="#C3D0D9"/>
+        <text x="395" y="155" text-anchor="middle" font-size="13" font-weight="700">Consulta</text>
+        <text x="395" y="172" text-anchor="middle" font-size="10" fill="#5C7080">conversación con el bot</text>
+        <text x="395" y="187" text-anchor="middle" font-size="10" fill="#5C7080">busca en la KB de su compañía</text>
+        <line x1="266" y1="240" x2="316" y2="185" stroke="#A4B5C2" marker-end="url(#ar2)"/>
+        <text x="272" y="215" font-size="10" fill="#5C7080">inicia</text>
 
-    <details>
-      <summary><span class="b b-agente">operador</span> Rendimiento del operador</summary>
-      <div class="dbody"><p class="mini"><b>Mis Tickets</b> y <b>Mi Rendimiento</b>: casos por tipo de resolución, resueltos por semana, tiempos.</p></div>
-    </details>
+        <rect x="520" y="52" width="170" height="56" rx="8" fill="#E4F4F8" stroke="#AEDFEA"/>
+        <text x="605" y="76" text-anchor="middle" font-size="12" font-weight="700" fill="#0E7490">Resuelto por IA</text>
+        <text x="605" y="93" text-anchor="middle" font-size="10" fill="#0E7490">estado terminal, sin humano</text>
+        <path d="M470,150 C500,150 495,95 516,85" fill="none" stroke="#A4B5C2" marker-end="url(#ar2)"/>
+        <text x="478" y="120" font-size="10" fill="#5C7080">hay respuesta</text>
 
-    <details>
-      <summary><span class="b b-kb">kb</span> Base de conocimiento</summary>
-      <div class="dbody"><p class="mini">Carga de documentos, alcance por compañía, estado de indexación, resumen de temas por compañía.</p></div>
-    </details>
+        <rect x="520" y="150" width="170" height="70" rx="8" fill="#FDF1E4" stroke="#F3D3AC"/>
+        <text x="605" y="174" text-anchor="middle" font-size="13" font-weight="700" fill="#C2610A">Incidencia</text>
+        <text x="605" y="191" text-anchor="middle" font-size="10" fill="#C2610A">+ resumen IA, prioridad,</text>
+        <text x="605" y="205" text-anchor="middle" font-size="10" fill="#C2610A">categoría, módulo</text>
+        <line x1="470" y1="175" x2="516" y2="180" stroke="#A4B5C2" marker-end="url(#ar2)"/>
+        <text x="430" y="250" font-size="10" fill="#5C7080">no hay respuesta → escala</text>
 
-    <details>
-      <summary><span class="b b-admin">admin</span> Administración del tenant</summary>
-      <div class="dbody"><p class="mini">Métricas globales del tenant, configuración del bot, Observabilidad IA (tokens, costo, calidad), alta de usuarios KB, alta de organizaciones/tenants, acceso lectura a tenants finalizados.</p></div>
-    </details>
+        <rect x="750" y="150" width="150" height="56" rx="8" fill="#FDF1E4" stroke="#F3D3AC"/>
+        <text x="825" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#C2610A">Operador</text>
+        <text x="825" y="191" text-anchor="middle" font-size="10" fill="#C2610A">solo clientes asignados</text>
+        <line x1="690" y1="180" x2="746" y2="180" stroke="#A4B5C2" marker-end="url(#ar2)"/>
+        <text x="694" y="172" font-size="10" fill="#5C7080">toma</text>
+
+        <rect x="750" y="234" width="150" height="46" rx="8" fill="#E7EEF4" stroke="#BCCEDC"/>
+        <text x="825" y="253" text-anchor="middle" font-size="12" font-weight="700" fill="#0F4569">Ticket en Jira</text>
+        <text x="825" y="269" text-anchor="middle" font-size="10" fill="#0F4569">referencia guardada</text>
+        <line x1="825" y1="206" x2="825" y2="230" stroke="#A4B5C2" marker-end="url(#ar2)"/>
+        <text x="832" y="224" font-size="10" fill="#5C7080">aprueba</text>
+
+        <rect x="930" y="150" width="120" height="130" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/>
+        <text x="990" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#157F4B">Métricas</text>
+        <text x="990" y="194" text-anchor="middle" font-size="10" fill="#157F4B">tiempo de</text>
+        <text x="990" y="207" text-anchor="middle" font-size="10" fill="#157F4B">resolución (manual)</text>
+        <text x="990" y="226" text-anchor="middle" font-size="10" fill="#157F4B">tipo de resolución</text>
+        <text x="990" y="245" text-anchor="middle" font-size="10" fill="#157F4B">override de prioridad</text>
+        <line x1="900" y1="178" x2="926" y2="178" stroke="#A4B5C2" marker-end="url(#ar2)"/>
+        <path d="M690,70 C830,70 900,110 940,146" fill="none" stroke="#A4B5C2" stroke-dasharray="4 3" marker-end="url(#ar2)"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -163,16 +200,6 @@
 <section id="roles" style="--accent:var(--c-roles)">
   <div class="shead"><div><h2>Users &amp; Roles <span class="num">02</span></h2><p>Cuatro roles humanos, una jerarquía de tres niveles, y un actor no humano que decide.</p></div></div>
   <div class="sbody">
-
-    <div class="callout c-neutral">
-      <b>Jerarquía organizacional</b>
-      <b>Tenant</b> → <b>Cliente / Compañía</b> → <b>Usuario</b>. La capa intermedia de <i>Cliente</i> se agregó para que un tenant pueda atender varios clientes independientes “without cross-contamination of tickets, conversations, or agent assignments” <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-485" target="_blank">LABS-485</a>. En los tickets, <b>cliente = compañía = organización</b> se usan como sinónimos <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-462" target="_blank">LABS-462</a>.
-    </div>
-
-    <div class="callout c-warn">
-      <b>Nota de vocabulario</b>
-      <b>“Agente” y “Operador” son el mismo rol.</b> En Jira y en las minutas aparecen además como <i>analista</i>, <i>asistente</i> y <i>Support Agent</i>. El 11/08 se decidió estandarizar en <b>“Agente”</b>, pero “Operador” sigue usándose en toda la UI y los tickets. Ojo también con “agente”: cuando el ticket dice “agente de mesa de entrada” se refiere al <b>bot</b>, no a la persona.
-    </div>
 
     <h3>Los cuatro roles</h3>
 
@@ -183,27 +210,15 @@
           <dt>Quién es</dt><dd>El usuario final del sistema soportado (empleado de Nybble usando NYBO, o usuario del cliente en un proyecto Odoo). Cuenta demo: <code>usuario@acme.com</code>.</dd>
           <dt>Objetivo</dt><dd>Resolver su duda o problema lo más rápido posible, sin importar si lo resuelve la IA o una persona.</dd>
         </dl>
-        <div class="grid g2" style="margin-top:12px">
-          <div class="card"><h5>Qué puede hacer</h5><ul class="mini" style="margin-bottom:0">
-            <li>Chatear con el bot; adjuntar archivos con el botón <code>+</code> <b>solo después</b> de la primera respuesta del bot <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a></li>
-            <li>Pedir explícitamente hablar con un humano (escala de inmediato)</li>
-            <li>Confirmar la creación de la incidencia cuando el bot lo propone</li>
-            <li>Responder “¿te sirvió la respuesta?” con <b>Sí / No</b></li>
-            <li>Cerrar la conversación (botón rojo o la cruz)</li>
-            <li>Ver su historial en <b>Mis Consultas</b> y filtrar por estado</li>
-            <li>Consultar la <b>FAQ</b></li>
-          </ul></div>
-          <div class="card"><h5>Qué ve / qué no</h5><ul class="mini" style="margin-bottom:0">
-            <li><b>Solo sus propias consultas</b>, nunca las de otros usuarios del tenant — <code>BR-060</code></li>
-            <li>Menú restringido a Mis Consultas y Mis Incidencias; <b>“Mis Incidencias” no es alcanzable por URL directa</b> (devuelve 404, verificado)</li>
-            <li>El panel de configuración del perfil <b>está oculto</b> porque no funcionaba, incluyendo el selector de idioma y la preferencia de “recibir mail cuando el ticket cambia de estado” <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-552" target="_blank">LABS-552</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-511" target="_blank">LABS-511</a></li>
-            <li>No puede iniciar sesión en un cliente en estado <b>finalizado</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-486" target="_blank">LABS-486</a></li>
-            <li>En incidencias <b>Pendientes</b>, la card expone la clasificación interna que la IA genera para el operador (p. ej. prioridad <code>low</code>) — pensada para triage, no para el usuario final <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-574" target="_blank">LABS-574</a></li>
-          </ul></div>
-        </div>
-        <div class="callout c-warn" style="margin-top:12px"><b>Restricción crítica</b>
-          Cuando el operador le <span class="st st-ret">Retorna</span> una incidencia, <b>el usuario no tiene forma de accionar ni de continuar la conversación</b> dentro de la plataforma <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a>. El ida y vuelta ocurre por fuera (Slack / mail). Es el hueco funcional más importante del producto.
-        </div>
+        <div class="card" style="margin-top:12px"><h5>Qué puede hacer</h5><ul class="mini" style="margin-bottom:0">
+          <li>Chatear con el bot; adjuntar archivos con el botón <code>+</code> <b>solo después</b> de la primera respuesta del bot <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a></li>
+          <li>Pedir explícitamente hablar con un humano (escala de inmediato)</li>
+          <li>Confirmar la creación de la incidencia cuando el bot lo propone</li>
+          <li>Responder “¿te sirvió la respuesta?” con <b>Sí / No</b></li>
+          <li>Cerrar la conversación (botón rojo o la cruz)</li>
+          <li>Ver su historial en <b>Mis Consultas</b> y filtrar por estado</li>
+          <li>Consultar la <b>FAQ</b></li>
+        </ul></div>
       </div>
     </details>
 
@@ -224,16 +239,15 @@
             <li><b>Tiempo de resolución</b> — horas y minutos, <b>campo requerido para cualquiera de las acciones</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-477" target="_blank">LABS-477</a></li>
             <li>Puede <b>sobrescribir la prioridad</b> que asignó la IA al aprobar; el sistema registra el delta <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-465" target="_blank">LABS-465</a></li>
           </ul></div>
-          <div class="card"><h5>Qué ve / qué no</h5><ul class="mini" style="margin-bottom:0">
-            <li>Bandeja filtrada por <b>los clientes que tiene asignados</b>: <code>clientId IN (clientes asignados)</code> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-490" target="_blank">LABS-490</a></li>
-            <li>Detalle con <b>consulta literal del usuario + resumen de la IA</b> + estado, prioridad, agente, canal, cliente y contacto <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-550" target="_blank">LABS-550</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-474" target="_blank">LABS-474</a></li>
+          <div class="card"><h5>Qué ve</h5><ul class="mini" style="margin-bottom:0">
+            <li>Bandeja filtrada por <b>los clientes que tiene asignados</b>: <code>clientId IN (clientes asignados)</code></li>
+            <li>Detalle con <b>consulta literal del usuario + resumen de la IA</b> + estado, prioridad, agente, canal, cliente y contacto</li>
             <li>Escalamientos ordenados <b>CRITICAL &gt; HIGH &gt; MEDIUM &gt; LOW</b></li>
             <li><b>Solo sus propias métricas</b> en Mi Rendimiento — <code>BR-070</code></li>
-            <li>No puede tomar casos de tenants o clientes <b>finalizados</b></li>
           </ul></div>
         </div>
         <div class="callout c-bad" style="margin-top:12px"><b>Restricción crítica</b>
-          <b>El operador no puede chatear con el usuario dentro de la plataforma.</b> Los botones Aprobar/Resuelto/Rechazar no abren cuadro de texto; solo Retornar lo hace, y sin adjuntos. En la práctica el operador “resuelve” anotando horas y marcando el estado. El 13/08 se marcó como prioridad #1 y el 19/08 se resolvió <b>dejarlo fuera de V1</b>: la comunicación se hace por Slack o mail y debe quedar documentada. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a>
+          <b>El operador no puede chatear con el usuario dentro de la plataforma.</b> Los botones Aprobar/Resuelto/Rechazar no abren cuadro de texto; solo Retornar lo hace, y sin adjuntos. En la práctica el operador “resuelve” anotando horas y marcando el estado. <b>La comunicación se hace por Slack o mail y el tiempo de resolución debe quedar documentado para cambiar el estado de las incidencias.</b>
         </div>
       </div>
     </details>
@@ -252,11 +266,8 @@
             <li>Ver el <b>estado de indexación</b> por documento: Indexando / Listo / Error <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-488" target="_blank">LABS-488</a></li>
             <li>Ver el <b>resumen de temas por compañía</b></li>
           </ul></div>
-          <div class="card"><h5>Problemas abiertos</h5><ul class="mini" style="margin-bottom:0">
-            <li><b>No puede abrir ni leer los archivos cargados</b> desde la plataforma <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a> <span class="mark m-draft">Draft</span></li>
-            <li>La carga de <b>PDF falla</b> con <code>matrix is not defined</code> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-573" target="_blank">LABS-573</a>; los <code>.doc</code> funcionan (reportado 12/08)</li>
-            <li>Restringir la asignación a una única compañía quedó en backlog</li>
-            <li>Alcance de KB alimentada por fuentes externas (Google Drive) e índices por compañía: <span class="mark m-tbd">TBD post-POC</span> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-576" target="_blank">LABS-576</a></li>
+          <div class="card"><h5>Futuras versiones</h5><ul class="mini" style="margin-bottom:0">
+            <li>Alcance de KB alimentada por fuentes externas (Google Drive) e índices por compañía <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-576" target="_blank">LABS-576</a></li>
           </ul></div>
         </div>
       </div>
@@ -269,24 +280,14 @@
           <dt>Quién es</dt><dd>“admin de cada organizacion, creo que mayormente seriamos nosotros”. Cuenta demo: <code>admin@acme.com</code>.</dd>
           <dt>Objetivo</dt><dd>Configurar el comportamiento de la mesa para su organización y medir su rendimiento y su costo.</dd>
         </dl>
-        <div class="grid g2" style="margin-top:12px">
-          <div class="card"><h5>Qué puede hacer</h5><ul class="mini" style="margin-bottom:0">
-            <li>Ver <b>todas las métricas globales del tenant</b>: tickets y tiempos <b>por cliente</b> y <b>por agente humano</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-484" target="_blank">LABS-484</a></li>
-            <li>Crear usuarios <b>KB</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-553" target="_blank">LABS-553</a></li>
-            <li>Configuración del bot: ver y <b>regenerar</b> el resumen de temas de la KB <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-488" target="_blank">LABS-488</a></li>
-            <li>Ajustar parámetros por tenant: <code>maxAttempts</code> (2–5, default 3), <code>maxMessagesPerSession</code>, umbral de confianza, nombre y tono del bot</li>
-            <li>Sección <b>Configuración → Observabilidad IA</b>: tokens, costo y score de calidad <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a></li>
-            <li><b>Alta de organización</b> (formulario “New Organization”): nombre de la organización, mail del admin (<code>adminEmail</code>) y contraseña <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-532" target="_blank">LABS-532</a></li>
-          </ul></div>
-          <div class="card"><h5>Restricciones</h5><ul class="mini" style="margin-bottom:0">
-            <li>Solo métricas <b>de su propio tenant</b> — <code>BR-101</code></li>
-            <li>Acceso de <b>solo lectura</b> a tenants o clientes finalizados</li>
-            <li>El control de acceso por rol de la sección de Observabilidad quedó <b>sin verificar</b> (AC-4.2) <span class="mark m-open">Re-open</span></li>
-          </ul></div>
-        </div>
-        <div class="callout c-warn" style="margin-top:10px"><b>Bug abierto que bloquea el ticket</b>
-          Al dar de alta una organización, si al corregir el mail sigue habiendo un error en la contraseña, <b>el error del mail queda pegado en pantalla</b> aunque el mail ya sea válido. Además los errores se muestran de a uno y el validador imprime el nombre crudo del campo (<code>adminEmail</code>) en lugar de un mensaje. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-532" target="_blank">LABS-532</a> <span class="mark m-open">In Progress</span>
-        </div>
+        <div class="card" style="margin-top:12px"><h5>Qué puede hacer</h5><ul class="mini" style="margin-bottom:0">
+          <li>Ver <b>todas las métricas globales del tenant</b>: tickets y tiempos <b>por cliente</b> y <b>por agente humano</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-484" target="_blank">LABS-484</a></li>
+          <li>Crear usuarios <b>KB</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-553" target="_blank">LABS-553</a></li>
+          <li>Configuración del bot: ver y <b>regenerar</b> el resumen de temas de la KB <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-488" target="_blank">LABS-488</a></li>
+          <li>Ajustar parámetros por tenant: <code>maxAttempts</code> (2–5, default 3), <code>maxMessagesPerSession</code>, umbral de confianza, nombre y tono del bot</li>
+          <li>Sección <b>Configuración → Observabilidad IA</b>: tokens, costo y score de calidad <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a></li>
+          <li><b>Alta de organización</b> (formulario “New Organization”): nombre de la organización, mail del admin (<code>adminEmail</code>) y contraseña <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-532" target="_blank">LABS-532</a></li>
+        </ul></div>
       </div>
     </details>
 
@@ -341,41 +342,82 @@
   </div>
 </section>
 
-<!-- ============ 3. ACCESS ============ -->
-<section id="access" style="--accent:var(--c-access)">
-  <div class="shead"><div><h2>Access &amp; How to Explore the Platform <span class="num">03</span></h2><p>Entrá, logueate con los cuatro roles y recorré el producto en este orden.</p></div></div>
+<!-- ============ 3. CORE CONCEPTS ============ -->
+<section id="concepts" style="--accent:var(--c-concepts)">
+  <div class="shead"><div><h2>Core Entities / Concepts <span class="num">03</span></h2><p>El vocabulario del HelpDesk.</p></div></div>
   <div class="sbody">
 
     <div class="callout c-warn">
-      <b>Ambiente</b>
-      Existe un único ambiente accesible documentado y es <b>DEV</b>. No hay URL de producción en ninguna fuente: el pase a producción es el objetivo del sprint (<a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-530" target="_blank">LABS-530</a> · crear el tenant <code>NYBBLE-LABS</code> con la empresa <code>NYBO</code>), no un hecho. Infra DEV + PROD ya está creada en AWS ECS <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-502" target="_blank">LABS-502</a>.
+      <b>La distinción que más se confunde</b>
+      <b>Consulta</b> = cualquier conversación que el usuario inicia, se escale o no. <b>Incidencia</b> = una consulta que el bot <b>no</b> pudo resolver y que se escaló a un operador. Toda incidencia nace de una consulta; no toda consulta se convierte en incidencia. La sección del usuario se llama <b>“Mis Consultas”</b> y unifica ambas con filtros fijos por estado <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. Antes existían dos secciones separadas (“Mis Consultas” y “Mis Incidencias”) y antes aún se llamaba “Mis Tickets”.
     </div>
 
-    <div class="grid g2">
-      <div class="card acc">
-        <h5>URL de acceso <span class="mark m-doc">Documentado</span></h5>
-        <p class="url"><a href="https://ai-helpdesk-dev.labs-dev.nybblenetwork.com/login" target="_blank">https://ai-helpdesk-dev.labs-dev.nybblenetwork.com/login</a></p>
-        <p class="mini" style="margin-bottom:0">Tenant de demo cargado: <b>ACME Corp</b>, con compañías <i>Distribuidora Norte, Servicios Corporativos, Manufactura, Logística, Retail Division</i>. Tenants demo nombrados en tickets: <code>Acme</code> y <code>Globex</code>.</p>
-      </div>
-      <div class="card acc">
-        <h5>Credenciales de acceso</h5>
-        <p class="mini" style="margin-bottom:0">No publicadas en este documento por estar hosteado públicamente. Pedirlas por el canal interno habitual.</p>
-      </div>
-    </div>
+    <details>
+      <summary>Tenant</summary>
+      <div class="dbody"><p class="mini">La unidad máxima de aislamiento — normalmente una organización cliente. Tiene su propia KB en un namespace separado, sus propias métricas, y su propia configuración de bot. Un usuario pertenece a <b>un único</b> tenant. Se da de alta por el Admin del tenant.</p></div>
+    </details>
 
-    <h3>Usuarios de prueba</h3>
-    <p>El mail los lista <b>en orden de prioridad para explorar</b>. Respetá ese orden: es el recorrido natural del producto.</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th style="width:56px">Orden</th><th style="width:180px">Usuario</th><th style="width:130px">Rol</th><th>Descripción</th></tr></thead>
-        <tbody>
-          <tr><td><b>1º</b></td><td><code>usuario@acme.com</code></td><td><span class="b b-usuario">Usuario</span></td><td>“usuario del cliente que va a utilizar la mesa”</td></tr>
-          <tr><td><b>2º</b></td><td><code>agente@acme.com</code></td><td><span class="b b-agente">Agente/Operador</span></td><td>“operador humano que atiende los tickets escalados, puede ser de algun cliente si tiene un equipo de soporte y nos contrata la mesa como producto, o podemos ser nosotros, por ejemplo el lider de soporte de Business Solution”</td></tr>
-          <tr><td><b>3º</b></td><td><code>kb@acme.com</code></td><td><span class="b b-kb">KB Manager</span></td><td>“usuario del cliente que va a administrar el conocimiento y la documentación que alimenta la mesa”</td></tr>
-          <tr><td><b>4º</b></td><td><code>admin@acme.com</code></td><td><span class="b b-admin">Admin</span></td><td>“admin de cada organizacion, creo que mayormente seriamos nosotros”</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <details>
+      <summary>Cliente / Compañía / Organización</summary>
+      <div class="dbody"><p class="mini">Los tres términos se usan como sinónimos. Es la capa intermedia dentro del tenant: permite que un tenant atienda varios clientes sin contaminación cruzada de tickets, conversaciones ni asignaciones de agentes. Los documentos de KB y las asignaciones de agentes operan a este nivel.</p></div>
+    </details>
+
+    <details>
+      <summary>Usuario</summary>
+      <div class="dbody"><p class="mini">Pertenece a un tenant y a un cliente, y tiene exactamente un rol funcional. Solo ve sus propios datos.</p></div>
+    </details>
+
+    <details>
+      <summary>Consulta</summary>
+      <div class="dbody"><p class="mini">La conversación completa que el usuario inicia con el bot. Si se resuelve por KB, termina en <span class="st st-ia">Resuelto por IA</span> y nunca llega a un humano.</p></div>
+    </details>
+
+    <details>
+      <summary>Incidencia / Escalamiento</summary>
+      <div class="dbody"><p class="mini">La consulta escalada. Entra en una <b>cola compartida</b> (“bolsa de tickets”) que ven todos los operadores habilitados para ese cliente. Lleva: consulta literal, resumen generado por IA, prioridad, categoría, módulo, cliente, contacto, canal, estado, y tiempo de resolución cuando se cierra.</p></div>
+    </details>
+
+    <details>
+      <summary>Ticket de Jira</summary>
+      <div class="dbody"><p class="mini">La derivación a un sistema externo cuando la mesa no puede cerrar el caso. Se crea <b>solo si el operador aprueba</b>. Se guarda la referencia (número) para trazabilidad, y el usuario recibe confirmación con ese número (<code>BR-033</code>).</p></div>
+    </details>
+
+    <details>
+      <summary>Base de conocimiento (KB)</summary>
+      <div class="dbody"><p class="mini">El conjunto de documentos aprobados que alimenta al bot. Es <b>la única fuente válida de respuestas</b>. Aislada por tenant y opcionalmente acotada a compañías. Cada documento pasa por indexación (<code>PENDING → INDEXING → INDEXED / ERROR</code>).</p></div>
+    </details>
+
+    <details>
+      <summary>Resumen de temas de la KB</summary>
+      <div class="dbody"><p class="mini">Un resumen corto y <b>deliberadamente opaco</b> (etiquetas de tema, sin datos ni números) que se inyecta en el prompt <b>solo</b> para detectar off-topic. Se regenera automáticamente ante cualquier cambio en la KB y el admin puede regenerarlo a mano.</p></div>
+    </details>
+
+    <details>
+      <summary>Prioridad</summary>
+      <div class="dbody"><p class="mini"><code>CRITICAL</code> &gt; <code>HIGH</code> &gt; <code>MEDIUM</code> &gt; <code>LOW</code>. La asigna la IA con una rúbrica común y ordena la bandeja del operador. El operador puede sobrescribirla al aprobar, y el sistema registra el delta.</p></div>
+    </details>
+
+    <details>
+      <summary>Tiempo de resolución</summary>
+      <div class="dbody"><p class="mini">Campo numérico de horas y minutos que <b>el operador completa a mano</b> y que es <b>requerido para cualquiera</b> de las acciones de cierre. Es el insumo de todos los KPIs de tiempo: no hay medición automática.</p></div>
+    </details>
+
+    <details>
+      <summary>Sesión de conversación</summary>
+      <div class="dbody"><p class="mini">Contexto del chat. Tiene contador de intentos fallidos de KB, tope de mensajes por sesión, y se limpia por inactividad. Los timers de 45 y 60 minutos operan sobre ella.</p></div>
+    </details>
+
+    <details>
+      <summary>Estado “finalizado”</summary>
+      <div class="dbody"><p class="mini">Baja lógica de un cliente o de un tenant: no se crean más usuarios ni operaciones, el rol Usuario no puede loguear, y los datos quedan en solo lectura para los roles superiores <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-486" target="_blank">LABS-486</a>.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 4. ACCESS ============ -->
+<section id="access" style="--accent:var(--c-access)">
+  <div class="shead"><div><h2>Access &amp; How to Explore the Platform <span class="num">04</span></h2><p>Entrá, logueate con los cuatro roles y recorré el producto en este orden.</p></div></div>
+  <div class="sbody">
 
     <h3>Recorrido sugerido para entender el producto</h3>
     <p class="mini" style="color:var(--ink2)">Dos sesiones de navegador (o dos perfiles) en paralelo: una con <code>usuario@acme.com</code> y otra con <code>agente@acme.com</code>. Todo el ciclo de vida se entiende viendo los dos lados a la vez.</p>
@@ -456,99 +498,6 @@
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ============ 4. CORE CONCEPTS ============ -->
-<section id="concepts" style="--accent:var(--c-concepts)">
-  <div class="shead"><div><h2>Core Entities / Concepts <span class="num">04</span></h2><p>El vocabulario mínimo para leer un ticket de Jira sin perderse.</p></div></div>
-  <div class="sbody">
-
-    <div class="callout c-warn">
-      <b>La distinción que más se confunde</b>
-      <b>Consulta</b> = cualquier conversación que el usuario inicia, se escale o no. <b>Incidencia</b> = una consulta que el bot <b>no</b> pudo resolver y que se escaló a un operador. Toda incidencia nace de una consulta; no toda consulta se convierte en incidencia. La sección del usuario se llama <b>“Mis Consultas”</b> y unifica ambas con filtros fijos por estado <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. Antes existían dos secciones separadas (“Mis Consultas” y “Mis Incidencias”) y antes aún se llamaba “Mis Tickets”.
-    </div>
-
-    <div class="grid g2">
-      <div class="card acc"><h5>Tenant</h5><p class="mini">La unidad máxima de aislamiento — normalmente una organización cliente. Tiene su propia KB en un namespace separado, sus propias métricas, y su propia configuración de bot. Un usuario pertenece a <b>un único</b> tenant. Se da de alta por el Admin del tenant.</p></div>
-      <div class="card acc"><h5>Cliente / Compañía / Organización</h5><p class="mini">Los tres términos se usan como sinónimos. Es la capa intermedia dentro del tenant: permite que un tenant atienda varios clientes sin contaminación cruzada de tickets, conversaciones ni asignaciones de agentes. Los documentos de KB y las asignaciones de agentes operan a este nivel.</p></div>
-      <div class="card acc"><h5>Usuario</h5><p class="mini">Pertenece a un tenant y a un cliente, y tiene exactamente un rol funcional. Solo ve sus propios datos.</p></div>
-      <div class="card acc"><h5>Consulta</h5><p class="mini">La conversación completa que el usuario inicia con el bot. Si se resuelve por KB, termina en <span class="st st-ia">Resuelto por IA</span> y nunca llega a un humano.</p></div>
-      <div class="card acc"><h5>Incidencia / Escalamiento</h5><p class="mini">La consulta escalada. Entra en una <b>cola compartida</b> (“bolsa de tickets”) que ven todos los operadores habilitados para ese cliente. Lleva: consulta literal, resumen generado por IA, prioridad, categoría, módulo, cliente, contacto, canal, estado, y tiempo de resolución cuando se cierra.</p></div>
-      <div class="card acc"><h5>Ticket de Jira</h5><p class="mini">La derivación a un sistema externo cuando la mesa no puede cerrar el caso. Se crea <b>solo si el operador aprueba</b>. Se guarda la referencia (número) para trazabilidad, y el usuario recibe confirmación con ese número (<code>BR-033</code>).</p></div>
-      <div class="card acc"><h5>Base de conocimiento (KB)</h5><p class="mini">El conjunto de documentos aprobados que alimenta al bot. Es <b>la única fuente válida de respuestas</b>. Aislada por tenant y opcionalmente acotada a compañías. Cada documento pasa por indexación (<code>PENDING → INDEXING → INDEXED / ERROR</code>).</p></div>
-      <div class="card acc"><h5>Resumen de temas de la KB</h5><p class="mini">Un resumen corto y <b>deliberadamente opaco</b> (etiquetas de tema, sin datos ni números) que se inyecta en el prompt <b>solo</b> para detectar off-topic. Se regenera automáticamente ante cualquier cambio en la KB y el admin puede regenerarlo a mano.</p></div>
-      <div class="card acc"><h5>Prioridad</h5><p class="mini"><code>CRITICAL</code> &gt; <code>HIGH</code> &gt; <code>MEDIUM</code> &gt; <code>LOW</code>. La asigna la IA con una rúbrica común y ordena la bandeja del operador. El operador puede sobrescribirla al aprobar, y el sistema registra el delta.</p></div>
-      <div class="card acc"><h5>Tiempo de resolución</h5><p class="mini">Campo numérico de horas y minutos que <b>el operador completa a mano</b> y que es <b>requerido para cualquiera</b> de las acciones de cierre. Es el insumo de todos los KPIs de tiempo: no hay medición automática.</p></div>
-      <div class="card acc"><h5>Sesión de conversación</h5><p class="mini">Contexto del chat. Tiene contador de intentos fallidos de KB, tope de mensajes por sesión, y se limpia por inactividad. Los timers de 45 y 60 minutos operan sobre ella.</p></div>
-      <div class="card acc"><h5>Estado “finalizado”</h5><p class="mini">Baja lógica de un cliente o de un tenant: no se crean más usuarios ni operaciones, el rol Usuario no puede loguear, y los datos quedan en solo lectura para los roles superiores <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-486" target="_blank">LABS-486</a>.</p></div>
-    </div>
-
-    <h3>Cómo se relacionan</h3>
-    <div class="diagbox">
-      <svg viewBox="0 0 1080 300" xmlns="http://www.w3.org/2000/svg" font-family="Sora, Montserrat, -apple-system, Segoe UI, sans-serif">
-        <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#A4B5C2"/></marker></defs>
-        <rect x="20" y="20" width="1040" height="260" rx="12" fill="#FAFBFC" stroke="#DCE4EA"/>
-        <text x="36" y="42" font-size="11" fill="#A4B5C2" letter-spacing="1">TENANT</text>
-        <rect x="36" y="52" width="230" height="60" rx="8" fill="#E7EEF4" stroke="#BCCEDC"/>
-        <text x="151" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#0F4569">Tenant</text>
-        <text x="151" y="96" text-anchor="middle" font-size="11" fill="#0F4569">KB aislada · config de bot · métricas</text>
-
-        <rect x="36" y="140" width="108" height="52" rx="8" fill="#fff" stroke="#C3D0D9"/>
-        <text x="90" y="162" text-anchor="middle" font-size="12" font-weight="600">Compañía A</text>
-        <text x="90" y="178" text-anchor="middle" font-size="10" fill="#5C7080">docs KB propios</text>
-        <rect x="158" y="140" width="108" height="52" rx="8" fill="#fff" stroke="#C3D0D9"/>
-        <text x="212" y="162" text-anchor="middle" font-size="12" font-weight="600">Compañía B</text>
-        <text x="212" y="178" text-anchor="middle" font-size="10" fill="#5C7080">docs KB propios</text>
-        <line x1="151" y1="112" x2="151" y2="136" stroke="#A4B5C2" marker-end="url(#ar)"/>
-
-        <rect x="36" y="216" width="230" height="48" rx="8" fill="#E7F1F8" stroke="#B5D3E6"/>
-        <text x="151" y="236" text-anchor="middle" font-size="12" font-weight="700" fill="#1873A8">Usuario</text>
-        <text x="151" y="252" text-anchor="middle" font-size="10" fill="#1873A8">1 tenant · 1 compañía · 1 rol</text>
-        <line x1="151" y1="192" x2="151" y2="212" stroke="#A4B5C2" marker-end="url(#ar)"/>
-
-        <rect x="320" y="130" width="150" height="70" rx="8" fill="#fff" stroke="#C3D0D9"/>
-        <text x="395" y="155" text-anchor="middle" font-size="13" font-weight="700">Consulta</text>
-        <text x="395" y="172" text-anchor="middle" font-size="10" fill="#5C7080">conversación con el bot</text>
-        <text x="395" y="187" text-anchor="middle" font-size="10" fill="#5C7080">busca en la KB de su compañía</text>
-        <line x1="266" y1="240" x2="316" y2="185" stroke="#A4B5C2" marker-end="url(#ar)"/>
-        <text x="272" y="215" font-size="10" fill="#5C7080">inicia</text>
-
-        <rect x="520" y="52" width="170" height="56" rx="8" fill="#E4F4F8" stroke="#AEDFEA"/>
-        <text x="605" y="76" text-anchor="middle" font-size="12" font-weight="700" fill="#0E7490">Resuelto por IA</text>
-        <text x="605" y="93" text-anchor="middle" font-size="10" fill="#0E7490">estado terminal, sin humano</text>
-        <path d="M470,150 C500,150 495,95 516,85" fill="none" stroke="#A4B5C2" marker-end="url(#ar)"/>
-        <text x="478" y="120" font-size="10" fill="#5C7080">hay respuesta</text>
-
-        <rect x="520" y="150" width="170" height="70" rx="8" fill="#FDF1E4" stroke="#F3D3AC"/>
-        <text x="605" y="174" text-anchor="middle" font-size="13" font-weight="700" fill="#C2610A">Incidencia</text>
-        <text x="605" y="191" text-anchor="middle" font-size="10" fill="#C2610A">+ resumen IA, prioridad,</text>
-        <text x="605" y="205" text-anchor="middle" font-size="10" fill="#C2610A">categoría, módulo</text>
-        <line x1="470" y1="175" x2="516" y2="180" stroke="#A4B5C2" marker-end="url(#ar)"/>
-        <text x="430" y="250" font-size="10" fill="#5C7080">no hay respuesta → escala</text>
-
-        <rect x="750" y="150" width="150" height="56" rx="8" fill="#FDF1E4" stroke="#F3D3AC"/>
-        <text x="825" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#C2610A">Operador</text>
-        <text x="825" y="191" text-anchor="middle" font-size="10" fill="#C2610A">solo clientes asignados</text>
-        <line x1="690" y1="180" x2="746" y2="180" stroke="#A4B5C2" marker-end="url(#ar)"/>
-        <text x="694" y="172" font-size="10" fill="#5C7080">toma</text>
-
-        <rect x="750" y="234" width="150" height="46" rx="8" fill="#E7EEF4" stroke="#BCCEDC"/>
-        <text x="825" y="253" text-anchor="middle" font-size="12" font-weight="700" fill="#0F4569">Ticket en Jira</text>
-        <text x="825" y="269" text-anchor="middle" font-size="10" fill="#0F4569">referencia guardada</text>
-        <line x1="825" y1="206" x2="825" y2="230" stroke="#A4B5C2" marker-end="url(#ar)"/>
-        <text x="832" y="224" font-size="10" fill="#5C7080">aprueba</text>
-
-        <rect x="930" y="150" width="120" height="130" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/>
-        <text x="990" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#157F4B">Métricas</text>
-        <text x="990" y="194" text-anchor="middle" font-size="10" fill="#157F4B">tiempo de</text>
-        <text x="990" y="207" text-anchor="middle" font-size="10" fill="#157F4B">resolución (manual)</text>
-        <text x="990" y="226" text-anchor="middle" font-size="10" fill="#157F4B">tipo de resolución</text>
-        <text x="990" y="245" text-anchor="middle" font-size="10" fill="#157F4B">override de prioridad</text>
-        <line x1="900" y1="178" x2="926" y2="178" stroke="#A4B5C2" marker-end="url(#ar)"/>
-        <path d="M690,70 C830,70 900,110 940,146" fill="none" stroke="#A4B5C2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
-      </svg>
-    </div>
   </div>
 </section>
 

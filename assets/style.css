@@ -142,8 +142,9 @@ blockquote em{color:var(--ink3);font-style:normal;font-size:12px;display:block;m
 .steps-tab.is-active{background:var(--accent,#0F4569);border-color:var(--accent,#0F4569);color:#fff}
 .steps-tab-n{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:rgba(0,0,0,.08);font-size:10px;font-family:var(--head);font-weight:800;flex:none}
 .steps-tab.is-active .steps-tab-n{background:rgba(255,255,255,.25)}
-.steps-panel{display:none;padding:18px}
-.steps-panel.is-active{display:block}
+.steps-body{display:grid}
+.steps-panel{grid-area:1/1;padding:18px;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .15s}
+.steps-panel.is-active{visibility:visible;opacity:1;pointer-events:auto}
 .steps-panel h5{margin:0 0 10px;font-size:14.5px;display:flex;align-items:center;gap:8px}
 .steps-panel ol,.steps-panel ul{font-size:13.4px;color:var(--ink2)}
 .steps-footer{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;border-top:1px solid var(--line2);background:#FAFBFC}

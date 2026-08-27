@@ -133,7 +133,6 @@
 
     <h3>Otras cosas que el sistema mide</h3>
     <div class="grid g3">
-      <div class="card tint"><h5>Delta de override de prioridad</h5><p class="mini">Cuando el operador aprueba con una prioridad distinta a la que puso la IA, se registra la diferencia. Insumo futuro para mejorar el clasificador (<code>F-32</code>). El dashboard de tasa de override está <b>fuera de alcance</b>.</p></div>
       <div class="card tint"><h5>Rechazos de off-topic</h5><p class="mini">Cada rechazo se registra para analítica. No hay vista que lo muestre.</p></div>
       <div class="card tint"><h5>Feedback Sí/No de utilidad</h5><p class="mini">Es el insumo del estado Resuelto por IA. Recordá que el silencio cuenta como Sí.</p></div>
     </div>
@@ -208,7 +207,6 @@
         <rect x="254" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="364" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">Métricas del operador</text><text x="364" y="396" text-anchor="middle" font-size="10" fill="#157F4B">tipo de resolución + tiempos</text>
         <rect x="494" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="604" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">Métricas del tenant</text><text x="604" y="396" text-anchor="middle" font-size="10" fill="#157F4B">por cliente y por agente</text>
         <rect x="734" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="844" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">Observabilidad de IA</text><text x="844" y="396" text-anchor="middle" font-size="10" fill="#157F4B">tokens · costo · calidad</text>
-        <rect x="974" y="358" width="150" height="50" rx="8" fill="#FDF4E8" stroke="#EDD3AA"/><text x="1049" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8A4409">Override delta</text><text x="1049" y="396" text-anchor="middle" font-size="10" fill="#8A4409">mejora el clasificador</text>
       </svg>
     </div>
 
@@ -232,7 +230,7 @@
       <div class="card acc"><h5>2 · El bucle de escalamiento</h5><p class="mini">Tres intentos fallidos, palabra clave crítica o pedido explícito del usuario cierran el chat y crean una incidencia con resumen y clasificación. <b>El escalamiento es un cierre</b>, no una continuación.</p></div>
       <div class="card acc"><h5>3 · El bucle humano (con una fuga)</h5><p class="mini">El operador toma, decide y cierra registrando su tiempo. Pero para <i>hablar</i> con el usuario tiene que salir de la plataforma. Ese salto a Slack o mail <b>no queda registrado en el sistema</b>, así que ni las métricas ni la trazabilidad lo ven.</p></div>
       <div class="card acc"><h5>4 · El bucle de medición</h5><p class="mini">La acción del operador y su tiempo cargado a mano alimentan sus métricas, las del tenant y el KPI de deflección. Todo se recarga inmediatamente después de cada CTA para que el número refleje la acción.</p></div>
-      <div class="card acc"><h5>5 · El bucle de aprendizaje</h5><p class="mini">Cuando el operador sobrescribe la prioridad de la IA, el delta se guarda como insumo para mejorar el clasificador. Y los gaps de conocimiento (preguntas sin respuesta) vuelven al KB Manager, anonimizados. Es el único mecanismo de mejora continua definido.</p></div>
+      <div class="card acc"><h5>5 · El bucle de aprendizaje</h5><p class="mini">Los gaps de conocimiento (preguntas sin respuesta) vuelven al KB Manager, anonimizados. Es el único mecanismo de mejora continua definido para esta versión.</p></div>
       <div class="card acc" style="border-left-color:var(--bad)"><h5>El bucle que falta</h5><p class="mini">No hay retorno del usuario hacia la plataforma. Ni respuesta a un retorno, ni reapertura, ni disconformidad. <b>Una vez que el caso sale de la mesa, la mesa no se entera de qué pasó.</b></p></div>
     </div>
   </div>

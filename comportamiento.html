@@ -217,7 +217,7 @@
           <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-rec">Rechazado</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Rechazar</b></td><td>Requiere tiempo de resolución. <b>El usuario no recibe notificación automática</b>: comunicar el motivo es responsabilidad del operador (<code>BR-034</code>).</td></tr>
           <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-ret">Retornada</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Retornar</b> → <b>Confirmar retorno</b></td><td>Abre cuadro de texto para el motivo y lo que debe hacer el usuario. <b>No permite adjuntos.</b> El usuario no puede responder desde la plataforma.</td></tr>
           <tr><td><span class="st st-ret">Retornada</span></td><td><span class="st st-rev">En Revisión</span></td><td><span class="b b-agente">operador</span></td><td><b>Manual</b></td><td>“cuando el operador verifica que el cliente contestó lo que necesitaba, cambia manualmente el estado, luego lo evolucionamos.” Decisión consciente para la POC. <span class="mark m-tbd">No implementado</span></td></tr>
-          <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-jira">Ticket creado en Jira</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Aprobar y crear en Jira</b></td><td>Da por cerrada la interacción en la mesa, crea el ticket con los campos mapeados y guarda la referencia. El usuario recibe confirmación con el número (<code>BR-033</code>). El operador puede sobrescribir la prioridad de la IA acá.</td></tr>
+          <tr><td><span class="st st-rev">En Revisión</span></td><td><span class="st st-jira">Ticket creado en Jira</span></td><td><span class="b b-agente">operador</span></td><td>Botón <b>Aprobar y crear en Jira</b></td><td>Da por cerrada la interacción en la mesa, crea el ticket con los campos mapeados y guarda la referencia. El usuario recibe confirmación con el número (<code>BR-033</code>).</td></tr>
           <tr><td colspan="5" style="background:#fafbfc;color:var(--ink3);font-size:12.5px"><b>Sin transición documentada:</b> reapertura de una incidencia cerrada, cancelación por el usuario, reasignación entre operadores, y devolución de <span class="st st-rec">Rechazado</span> a la cola. <span class="mark m-tbd">TBD</span> — no lo inventes.</td></tr>
         </tbody>
       </table>
@@ -426,7 +426,6 @@
         </div></div>
         <div class="frow"><div class="lab">Reglas</div><div><ul>
           <li>Rúbrica <b>única y compartida</b> por el generador de borradores, el generador de resúmenes de escalamiento y el clasificador de urgencia. Personalizar la rúbrica por tenant está <b>fuera de alcance</b>.</li>
-          <li>El operador puede sobrescribir la prioridad al aprobar; el delta se acumula como insumo para mejorar el clasificador.</li>
           <li>El enriquecimiento se aplica <b>tanto al camino de ticket como al de escalamiento</b>.</li>
         </ul></div></div>
       </div>
@@ -503,7 +502,6 @@
           <li>El nombre del estado se eligió platform-agnostic a propósito: “Escalada a Ticket” se reemplazó por “creado en Jira” para reflejar la acción independientemente de la herramienta de tickets que se use.</li>
           <li>El ticket se apoya en <b>el resumen generado por la IA</b>.</li>
           <li>Este CTA <b>no abre cuadro de texto ni permite adjuntos</b>.</li>
-          <li>Es el momento en que el operador puede <b>sobrescribir la prioridad</b> asignada por la IA; el sistema registra el delta como insumo para mejorar el clasificador.</li>
         </ul></div></div>
         <div class="frow"><div class="lab">Ojo</div><div><p class="mini"><b>La comunicación entre el usuario y el operador para este ticket se hace por fuera de la plataforma</b> (Slack, mail u otra aplicación separada) — no hay chat in-app. Lo único que queda registrado en la mesa es el tiempo de resolución que carga el operador, que es lo que permite actualizar el estado de la incidencia.</p></div></div>
       </div>

@@ -123,6 +123,7 @@
           <li><b>Interpretación de imágenes</b> por el bot <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a></li>
           <li><b>Notificaciones por mail</b> de cambio de estado (la preferencia existe pero no funciona; el panel se ocultó)</li>
           <li>Ruteo de agentes por especialidad (post-MVP, <code>BR-039</code>)</li>
+          <li><b>Override manual de prioridad por el operador</b> al aprobar una incidencia (con registro de delta para mejorar el clasificador)</li>
           <li>Dashboard de tasa de override, correlación entre casos, rúbricas por tenant</li>
         </ul>
       </div>
@@ -183,12 +184,11 @@
         <line x1="825" y1="206" x2="825" y2="230" stroke="#A4B5C2" marker-end="url(#ar2)"/>
         <text x="832" y="224" font-size="10" fill="#5C7080">aprueba</text>
 
-        <rect x="930" y="150" width="120" height="130" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/>
+        <rect x="930" y="150" width="120" height="110" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/>
         <text x="990" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#157F4B">Métricas</text>
         <text x="990" y="194" text-anchor="middle" font-size="10" fill="#157F4B">tiempo de</text>
         <text x="990" y="207" text-anchor="middle" font-size="10" fill="#157F4B">resolución (manual)</text>
         <text x="990" y="226" text-anchor="middle" font-size="10" fill="#157F4B">tipo de resolución</text>
-        <text x="990" y="245" text-anchor="middle" font-size="10" fill="#157F4B">override de prioridad</text>
         <line x1="900" y1="178" x2="926" y2="178" stroke="#A4B5C2" marker-end="url(#ar2)"/>
         <path d="M690,70 C830,70 900,110 940,146" fill="none" stroke="#A4B5C2" stroke-dasharray="4 3" marker-end="url(#ar2)"/>
       </svg>
@@ -237,7 +237,6 @@
             <li><b>Retornar</b> — abre un cuadro de texto para explicar el motivo y qué debe hacer el usuario (es el único CTA con caja de texto)</li>
             <li><b>Aprobar y crear en Jira</b> — cierra la interacción en la mesa y crea el ticket externo</li>
             <li><b>Tiempo de resolución</b> — horas y minutos, <b>campo requerido para cualquiera de las acciones</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-477" target="_blank">LABS-477</a></li>
-            <li>Puede <b>sobrescribir la prioridad</b> que asignó la IA al aprobar; el sistema registra el delta <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-465" target="_blank">LABS-465</a></li>
           </ul></div>
           <div class="card"><h5>Qué ve</h5><ul class="mini" style="margin-bottom:0">
             <li>Bandeja filtrada por <b>los clientes que tiene asignados</b>: <code>clientId IN (clientes asignados)</code></li>
@@ -394,7 +393,7 @@
 
     <details>
       <summary>Prioridad</summary>
-      <div class="dbody"><p class="mini"><code>CRITICAL</code> &gt; <code>HIGH</code> &gt; <code>MEDIUM</code> &gt; <code>LOW</code>. La asigna la IA con una rúbrica común y ordena la bandeja del operador. El operador puede sobrescribirla al aprobar, y el sistema registra el delta.</p></div>
+      <div class="dbody"><p class="mini"><code>CRITICAL</code> &gt; <code>HIGH</code> &gt; <code>MEDIUM</code> &gt; <code>LOW</code>. La asigna la IA con una rúbrica común y ordena la bandeja del operador.</p></div>
     </details>
 
     <details>

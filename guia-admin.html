@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Guía Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <b>Nybble AI Help Desk</b>
+    <span>Functional Source of Truth</span>
+  </div>
+  <div class="grp">Producto</div>
+  <a href="index.html#overview"><i>1</i>Visión del Producto</a>
+  <a href="index.html#roles"><i>2</i>Usuarios y Roles</a>
+  <a href="index.html#concepts"><i>3</i>Conceptos Clave</a>
+  <a href="index.html#access"><i>4</i>Recorrido Guiado</a>
+  <div class="grp">Comportamiento</div>
+  <a href="comportamiento.html#lifecycle"><i>5</i>Ciclo de Vida de una Incidencia</a>
+  <a href="comportamiento.html#flows"><i>6</i>Flujos Funcionales</a>
+  <div class="grp is-here">Guías</div>
+  <a href="guia-usuario.html"><i>★</i>Usuario · Cómo Usar el Chat</a>
+  <a href="guia-operador.html"><i>★</i>Operador · Cómo Resolver Casos</a>
+  <a href="guia-kb-manager.html"><i>★</i>KB Manager · Carga de KB</a>
+  <a href="guia-admin.html"><i>★</i>Admin · Configuración y Métricas</a>
+  <div class="grp">Estado Actual</div>
+  <a href="estado-actual.html#e2e"><i>·</i>Lógica de Punta a Punta</a>
+  <a href="estado-actual.html#limits"><i>·</i>Límites conocidos V1</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Guía Admin</div>
+    <h1>Guía rápida · Admin del tenant <span class="b b-admin" style="vertical-align:middle">admin</span></h1>
+    <p>Cómo dar de alta la organización, configurar el bot, crear usuarios KB, y leer las métricas globales del tenant. Pensada para consulta puntual, no para leer de punta a punta antes de empezar.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="callout c-info">
+  <b>Lo primero que hay que saber</b>
+  Sos el único rol que puede <b>dar de alta organizaciones</b>, <b>crear usuarios KB</b> y <b>configurar los parámetros del bot</b>. Tus métricas son siempre <b>de todo tu tenant</b> — a diferencia de un operador, que solo ve las suyas propias.
+</div>
+
+<h3>Paso a paso</h3>
+<div class="steps" data-steps>
+  <div class="steps-nav" role="tablist" aria-label="Pasos de configuración y administración">
+    <button class="steps-tab is-active" role="tab" aria-selected="true" data-step="1"><span class="steps-tab-n">1</span>Dar de alta la organización</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="2"><span class="steps-tab-n">2</span>Configurar el bot</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="3"><span class="steps-tab-n">3</span>Crear usuarios KB</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="4"><span class="steps-tab-n">4</span>Ver métricas globales</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="5"><span class="steps-tab-n">5</span>Revisar Observabilidad IA</button>
+  </div>
+
+  <div class="steps-body">
+  <div class="steps-panel is-active" role="tabpanel" data-step-panel="1">
+    <h5>Paso 1 · Dar de alta la organización <span class="b b-admin">admin</span></h5>
+    <ol>
+      <li>Usá el formulario <b>"New Organization"</b>: nombre de la organización, mail del admin, y contraseña.</li>
+      <li>El formulario es válido si: el nombre del tenant no existe todavía, el mail del admin no está usado, y la contraseña tiene <b>al menos 8 caracteres</b>.</li>
+      <li>Después del alta se crea la <b>compañía</b> dentro del tenant, y se define el <b>mapeo de campos hacia Jira</b> como parte del onboarding.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">Bug conocido: si corregís el mail pero la contraseña sigue siendo inválida, el error del mail queda pegado en pantalla aunque ya esté bien. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-532" target="_blank">LABS-532</a></p>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="2">
+    <h5>Paso 2 · Configurar el bot <span class="b b-admin">admin</span></h5>
+    <ul>
+      <li><code>maxAttempts</code> — cuántos intentos fallidos de búsqueda en KB fuerzan un escalamiento (2–5, default 3).</li>
+      <li><code>maxMessagesPerSession</code> — tope de mensajes por sesión de chat.</li>
+      <li>Umbral de confianza de la búsqueda en KB.</li>
+      <li>Nombre y tono del bot.</li>
+    </ul>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="3">
+    <h5>Paso 3 · Crear usuarios KB <span class="b b-admin">admin</span></h5>
+    <ol>
+      <li>Sos el único rol que puede crear usuarios con el rol <b>KB Manager</b>.</li>
+      <li>Si un KB Manager no ve la sección Base de Conocimiento en su menú, es porque no tiene el rol asignado — te lo van a pedir a vos.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="4">
+    <h5>Paso 4 · Ver métricas globales del tenant <span class="b b-admin">admin</span></h5>
+    <ul>
+      <li><b>Tickets y tiempos por cliente</b> — qué compañía consume más soporte.</li>
+      <li><b>Tickets y tiempos por agente humano</b> — la contracara agregada de "Mi Rendimiento" de cada operador.</li>
+    </ul>
+    <p class="mini" style="color:var(--ink3)">Ninguna de las dos vistas tiene fórmula documentada — tomalas como orientación, no como número auditado.</p>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="5">
+    <h5>Paso 5 · Revisar Observabilidad IA <span class="b b-admin">admin</span></h5>
+    <ul>
+      <li><b>Configuración → Observabilidad IA</b>: tokens, costo, score de calidad, eficiencia de matching de KB, filtros por fecha/modelo/feature.</li>
+      <li>El <b>score de calidad</b> (LLM-as-a-judge) <b>excluye el chat principal</b> — ~85% del tráfico total no tiene medición de calidad.</li>
+      <li>La <b>eficiencia de matching KB</b> sí cubre el chat principal, pero mide si el retrieval encontró algo relevante, no la calidad de la respuesta final.</li>
+    </ul>
+  </div>
+  </div>
+
+  <div class="steps-footer">
+    <button class="steps-prev" disabled>← Anterior</button>
+    <span class="steps-progress">Paso <b data-step-current>1</b> de 5</span>
+    <button class="steps-next">Siguiente →</button>
+  </div>
+</div>
+
+<h3>Cosas para tener en cuenta</h3>
+<div class="callout c-warn">
+  <b>Problemas conocidos durante el piloto</b>
+  <ul style="margin:6px 0 0">
+    <li>Bug bloqueante en el alta de organización: el error del mail queda pegado en pantalla aunque ya lo hayas corregido, si la contraseña sigue siendo inválida. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-532" target="_blank">LABS-532</a></li>
+    <li>El score de calidad de Observabilidad IA <b>no cubre el chat principal</b> — la parte del producto que más se usa es la que menos se mide en calidad. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a></li>
+    <li><b>No hay framework de SLA</b> — es una decisión explícita, no algo pendiente de construir. No prometas SLAs a un cliente basándote en la mesa.</li>
+    <li>Las métricas por cliente y por agente <b>no tienen fórmula documentada</b>.</li>
+  </ul>
+</div>
+
+<h3>Chequeo rápido</h3>
+<div class="grid g2">
+  <div class="card acc">
+    <h5>Hacé esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Verificá mail y contraseña (mín. 8 caracteres) antes de enviar un alta de organización</li>
+      <li>Usá las métricas por cliente/agente como orientación, no como número auditado</li>
+      <li>Aclará a los operadores el rango de <code>maxAttempts</code> que configuraste, así entienden cuándo escala el bot</li>
+    </ul>
+  </div>
+  <div class="card" style="border-left:4px solid var(--bad)">
+    <h5>Evitá esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Prometer SLAs a un cliente basándote en esta mesa — no existe ese framework</li>
+      <li>Asumir que el score de calidad de Observabilidad IA refleja el chat principal</li>
+      <li>Reenviar el formulario de alta sin revisar mail y contraseña — el bug de UI puede confundirte</li>
+    </ul>
+  </div>
+</div>
+
+<div class="pager">
+  <a class="prev" href="guia-kb-manager.html"><span class="d">Anterior</span><span class="t">← Guía KB Manager</span></a>
+  <a class="next" href="estado-actual.html"><span class="d">Siguiente</span><span class="t">Estado Actual →</span></a>
+</div>
+
+<footer>
+  <p style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</p>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Arriba</a>
+<script src="assets/steps.js"></script>
+</body>
+</html>

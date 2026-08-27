@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Guía Usuario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <b>Nybble AI Help Desk</b>
+    <span>Functional Source of Truth</span>
+  </div>
+  <div class="grp">Producto</div>
+  <a href="index.html#overview"><i>1</i>Visión del Producto</a>
+  <a href="index.html#roles"><i>2</i>Usuarios y Roles</a>
+  <a href="index.html#concepts"><i>3</i>Conceptos Clave</a>
+  <a href="index.html#access"><i>4</i>Recorrido Guiado</a>
+  <div class="grp">Comportamiento</div>
+  <a href="comportamiento.html#lifecycle"><i>5</i>Ciclo de Vida de una Incidencia</a>
+  <a href="comportamiento.html#flows"><i>6</i>Flujos Funcionales</a>
+  <div class="grp is-here">Guías</div>
+  <a href="guia-usuario.html"><i>★</i>Usuario · Cómo Usar el Chat</a>
+  <a href="guia-operador.html"><i>★</i>Operador · Cómo Resolver Casos</a>
+  <a href="guia-kb-manager.html"><i>★</i>KB Manager · Carga de KB</a>
+  <a href="guia-admin.html"><i>★</i>Admin · Configuración y Métricas</a>
+  <div class="grp">Estado Actual</div>
+  <a href="estado-actual.html#e2e"><i>·</i>Lógica de Punta a Punta</a>
+  <a href="estado-actual.html#limits"><i>·</i>Límites conocidos V1</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Guía Usuario</div>
+    <h1>Guía rápida · Usuario <span class="b b-usuario" style="vertical-align:middle">usuario</span></h1>
+    <p>Cómo usar el chat de soporte, qué esperar cuando la IA no puede resolverte, y dónde seguir el estado de tu consulta. Pensada para tener abierta mientras usás la mesa, no para leer de punta a punta antes de empezar.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="callout c-info">
+  <b>Lo primero que hay que saber</b>
+  El bot <b>solo responde con lo que encuentra en la Base de Conocimiento</b> de tu compañía. Si no encuentra nada relevante en 3 intentos, si detecta una palabra clave crítica, o si vos pedís explícitamente hablar con una persona, tu consulta se escala automáticamente a un operador humano — y el chat se cierra en ese mismo momento.
+</div>
+
+<h3>Paso a paso</h3>
+<div class="steps" data-steps>
+  <div class="steps-nav" role="tablist" aria-label="Pasos para usar el chat">
+    <button class="steps-tab is-active" role="tab" aria-selected="true" data-step="1"><span class="steps-tab-n">1</span>Hacer tu consulta</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="2"><span class="steps-tab-n">2</span>Confirmar si te sirvió</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="3"><span class="steps-tab-n">3</span>Si escala a un humano</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="4"><span class="steps-tab-n">4</span>Seguir tu caso</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="5"><span class="steps-tab-n">5</span>Si te la retornaron</button>
+  </div>
+
+  <div class="steps-body">
+  <div class="steps-panel is-active" role="tabpanel" data-step-panel="1">
+    <h5>Paso 1 · Hacer tu consulta <span class="b b-usuario">usuario</span></h5>
+    <ol>
+      <li>Abrí el chat e iniciá sesión con tu usuario.</li>
+      <li>Escribí tu pregunta con el mayor detalle posible — cuanto más específica, mejor la búsqueda del bot en la Base de Conocimiento.</li>
+      <li>Podés adjuntar un archivo con el botón <code>+</code>, pero <b>solo después</b> de que el bot te responda el primer mensaje.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="2">
+    <h5>Paso 2 · Confirmar si te sirvió <span class="b b-usuario">usuario</span></h5>
+    <ol>
+      <li>Después de la primera respuesta del bot aparece un <b>botón rojo</b> para finalizar la conversación.</li>
+      <li>Al cerrar, te va a preguntar <b>"¿te sirvió la respuesta?"</b> con botones Sí / No.</li>
+      <li>Si contestás <b>Sí</b>, tu consulta queda <b>Resuelto por IA</b> y no requiere ninguna acción más de tu parte.</li>
+      <li>Si no contestás nada, a los <b>45 minutos</b> el sistema asume que sí te sirvió y cierra la conversación igual.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="3">
+    <h5>Paso 3 · Si el bot no puede resolverlo <span class="b b-usuario">usuario</span></h5>
+    <ol>
+      <li>Podés pedir <b>explícitamente hablar con un humano</b> en cualquier momento — escala de inmediato.</li>
+      <li>Si el bot falla 3 veces buscando en la Base de Conocimiento, escala solo.</li>
+      <li>En cualquiera de los dos casos, <b>el chat se cierra automáticamente</b> y <b>no</b> te pregunta si fue útil — un escalamiento ya es un cierre en sí mismo.</li>
+      <li>Tu consulta pasa a <b>Pendiente</b> en la cola de un operador.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="4">
+    <h5>Paso 4 · Seguir tu caso en Mis Consultas <span class="b b-usuario">usuario</span></h5>
+    <ol>
+      <li>Andá a <b>Mis Consultas</b> para ver el estado: <b>Pendiente</b>, <b>En Revisión</b>, <b>Resuelto</b> o <b>Resuelto por IA</b>.</li>
+      <li>Ahí vas a ver <b>solo tus propias consultas</b>, nunca las de otros usuarios.</li>
+      <li>Podés filtrar por estado.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="5">
+    <h5>Paso 5 · Si un operador te la retorna <span class="b b-usuario">usuario</span></h5>
+    <ul>
+      <li>El operador puede marcar tu incidencia como <b>Retornada</b> cuando necesita algo tuyo para seguir (un dato, un paso adicional).</li>
+      <li><b>Hoy no hay forma de responder desde la plataforma</b> a un Retornada — el operador se va a comunicar con vos por Slack o mail, fuera de la mesa.</li>
+      <li>Una vez que respondas por ese canal, el operador cambia el estado a mano.</li>
+    </ul>
+  </div>
+  </div>
+
+  <div class="steps-footer">
+    <button class="steps-prev" disabled>← Anterior</button>
+    <span class="steps-progress">Paso <b data-step-current>1</b> de 5</span>
+    <button class="steps-next">Siguiente →</button>
+  </div>
+</div>
+
+<h3>Cosas para tener en cuenta</h3>
+<div class="callout c-warn">
+  <b>Problemas conocidos durante el piloto</b>
+  <ul style="margin:6px 0 0">
+    <li>Si tu incidencia quedó <b>Retornada</b>, no tenés forma de accionar ni continuar la conversación dentro de la plataforma — es el hueco funcional más importante del producto hoy. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a></li>
+    <li>En incidencias <b>Pendientes</b> podés ver tags de clasificación interna pensados para el operador (por ejemplo, una prioridad "low") — no es un juicio sobre tu consulta, es un bug conocido. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-574" target="_blank">LABS-574</a></li>
+    <li><b>No hay notificaciones.</b> Ningún cambio de estado te avisa por mail — tenés que entrar a Mis Consultas para enterarte. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-552" target="_blank">LABS-552</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-511" target="_blank">LABS-511</a></li>
+    <li>El bot <b>no interpreta imágenes</b>, ni siquiera capturas de algo que ya está en la Base de Conocimiento. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a></li>
+  </ul>
+</div>
+
+<h3>Chequeo rápido</h3>
+<div class="grid g2">
+  <div class="card acc">
+    <h5>Hacé esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Sé específico en tu primera pregunta</li>
+      <li>Contestá Sí / No a "¿te sirvió?" para que quede bien clasificado</li>
+      <li>Revisá Mis Consultas si no tenés respuesta — no te va a llegar un mail</li>
+    </ul>
+  </div>
+  <div class="card" style="border-left:4px solid var(--bad)">
+    <h5>Evitá esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Esperar que el operador te escriba dentro de la plataforma tras un Retornada</li>
+      <li>Asumir que una prioridad "low" que ves en tu card es un juicio sobre tu consulta</li>
+      <li>Pegar una imagen directo en el chat — hoy solo se puede adjuntar con el botón <code>+</code></li>
+    </ul>
+  </div>
+</div>
+
+<div class="pager">
+  <a class="prev" href="comportamiento.html#flows"><span class="d">Anterior</span><span class="t">← Comportamiento</span></a>
+  <a class="next" href="guia-operador.html"><span class="d">Siguiente</span><span class="t">Guía Operador →</span></a>
+</div>
+
+<footer>
+  <p style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</p>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Arriba</a>
+<script src="assets/steps.js"></script>
+</body>
+</html>

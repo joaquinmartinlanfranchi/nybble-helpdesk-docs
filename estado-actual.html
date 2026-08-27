@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nybble AI Help Desk · Medición</title>
+<title>Nybble AI Help Desk · Estado Actual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,123 +25,30 @@
   <div class="grp">Comportamiento</div>
   <a href="comportamiento.html#lifecycle"><i>5</i>Ciclo de Vida de una Incidencia</a>
   <a href="comportamiento.html#flows"><i>6</i>Flujos Funcionales</a>
-  <div class="grp is-here">Medición</div>
-  <a href="#kpis"><i>7</i>KPIs y Métricas</a>
-  <a href="#e2e"><i>8</i>Lógica de Punta a Punta</a>
-  <div class="grp">Referencia</div>
-  <a href="#limits"><i>·</i>Límites conocidos V1</a>
   <div class="grp">Guías</div>
+  <a href="guia-usuario.html"><i>★</i>Usuario · Cómo Usar el Chat</a>
+  <a href="guia-operador.html"><i>★</i>Operador · Cómo Resolver Casos</a>
   <a href="guia-kb-manager.html"><i>★</i>KB Manager · Carga de KB</a>
+  <a href="guia-admin.html"><i>★</i>Admin · Configuración y Métricas</a>
+  <div class="grp is-here">Estado Actual</div>
+  <a href="#e2e"><i>·</i>Lógica de Punta a Punta</a>
+  <a href="#limits"><i>·</i>Límites conocidos V1</a>
 </nav>
 
 <main>
 <header class="pagehead">
   <div class="wrap">
-    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Medición</div>
-    <h1>Medición</h1>
-    <p>Qué mide el producto hoy, con qué dato lo mide, dónde la medición no dice lo que parece decir (07), la lógica funcional de punta a punta (08), y los límites conocidos de V1.</p>
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Estado Actual</div>
+    <h1>Estado Actual</h1>
+    <p>Cómo funciona el HelpDesk como un todo hoy, de punta a punta, y qué límites conocidos tiene esta versión — lo que un dev nuevo va a descubrir en la primera hora y conviene que ya sepa.</p>
   </div>
 </header>
 
 <div class="wrap">
 
-<!-- ============ 7. KPIs ============ -->
-<section id="kpis" style="--accent:var(--c-kpi)">
-  <div class="shead"><div><h2>KPIs y Métricas <span class="num">07</span></h2><p>Qué mide el producto, con qué dato lo mide, y dónde la medición no dice lo que parece decir.</p></div></div>
-  <div class="sbody">
-
-    <div class="callout c-warn">
-      <b>Regla general antes de leer cualquier número</b>
-      <b>No hay medición automática de tiempos.</b> Todo KPI de tiempo se alimenta del campo <i>“Tiempo de resolución”</i> que <b>el operador escribe a mano</b> y que es obligatorio en cada cierre. Y <b>no hay ninguna fórmula documentada</b> para ningún KPI: lo que existe son nombres de métrica, especificaciones de gráfico y el dato de entrada. Donde falta la fórmula, este documento no la inventa.
-    </div>
-
-    <h3>KPIs del operador · cards de la Bandeja de escalamientos</h3>
-    <div class="tw">
-      <table>
-        <thead><tr><th style="width:190px">KPI</th><th>Definición documentada</th><th style="width:180px">Alcance</th><th style="width:120px">Estado</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><b>En curso</b></td>
-            <td>“refleja las incidencias con estado <i>Asignada</i>, es decir las que efectivamente están siendo revisadas por algún operador, <b>independientemente del operador que esté logueado</b>. Por ejemplo si hay 2 operadores y cada uno está con 2 casos, ese KPI debería mostrar 4.”</td>
-            <td><b>Todo el tenant</b>, no el agente logueado</td>
-            <td><span class="mark m-imp">vigente</span></td>
-          </tr>
-          <tr>
-            <td><b>Cola activa</b></td>
-            <td>“todas las consultas con estado <b>pendiente o asignados</b>”. Aceptado tal cual: “si es así está OK dejémoslo”.</td>
-            <td>Todo el tenant</td>
-            <td><span class="mark m-imp">vigente</span></td>
-          </tr>
-          <tr>
-            <td><b>Resueltos hoy</b></td>
-            <td>Existía en la card. Se pidió <b>reemplazarlo</b> por “Ticket creado en Jira”.</td>
-            <td>—</td>
-            <td><span class="mark m-open">pendiente</span></td>
-          </tr>
-          <tr>
-            <td style="text-decoration:line-through">Pendiente de aprobación</td>
-            <td>“Quitar el estado Pendiente de aprobación, que no aplica.”</td>
-            <td>—</td>
-            <td><span class="mark m-nogo">eliminado</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Métricas del operador · “Mi Rendimiento”</h3>
-    <div class="tw">
-      <table>
-        <thead><tr><th style="width:250px">Visual</th><th>Qué muestra</th><th style="width:200px">Dato que lo alimenta</th></tr></thead>
-        <tbody>
-          <tr><td><b>Mis casos por tipo de resolución</b></td><td>Resuelto directamente (<code>RESOLVED</code>) · Derivado a Jira / IT (<code>JIRA_CREATED</code>) · Rechazado (<code>REJECTED</code>)</td><td>La acción de cierre elegida por el operador</td></tr>
-          <tr><td><b>Casos resueltos — últimas 4 semanas</b></td><td>Serie temporal de cierres del agente logueado</td><td>Fecha de cierre</td></tr>
-          <tr><td><b>Tickets resueltos última semana</b></td><td>Lista de los cierres de los últimos 7 días, <b>resaltando el tiempo de resolución</b> (renombrado desde “Últimos tickets resueltos”)</td><td>Tiempo de resolución cargado a mano</td></tr>
-          <tr><td style="text-decoration:line-through">Mis casos por categoría — este mes</td><td>Se pidió <b>borrarlo</b></td><td>—</td></tr>
-          <tr><td><b>Contador “resuelto por mí”</b></td><td>Suma 1 por cada acción “Resuelto”. La variante “resuelto con workaround” fue eliminada.</td><td>Acción del operador</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="mini"><b>Alcance:</b> <code>BR-070</code> — son las métricas <b>del agente logueado</b>; no puede ver las de otros agentes. Nótese la asimetría deliberada con los KPIs de la bandeja, que sí son de todo el tenant.</p>
-
-    <h3>Métricas del Admin del tenant</h3>
-    <div class="grid g2">
-      <div class="card acc"><h5>Tickets y tiempos <b>por cliente</b></h5><p class="mini">Vista global del tenant. Permite ver qué compañía consume más soporte. <span class="mark m-tbd">sin fórmula documentada</span></p></div>
-      <div class="card acc"><h5>Tickets y tiempos <b>por agente humano</b></h5><p class="mini">Vista global del tenant. Es la contracara agregada de “Mi Rendimiento”. <span class="mark m-tbd">sin fórmula documentada</span></p></div>
-    </div>
-    <p class="mini">Alcance: <code>BR-101</code> — solo métricas de su propio tenant. Y <code>BR-048</code> — las métricas de estado del servicio que se muestran en <i>Inicio</i> son del tenant del usuario, no globales.</p>
-
-    <h3>Observabilidad de IA (Admin → Configuración → “Observabilidad IA”)</h3>
-    <div class="callout c-neutral">
-      <b>Nota importante</b> El ticket habla de Langfuse, pero <b>la implementación real usa Braintrust</b>. La sección está en estado <b>Re-open</b>: varios criterios no se cumplen y otros no se pudieron verificar porque el equipo no tiene acceso a Braintrust.
-    </div>
-    <div class="tw">
-      <table>
-        <thead><tr><th style="width:220px">Métrica</th><th>Qué mide</th><th style="width:230px">Estado real</th></tr></thead>
-        <tbody>
-          <tr><td><b>Tokens</b></td><td>Consumo de tokens de los LLM en toda la aplicación</td><td>Se muestra; exactitud sin verificar</td></tr>
-          <tr><td><b>Costo</b></td><td>Costo acumulado del período</td><td>Se muestra; cálculo sin verificar</td></tr>
-          <tr><td><b>Score promedio</b></td><td>Calidad de respuesta vía LLM-as-a-judge, funciones heurísticas o revisión humana</td><td><b style="color:var(--bad)">Excluye el chat principal</b> (~85% del tráfico) y no tiene evolución temporal, solo un valor puntual</td></tr>
-          <tr><td><b>Eficiencia de matching KB</b></td><td>Sí cubre el chat principal, pero mide <b>si el retrieval encontró algo relevante en la KB</b> — no la calidad de la respuesta final</td><td>Funciona, pero <b>no sustituye</b> al score de calidad</td></tr>
-          <tr><td><b>Filtros</b></td><td>Por fecha, modelo y feature, con tokens y costo por filtro</td><td>Funciona, con un error intermitente al cambiar filtros</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="callout c-bad">
-      <b>El hallazgo que importa</b>
-      <i>“el chat principal, el feature con más volumen de tokens, no tiene ninguna score de calidad tipo LLM-judge.”</i> Es decir: <b>la parte del producto que más se usa es la que menos se mide en calidad.</b> Sin resolver <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a>.
-    </div>
-
-    <h3>Otras cosas que el sistema mide</h3>
-    <div class="grid g3">
-      <div class="card tint"><h5>Rechazos de off-topic</h5><p class="mini">Cada rechazo se registra para analítica. No hay vista que lo muestre.</p></div>
-      <div class="card tint"><h5>Feedback Sí/No de utilidad</h5><p class="mini">Es el insumo del estado Resuelto por IA. Recordá que el silencio cuenta como Sí.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 8. E2E ============ -->
+<!-- ============ E2E ============ -->
 <section id="e2e" style="--accent:var(--c-e2e)">
-  <div class="shead"><div><h2>Lógica de Punta a Punta <span class="num">08</span></h2><p>Cómo funciona el HelpDesk como un todo: una sola vista de punta a punta.</p></div></div>
+  <div class="shead"><div><h2>Lógica de Punta a Punta</h2><p>Cómo funciona el HelpDesk como un todo: una sola vista de punta a punta.</p></div></div>
   <div class="sbody">
 
     <div class="diagbox">
@@ -233,6 +140,14 @@
       <div class="card acc"><h5>5 · El bucle de aprendizaje</h5><p class="mini">Los gaps de conocimiento (preguntas sin respuesta) vuelven al KB Manager, anonimizados. Es el único mecanismo de mejora continua definido para esta versión.</p></div>
       <div class="card acc" style="border-left-color:var(--bad)"><h5>El bucle que falta</h5><p class="mini">No hay retorno del usuario hacia la plataforma. Ni respuesta a un retorno, ni reapertura, ni disconformidad. <b>Una vez que el caso sale de la mesa, la mesa no se entera de qué pasó.</b></p></div>
     </div>
+
+    <h3>Qué mide hoy el sistema, en una vista</h3>
+    <div class="grid g3">
+      <div class="card tint"><h5>KPIs de la Bandeja</h5><p class="mini"><b>En curso</b> y <b>Cola activa</b> son de todo el tenant, no del operador logueado. No hay fórmula documentada para ningún KPI.</p></div>
+      <div class="card tint"><h5>Observabilidad de IA</h5><p class="mini">Tokens, costo y score de calidad — pero el score <b>excluye el chat principal</b> (~85% del tráfico).</p></div>
+      <div class="card tint"><h5>Feedback Sí/No de utilidad</h5><p class="mini">Es el insumo del estado Resuelto por IA. El silencio cuenta como Sí.</p></div>
+    </div>
+    <p class="mini" style="color:var(--ink3)">El detalle completo de KPIs y métricas por rol está en las guías de <a href="guia-operador.html">Operador</a> y <a href="guia-admin.html">Admin</a>.</p>
   </div>
 </section>
 
@@ -263,7 +178,7 @@
 </section>
 
 <div class="pager">
-  <a class="prev" href="comportamiento.html#flows"><span class="d">Anterior</span><span class="t">← Comportamiento</span></a>
+  <a class="prev" href="guia-admin.html"><span class="d">Anterior</span><span class="t">← Guía Admin</span></a>
   <span></span>
 </div>
 

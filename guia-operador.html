@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Guía Operador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <b>Nybble AI Help Desk</b>
+    <span>Functional Source of Truth</span>
+  </div>
+  <div class="grp">Producto</div>
+  <a href="index.html#overview"><i>1</i>Visión del Producto</a>
+  <a href="index.html#roles"><i>2</i>Usuarios y Roles</a>
+  <a href="index.html#concepts"><i>3</i>Conceptos Clave</a>
+  <a href="index.html#access"><i>4</i>Recorrido Guiado</a>
+  <div class="grp">Comportamiento</div>
+  <a href="comportamiento.html#lifecycle"><i>5</i>Ciclo de Vida de una Incidencia</a>
+  <a href="comportamiento.html#flows"><i>6</i>Flujos Funcionales</a>
+  <div class="grp is-here">Guías</div>
+  <a href="guia-usuario.html"><i>★</i>Usuario · Cómo Usar el Chat</a>
+  <a href="guia-operador.html"><i>★</i>Operador · Cómo Resolver Casos</a>
+  <a href="guia-kb-manager.html"><i>★</i>KB Manager · Carga de KB</a>
+  <a href="guia-admin.html"><i>★</i>Admin · Configuración y Métricas</a>
+  <div class="grp">Estado Actual</div>
+  <a href="estado-actual.html#e2e"><i>·</i>Lógica de Punta a Punta</a>
+  <a href="estado-actual.html#limits"><i>·</i>Límites conocidos V1</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Guía Operador</div>
+    <h1>Guía rápida · Operador <span class="b b-agente" style="vertical-align:middle">agente</span></h1>
+    <p>Cómo vaciar la bandeja de escalamientos: tomar un caso, decidir qué corresponde, y dejar todo registrado para que tus métricas reflejen tu trabajo. Pensada para tener abierta mientras trabajás la cola, no para leer de punta a punta antes de empezar.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="callout c-info">
+  <b>Lo primero que hay que saber</b>
+  Todos los operadores habilitados comparten <b>una única bolsa de tickets</b> — no hay asignación automática ni ruteo por especialidad. Vos solo ves los escalamientos de <b>los clientes que tenés asignados</b>, ordenados por prioridad <code>CRITICAL &gt; HIGH &gt; MEDIUM &gt; LOW</code>, y gana el primer clic al tomar un caso.
+</div>
+
+<h3>Paso a paso</h3>
+<div class="steps" data-steps>
+  <div class="steps-nav" role="tablist" aria-label="Pasos para resolver un caso">
+    <button class="steps-tab is-active" role="tab" aria-selected="true" data-step="1"><span class="steps-tab-n">1</span>Tomar un caso</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="2"><span class="steps-tab-n">2</span>Leer el contexto</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="3"><span class="steps-tab-n">3</span>Elegir la acción</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="4"><span class="steps-tab-n">4</span>Hablar con el usuario</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="5"><span class="steps-tab-n">5</span>Cerrar el caso</button>
+  </div>
+
+  <div class="steps-body">
+  <div class="steps-panel is-active" role="tabpanel" data-step-panel="1">
+    <h5>Paso 1 · Tomar un caso <span class="b b-agente">agente</span></h5>
+    <ol>
+      <li>Abrí la <b>Bandeja de escalamientos</b> — vas a ver solo los clientes que tenés asignados.</li>
+      <li>Elegí un caso y hacé clic en <b>Tomar caso</b>.</li>
+      <li>Gana el <b>primer clic</b>: si otro operador lo tomó antes, vas a ver "Tomado por &lt;nombre&gt;" y el botón se actualiza solo.</li>
+      <li>El caso pasa a <b>En Revisión</b>.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="2">
+    <h5>Paso 2 · Leer el contexto <span class="b b-agente">agente</span></h5>
+    <ol>
+      <li>Abrí el detalle — hoy aparece <b>debajo</b> de la lista, puede que tengas que scrollear.</li>
+      <li>Leé la <b>consulta literal del usuario</b> y el <b>resumen generado por la IA</b>.</li>
+      <li>Revisá prioridad, categoría, módulo, cliente y contacto.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="3">
+    <h5>Paso 3 · Elegir la acción <span class="b b-agente">agente</span></h5>
+    <ul>
+      <li><b>Resuelto</b> — lo resolviste vos directamente, sin ticket externo.</li>
+      <li><b>Rechazar</b> — no aplica ninguna acción (alucinación del bot, o el tema no corresponde).</li>
+      <li><b>Retornar</b> — necesitás algo del usuario para seguir. Es el <b>único</b> CTA con cuadro de texto (sin adjuntos).</li>
+      <li><b>Aprobar y crear en Jira</b> — no lo podés resolver vos, se deriva a Jira.</li>
+    </ul>
+    <p class="mini" style="color:var(--ink3)">Las cuatro acciones te van a pedir el <b>tiempo de resolución</b> (horas y minutos) — es obligatorio siempre.</p>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="4">
+    <h5>Paso 4 · Si necesitás hablar con el usuario <span class="b b-agente">agente</span></h5>
+    <ol>
+      <li><b>No existe chat operador ↔ usuario dentro de la plataforma.</b> Es una decisión explícita, fuera de alcance de V1.</li>
+      <li>Contactalo por <b>Slack o mail</b>, fuera de la mesa.</li>
+      <li>Si lo que necesitás es que te conteste algo puntual, usá <b>Retornar</b> para dejar registrado el motivo.</li>
+    </ol>
+  </div>
+  <div class="steps-panel" role="tabpanel" data-step-panel="5">
+    <h5>Paso 5 · Cerrar el caso <span class="b b-agente">agente</span></h5>
+    <ul>
+      <li>Cargá el <b>tiempo de resolución</b> — es el único insumo de todos los KPIs de tiempo, no hay medición automática.</li>
+      <li><b>Resuelto</b> suma 1 a tu contador "resuelto por mí" en Mi Rendimiento.</li>
+      <li>Si retornaste el caso y el usuario ya te contestó (por Slack o mail), volvé a la incidencia y cambiala <b>manualmente</b> de Retornada a En Revisión — ese paso no es automático.</li>
+    </ul>
+  </div>
+  </div>
+
+  <div class="steps-footer">
+    <button class="steps-prev" disabled>← Anterior</button>
+    <span class="steps-progress">Paso <b data-step-current>1</b> de 5</span>
+    <button class="steps-next">Siguiente →</button>
+  </div>
+</div>
+
+<h3>Tus métricas · Mi Rendimiento</h3>
+<div class="grid g2">
+  <div class="card acc"><h5>Mis casos por tipo de resolución</h5><p class="mini">Resuelto directamente · Derivado a Jira / IT · Rechazado — según la acción de cierre que elegiste.</p></div>
+  <div class="card acc"><h5>Casos resueltos — últimas 4 semanas</h5><p class="mini">Serie temporal de tus cierres.</p></div>
+  <div class="card acc"><h5>Tickets resueltos última semana</h5><p class="mini">Lista de tus cierres de los últimos 7 días, resaltando el tiempo de resolución que cargaste.</p></div>
+  <div class="card acc"><h5>Contador "resuelto por mí"</h5><p class="mini">Suma 1 por cada acción Resuelto.</p></div>
+</div>
+<p class="mini" style="color:var(--ink3)">Mi Rendimiento muestra <b>solo tus propias métricas</b> — no podés ver las de otros operadores. Los KPIs de arriba de la Bandeja ("En curso", "Cola activa") sí son de todo el tenant, no solo tuyos.</p>
+
+<h3>Cosas para tener en cuenta</h3>
+<div class="callout c-warn">
+  <b>Problemas conocidos durante el piloto</b>
+  <ul style="margin:6px 0 0">
+    <li>No hay chat operador↔usuario dentro de la plataforma — es decisión explícita, no un bug, pero condiciona todo tu flujo de trabajo. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a></li>
+    <li><b>No podés adjuntar nada</b> al retornar o resolver un caso — no hay forma de dejar evidencia dentro de la mesa. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a></li>
+    <li>Al escalar, <b>se borra el historial de la conversación previa</b> del usuario con el bot — perdés continuidad de contexto. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-572" target="_blank">LABS-572</a></li>
+    <li>Si rechazás un caso, <b>el usuario no recibe notificación automática</b> — comunicar el motivo es tu responsabilidad.</li>
+  </ul>
+</div>
+
+<h3>Chequeo rápido</h3>
+<div class="grid g2">
+  <div class="card acc">
+    <h5>Hacé esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Cargá el tiempo de resolución siempre, en horas y minutos</li>
+      <li>Comunicate por Slack o mail y dejá constancia de lo que hablaste</li>
+      <li>Cambiá a mano una Retornada a En Revisión apenas confirmes que el usuario contestó</li>
+    </ul>
+  </div>
+  <div class="card" style="border-left:4px solid var(--bad)">
+    <h5>Evitá esto</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Esperar que "Retornada" vuelva sola a En Revisión</li>
+      <li>Dar por hecho que el usuario ve tu explicación dentro de la plataforma</li>
+      <li>Rechazar sin avisar al usuario por otro canal el motivo</li>
+    </ul>
+  </div>
+</div>
+
+<div class="pager">
+  <a class="prev" href="guia-usuario.html"><span class="d">Anterior</span><span class="t">← Guía Usuario</span></a>
+  <a class="next" href="guia-kb-manager.html"><span class="d">Siguiente</span><span class="t">Guía KB Manager →</span></a>
+</div>
+
+<footer>
+  <p style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</p>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Arriba</a>
+<script src="assets/steps.js"></script>
+</body>
+</html>

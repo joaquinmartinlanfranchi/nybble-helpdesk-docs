@@ -40,7 +40,7 @@
   <div class="wrap">
     <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Comportamiento</div>
     <h1>Comportamiento</h1>
-    <p>Cómo se mueve una incidencia de punta a punta: el ciclo de vida de estados y las reglas de cierre del chat (05), y los 11 flujos funcionales concretos que implementan ese comportamiento (06).</p>
+    <p>Cómo se mueve una incidencia de punta a punta: el ciclo de vida de estados (05), y los 11 flujos funcionales concretos que implementan ese comportamiento (06).</p>
   </div>
 </header>
 
@@ -50,11 +50,6 @@
 <section id="lifecycle" style="--accent:var(--c-lifecycle)">
   <div class="shead"><div><h2>Ciclo de Vida de una Incidencia <span class="num">05</span></h2><p>La sección más importante: de dónde nace una incidencia, por dónde pasa y cómo termina.</p></div></div>
   <div class="sbody">
-
-    <div class="callout c-info">
-      <b>De dónde sale esta definición</b>
-      El origen canónico es <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-504" target="_blank">LABS-504</a> (comentario de Hernán Nadotti, 01-jul), refinado en el comentario de Jimena Pettinato del 07-jul en <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a> — el mejor diagrama de eventos que existe — y ratificado con ejemplos concretos en <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a> (“perfecto los estados, exacto”, Jimena, 31-jul). El 13/08 se cerró la lista del dropdown del operador. Todo lo que sigue está trazado a esas tres fuentes.
-    </div>
 
     <h3>Máquina de estados</h3>
     <div class="legend">
@@ -224,41 +219,6 @@
       </table>
     </div>
 
-    <h3>Reglas de cierre de la conversación</h3>
-    <p>Esto es el corazón del comportamiento del chat y está definido palabra por palabra en <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-537" target="_blank">LABS-537</a> (comentario de Hernán Nadotti, 05-ago, ratificado por Jimena y verificado por QA el 13/08).</p>
-    <div class="grid g2">
-      <div class="card">
-        <h5>1 · Aparición del botón de cierre</h5>
-        <p class="mini">Recién <b>después de que el bot responde el primer mensaje</b> (sea del tipo que sea) aparece un <b>botón rojo abajo</b> que permite finalizar el chat y limpiar el contexto.</p>
-      </div>
-      <div class="card">
-        <h5>2 · Cierre manual → pregunta de utilidad</h5>
-        <p class="mini">Cuando el usuario cierra la conversación aparece la pregunta de si fue útil la ayuda, con botones <b>Sí / No</b>. Lo mismo aplica <b>si el usuario cierra el chat desde la cruz</b>.</p>
-      </div>
-      <div class="card" style="border-left:4px solid var(--c-lifecycle)">
-        <h5>2.1 · El escalamiento ya es un cierre</h5>
-        <p class="mini">Si el bot decide escalar, o el usuario pide un humano, <b>el chat se cierra automáticamente en ese momento</b> y <b>no se muestra</b> la pregunta de utilidad — “porque un escalamiento ya es un cierre en sí mismo”. La incidencia figura en Mis Consultas como <span class="st st-pend">Pendiente</span>.</p>
-      </div>
-      <div class="card">
-        <h5>2.2 · Camino a Resuelto por IA</h5>
-        <p class="mini">Si el usuario responde que fue útil <b>y no se creó ningún escalamiento porque la respuesta salió de la KB</b>, el caso entra en la categoría <span class="st st-ia">Resuelto por IA</span>.</p>
-      </div>
-      <div class="card">
-        <h5>2.3 · Timer de 45 minutos</h5>
-        <p class="mini">Si no responde la pregunta de utilidad y pasan <b>45 minutos</b>: se cierra el chat, se limpia el contexto y se <b>asume que sí fue útil</b>.</p>
-      </div>
-      <div class="card">
-        <h5>3 · Timer de 60 minutos</h5>
-        <p class="mini">Con <b>60 minutos de inactividad</b> en la ventana de chat: se cierra, se limpia historial y contexto, y <b>si hubo algún match con la KB se toma como resuelto por el bot</b>. Es también el intervalo de refresco de la sesión.</p>
-      </div>
-    </div>
-    <h3>Lo que el usuario ve de todo esto</h3>
-    <p>En <b>Mis Consultas</b> los filtros son <b>fijos, no dropdown</b>, y son los cuatro que le importan al usuario: <span class="st st-pend">Pendiente</span> <span class="st st-rev">En Revisión</span> <span class="st st-res">Resuelto</span> <span class="st st-ia">Resuelto por IA</span> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. Quedó como pregunta abierta en la fuente si el usuario final necesita saber que se creó un ticket en Jira o no.</p>
-    <p class="mini" style="color:var(--bad)"><b>Bug conocido:</b> son específicamente las incidencias en estado <span class="st st-pend">Pendiente</span> las que muestran en la card del usuario la clasificación interna que la IA genera para el operador (p. ej. una consulta catalogada como <code>low</code>) — información pensada para triage del operador, no para el usuario final. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-574" target="_blank">LABS-574</a></p>
-    <div class="grid g2">
-      <div class="card"><h5>Orden actual <span class="mark m-imp">vigente</span></h5><p class="mini">Por <b>fecha de creación descendente</b>. Curiosidad relevante: ese criterio proviene de <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-509" target="_blank">LABS-509</a>, un ticket que quedó en estado <b>No go</b>.</p></div>
-      <div class="card"><h5>Orden decidido <span class="mark m-draft">no implementado</span></h5><p class="mini">Priorizar <b>los estados que requieren acción</b> del usuario (o sea <span class="st st-ret">Retornada</span>) por encima de la fecha, combinando estado + fecha <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-567" target="_blank">LABS-567</a>. Decidido el 19/08.</p></div>
-    </div>
   </div>
 </section>
 

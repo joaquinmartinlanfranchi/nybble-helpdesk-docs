@@ -345,11 +345,6 @@
   <div class="shead"><div><h2>Conceptos Clave <span class="num">03</span></h2><p>El vocabulario del HelpDesk.</p></div></div>
   <div class="sbody">
 
-    <div class="callout c-warn">
-      <b>La distinción que más se confunde</b>
-      <b>Consulta</b> = cualquier conversación que el usuario inicia, se escale o no. <b>Incidencia</b> = una consulta que el bot <b>no</b> pudo resolver y que se escaló a un operador. Toda incidencia nace de una consulta; no toda consulta se convierte en incidencia. La sección del usuario se llama <b>“Mis Consultas”</b> y unifica ambas con filtros fijos por estado <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-513" target="_blank">LABS-513</a>. Antes existían dos secciones separadas (“Mis Consultas” y “Mis Incidencias”) y antes aún se llamaba “Mis Tickets”.
-    </div>
-
     <details>
       <summary>Tenant</summary>
       <div class="dbody"><p class="mini">La unidad máxima de aislamiento — normalmente una organización cliente. Tiene su propia KB en un namespace separado, sus propias métricas, y su propia configuración de bot. Un usuario pertenece a <b>un único</b> tenant. Se da de alta por el Admin del tenant.</p></div>
@@ -454,19 +449,18 @@
         <h5>Paso 3 · El lado del operador <span class="b b-agente">agente</span></h5>
         <ol>
           <li>Logueate como <code>agente@acme.com</code> y abrí la <b>Bandeja de escalamientos</b>.</li>
-          <li>Mirá los <b>KPIs</b> de arriba y verificá cómo se relacionan (o no) con los estados reales — es una tensión conocida.</li>
+          <li>Mirá los <b>KPIs</b> de arriba cómo se relacionan con los estados de las incidencias.</li>
           <li>Abrí la incidencia que creaste. Aparece <b>abajo de la lista</b>: si la pantalla parece estática, scrolleá (bug conocido <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-569" target="_blank">LABS-569</a>).</li>
           <li>Comprobá que ves <b>la consulta literal del usuario y el resumen de la IA</b>, más prioridad, categoría, cliente y contacto.</li>
           <li><b>Tomá el caso</b> y mirá cómo pasa a <span class="st st-rev">En Revisión</span>.</li>
           <li>Probá los cuatro CTAs en incidencias distintas: <b>Retornar</b> (única con caja de texto), <b>Resuelto</b>, <b>Rechazar</b>, <b>Aprobar y crear en Jira</b>. En todos te va a exigir el <b>tiempo de resolución</b>.</li>
-          <li>Volvé al usuario y mirá una incidencia <span class="st st-ret">Retornada</span>: comprobá con tus propios ojos que <b>el usuario no tiene forma de responder</b>. Ese es el hueco central del producto.</li>
         </ol>
       </div>
       <div class="steps-panel" role="tabpanel" data-step-panel="4">
         <h5>Paso 4 · Conocimiento y aislamiento <span class="b b-kb">kb</span></h5>
         <ol>
           <li>Logueate como <code>kb@acme.com</code> y entrá a <b>Base de conocimiento</b>.</li>
-          <li>Subí un documento <code>.doc</code> (los PDF fallan) y <b>acotalo a una sola compañía</b>.</li>
+          <li>Subí un documento <code>.doc</code> o PDF y acotalo a la compañía que corresponda.</li>
           <li>Mirá el <b>estado de indexación</b> del documento.</li>
           <li>Volvé al chat como usuario y preguntá por ese contenido: comprobá que la respuesta respeta el alcance por compañía. Es la prueba que el equipo corrió dos veces con éxito.</li>
           <li>Intentá <b>abrir</b> el documento desde la plataforma: hoy no se puede <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a>.</li>

@@ -76,7 +76,7 @@
     <h5>Paso 2 · Subir un documento <span class="b b-kb">kb</span></h5>
     <ol>
       <li>Desde la Base de conocimiento, buscá la opción para <b>subir un documento nuevo</b> y seleccioná el archivo.</li>
-      <li>Formato recomendado: <code>.doc</code> / <code>.docx</code>. <b>Evitá PDF por ahora</b> — hay un bug conocido en la carga (ver "Antes de subir" más abajo).</li>
+      <li>Formato recomendado: <code>.doc</code> / <code>.docx</code> / <code>PDF</code> por ahora.</li>
       <li>La carga es de <b>un documento a la vez</b>. Repetí el paso para cada archivo.</li>
       <li>Después de subir, la mesa dispara sola la indexación — no hace falta ninguna acción adicional de tu parte.</li>
     </ol>
@@ -124,7 +124,6 @@
 <div class="callout c-warn">
   <b>Problemas conocidos durante el piloto</b>
   <ul style="margin:6px 0 0">
-    <li>La carga de <b>PDF falla</b> con el error <code>matrix is not defined</code>. <b>Usá <code>.doc</code> / <code>.docx</code> mientras este bug esté abierto.</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-573" target="_blank">LABS-573</a></li>
     <li>Una vez subido, <b>no se puede reabrir ni leer un documento desde la plataforma</b> para revisar su contenido — guardá una copia de lo que subís en otro lado como referencia. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-558" target="_blank">LABS-558</a></li>
     <li>Cargar la KB desde fuentes externas (Google Drive) todavía no está definido para el piloto. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-576" target="_blank">LABS-576</a></li>
   </ul>
@@ -135,7 +134,7 @@
   <div class="card acc">
     <h5>Hacé esto</h5>
     <ul class="mini" style="margin-bottom:0">
-      <li>Subí en <code>.doc</code> / <code>.docx</code></li>
+      <li>Subí en <code>.doc</code> / <code>.docx</code> / <code>PDF</code></li>
       <li>Un documento por tema, sin contradicciones entre archivos</li>
       <li>Verificá que el documento llegó a estado <b>Listo</b></li>
       <li>Guardá una copia propia de cada archivo que subís</li>
@@ -144,7 +143,6 @@
   <div class="card" style="border-left:4px solid var(--bad)">
     <h5>Evitá esto</h5>
     <ul class="mini" style="margin-bottom:0">
-      <li>Subir en <b>PDF</b> (falla la carga)</li>
       <li>Dar por cargado un documento que quedó en <b>Error</b></li>
       <li>Esperar poder reabrir un documento ya subido desde la plataforma</li>
     </ul>

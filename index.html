@@ -238,7 +238,7 @@
             <li><b>Tiempo de resolución</b> — horas y minutos, <b>campo requerido para cualquiera de las acciones</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-477" target="_blank">LABS-477</a></li>
           </ul></div>
           <div class="card"><h5>Qué ve</h5><ul class="mini" style="margin-bottom:0">
-            <li>Bandeja filtrada por <b>los clientes que tiene asignados</b>: <code>clientId IN (clientes asignados)</code></li>
+            <li>Bandeja filtrada por <b>los clientes que tiene asignados</b>: <code>clientId IN (clientes asignados)</code> — asignación que hace el <b>Admin del tenant</b> desde Gestión de Analistas</li>
             <li>Detalle con <b>consulta literal del usuario + resumen de la IA</b> + estado, prioridad, agente, canal, cliente y contacto</li>
             <li>Escalamientos ordenados <b>CRITICAL &gt; HIGH &gt; MEDIUM &gt; LOW</b></li>
             <li><b>Solo sus propias métricas</b> en Mi Rendimiento — <code>BR-070</code></li>
@@ -281,6 +281,7 @@
         <div class="card" style="margin-top:12px"><h5>Qué puede hacer</h5><ul class="mini" style="margin-bottom:0">
           <li>Ver <b>todas las métricas globales del tenant</b>: tickets y tiempos <b>por cliente</b> y <b>por agente humano</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-484" target="_blank">LABS-484</a></li>
           <li>Crear usuarios <b>KB</b> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-553" target="_blank">LABS-553</a></li>
+          <li>Crear y administrar <b>Analistas</b> (Agentes/Operadores) desde <b>Gestión de Analistas</b>, asignándole a cada uno una o varias compañías — eso determina qué escalamientos ve en su Bandeja <span class="mark m-doc">confirmado en la plataforma</span></li>
           <li>Configuración del bot: ver y <b>regenerar</b> el resumen de temas de la KB <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-488" target="_blank">LABS-488</a></li>
           <li>Ajustar parámetros por tenant: <code>maxAttempts</code> (2–5, default 3), <code>maxMessagesPerSession</code>, umbral de confianza, nombre y tono del bot</li>
           <li>Sección <b>Configuración → Observabilidad IA</b>: tokens, costo y score de calidad <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a></li>

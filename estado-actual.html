@@ -33,6 +33,7 @@
   <div class="grp is-here">Estado Actual</div>
   <a href="#e2e"><i>·</i>Lógica de Punta a Punta</a>
   <a href="#limits"><i>·</i>Límites conocidos V1</a>
+  <a href="#feedback"><i>·</i>Feedback</a>
 </nav>
 
 <main>
@@ -121,7 +122,7 @@
 
 <!-- ============ LIMITS ============ -->
 <section id="limits" style="--accent:#B91C1C">
-  <div class="shead"><div><h2>Límites conocidos de V1</h2><p>Lo que un dev nuevo va a descubrir en la primera hora y conviene que ya sepa.</p></div></div>
+  <div class="shead"><div><h2>Límites conocidos de V1</h2></div></div>
   <div class="sbody">
     <div class="tw">
       <table>
@@ -134,13 +135,25 @@
           <tr><td><b>Sin notificaciones</b></td><td>Ningún cambio de estado avisa al usuario. La preferencia de mail existía, no funcionaba, y el panel se ocultó. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-552" target="_blank">LABS-552</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-511" target="_blank">LABS-511</a></td><td><span class="mark m-tbd">no existe</span></td></tr>
           <tr><td><b>Sin SLA</b></td><td>No hay relojes, umbrales ni alertas por tiempo. Decisión explícita.</td><td><span class="mark m-nogo">no planificado</span></td></tr>
           <tr><td><b>Tiempos cargados a mano</b></td><td>Todo KPI de tiempo depende de que el operador escriba bien el campo. No hay medición automática.</td><td><span class="mark m-imp">por diseño</span></td></tr>
-          <tr><td><b>El escalamiento borra el historial del chat</b></td><td>Se pierde la continuidad de la conversación hacia el agente humano. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-572" target="_blank">LABS-572</a></td><td><span class="mark m-open">bug</span></td></tr>
           <tr><td><b>"Mis Consultas" expone clasificación interna de la IA</b></td><td>En incidencias <b>Pendientes</b>, el usuario ve tags pensados para el triage del operador (ej. prioridad "low"), no para uso propio. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-574" target="_blank">LABS-574</a></td><td><span class="mark m-open">bug</span></td></tr>
           <tr><td><b>El score de calidad no cubre el chat principal</b></td><td>El feature de mayor volumen no tiene score de calidad tipo LLM-judge. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a></td><td><span class="mark m-open">Re-open</span></td></tr>
           <tr><td><b>No hay documentación oficial previa</b></td><td>Las definiciones vivían en comentarios de Jira. Este documento cubre ese hueco (<a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-561" target="_blank">LABS-561</a>).</td><td><span class="mark m-draft">en curso</span></td></tr>
         </tbody>
       </table>
     </div>
+  </div>
+</section>
+
+<!-- ============ FEEDBACK ============ -->
+<section id="feedback" style="--accent:#1873A8">
+  <div class="shead"><div><h2>Comentanos tu feedback o sugerencias</h2><p>¿Encontraste algo que falta, un error, o tenés una idea para mejorar el producto o este documento? Escribinos acá.</p></div></div>
+  <div class="sbody">
+    <form id="feedback-form">
+      <textarea id="feedback-text" name="feedback" rows="7" maxlength="2000" placeholder="Contanos tu sugerencia, problema o idea de mejora (hasta 2000 caracteres)…" required></textarea>
+      <div class="feedback-meta"><span id="feedback-count">0 / 2000</span></div>
+      <button type="submit" id="feedback-submit">Enviar feedback</button>
+      <p id="feedback-status" class="mini" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -158,5 +171,6 @@
 </div><!-- /shell -->
 <a class="toplink" href="#">↑ Arriba</a>
 <script src="assets/steps.js"></script>
+<script src="assets/feedback.js"></script>
 </body>
 </html>

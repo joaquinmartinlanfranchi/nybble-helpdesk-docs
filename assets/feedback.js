@@ -1,6 +1,6 @@
 (function () {
   // Pegá acá la URL de tu Apps Script Web App (termina en /exec).
-  var GOOGLE_SCRIPT_URL = "REEMPLAZAR_CON_TU_URL_DE_APPS_SCRIPT";
+  var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7VAU_e4UNb-dry-XYM15LGR8SwHJvPcY-kO5zkA3AJAI3SqwVSPqllSHkonnStKfK/exec";
 
   var form = document.getElementById('feedback-form');
   if (!form) return; // esta página no tiene el formulario

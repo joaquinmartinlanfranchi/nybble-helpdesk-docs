@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Behavior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <img class="brand-mark" src="../assets/nybble-mark.svg" alt="" width="30" height="30">
+    <div class="brand-text">
+      <b>Nybble AI Help Desk</b>
+      <span>Functional Source of Truth</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <a href="../comportamiento.html" data-lang-link>ES</a>
+    <a href="#" class="is-current">EN</a>
+  </div>
+  <div class="grp">Product</div>
+  <a href="index.html#overview"><i>1</i>Product Vision</a>
+  <a href="index.html#roles"><i>2</i>Users & Roles</a>
+  <a href="index.html#concepts"><i>3</i>Core Concepts</a>
+  <a href="index.html#access"><i>4</i>Guided Tour</a>
+  <div class="grp is-here">Behavior</div>
+  <a href="#lifecycle"><i>5</i>Incident Lifecycle</a>
+  <a href="#flows"><i>6</i>Functional Flows</a>
+  <div class="grp">Guides</div>
+  <a href="guia-usuario.html"><i>★</i>User</a>
+  <a href="guia-operador.html"><i>★</i>Agent</a>
+  <a href="guia-kb-manager.html"><i>★</i>KB Manager</a>
+  <a href="guia-admin.html"><i>★</i>Admin</a>
+  <div class="grp">Current Status</div>
+  <a href="estado-actual.html#e2e"><i>·</i>End-to-End Logic</a>
+  <a href="estado-actual.html#limits"><i>·</i>Known Limits V1</a>
+  <a href="estado-actual.html#feedback"><i>·</i>Feedback</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Behavior</div>
+    <h1>Behavior</h1>
+    <p>How an incident moves end to end: the state lifecycle (05), and the 11 concrete functional flows that implement that behavior (06).</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 5. INCIDENT LIFECYCLE ============ -->
+<section id="lifecycle" style="--accent:var(--c-lifecycle)">
+  <div class="shead"><div><h2>Incident Lifecycle <span class="num">05</span></h2><p>The most important section: where an incident is born, what it passes through, and how it ends.</p></div></div>
+  <div class="sbody">
+
+    <h3>State machine</h3>
+    <div class="legend">
+      <i><span class="sw"></span> automatic transition or direct action</i>
+      <i><span class="sw d"></span> manual transition / traceability attribute</i>
+    </div>
+    <div class="diagbox">
+      <svg viewBox="0 0 1140 510" xmlns="http://www.w3.org/2000/svg" font-family="Sora, Montserrat, -apple-system, Segoe UI, sans-serif">
+        <defs>
+          <marker id="a1" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5 z" fill="#5C7080"/></marker>
+          <marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5 z" fill="#9A7BE8"/></marker>
+        </defs>
+
+        <!-- START -->
+        <rect x="20" y="196" width="170" height="58" rx="10" fill="#F2F5F7" stroke="#A4B5C2" stroke-width="1.5"/>
+        <text x="105" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#2E3946">Query in the chat</text>
+        <text x="105" y="238" text-anchor="middle" font-size="10.5" fill="#5C7080">the user asks the bot</text>
+
+        <!-- RESUELTO POR IA -->
+        <rect x="300" y="26" width="180" height="58" rx="10" fill="#E4F4F8" stroke="#0E7490" stroke-width="1.5"/>
+        <text x="390" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#0E7490">Resolved by AI</text>
+        <text x="390" y="68" text-anchor="middle" font-size="10.5" fill="#0E7490">terminal · never reaches a human</text>
+
+        <!-- PENDIENTE -->
+        <rect x="300" y="196" width="160" height="58" rx="10" fill="#FDF1E4" stroke="#C2610A" stroke-width="1.5"/>
+        <text x="380" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#C2610A">Pending</text>
+        <text x="380" y="238" text-anchor="middle" font-size="10.5" fill="#C2610A">in the queue, not taken</text>
+
+        <!-- EN REVISION -->
+        <rect x="570" y="196" width="160" height="58" rx="10" fill="#E7F1F8" stroke="#1873A8" stroke-width="1.5"/>
+        <text x="650" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#1873A8">In Review</text>
+        <text x="650" y="238" text-anchor="middle" font-size="10.5" fill="#1873A8">taken by an agent</text>
+
+        <!-- RETORNADA -->
+        <rect x="850" y="36" width="160" height="58" rx="10" fill="#F1EBFD" stroke="#6D28D9" stroke-width="1.5"/>
+        <text x="930" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="#6D28D9">Returned</text>
+        <text x="930" y="78" text-anchor="middle" font-size="10.5" fill="#6D28D9">waiting on the user's action</text>
+
+        <!-- RESUELTO -->
+        <rect x="850" y="196" width="160" height="58" rx="10" fill="#E6F4EC" stroke="#157F4B" stroke-width="1.5"/>
+        <text x="930" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#157F4B">Resolved</text>
+        <text x="930" y="238" text-anchor="middle" font-size="10.5" fill="#157F4B">closed by the agent</text>
+
+        <!-- RECHAZADO -->
+        <rect x="850" y="330" width="160" height="58" rx="10" fill="#FDEBEB" stroke="#b91c1c" stroke-width="1.5"/>
+        <text x="930" y="354" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c">Rejected</text>
+        <text x="930" y="372" text-anchor="middle" font-size="10.5" fill="#b91c1c">not applicable / hallucination</text>
+
+        <!-- JIRA -->
+        <rect x="555" y="350" width="190" height="58" rx="10" fill="#E7EEF4" stroke="#0F4569" stroke-width="1.5"/>
+        <text x="650" y="374" text-anchor="middle" font-size="13" font-weight="700" fill="#0F4569">Ticket Created in Jira</text>
+        <text x="650" y="392" text-anchor="middle" font-size="10.5" fill="#0F4569">terminal state, confirmed</text>
+
+        <!-- EDGES -->
+        <path d="M190,208 C250,200 252,60 296,56" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="196" y="120" font-size="10.5" fill="#43596B">the bot finds an answer</text>
+        <text x="196" y="134" font-size="10.5" fill="#43596B">in the KB and the user confirms it</text>
+        <text x="196" y="148" font-size="10.5" fill="#43596B">(or 45 / 60 min elapse)</text>
+
+        <path d="M190,238 L294,228" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="150" y="286" font-size="10.5" fill="#43596B">3 failed KB attempts,</text>
+        <text x="150" y="300" font-size="10.5" fill="#43596B">critical keyword, or the user</text>
+        <text x="150" y="314" font-size="10.5" fill="#43596B">asks to speak with a human</text>
+
+        <path d="M460,225 L564,225" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="472" y="216" font-size="10.5" font-weight="600" fill="#2E3946">Take Case</text>
+        <text x="466" y="272" font-size="10" fill="#5C7080">first click wins</text>
+
+        <path d="M730,204 C792,196 812,118 846,90" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="748" y="178" font-size="10.5" font-weight="600" fill="#2E3946">Confirm</text>
+        <text x="748" y="191" font-size="10.5" font-weight="600" fill="#2E3946">Return</text>
+
+        <path d="M852,48 C748,16 640,50 652,190" fill="none" stroke="#9A7BE8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a2)"/>
+        <text x="476" y="152" font-size="10" fill="#6D28D9">MANUAL in the POC: the agent</text>
+        <text x="476" y="165" font-size="10" fill="#6D28D9">changes the state by hand when</text>
+        <text x="476" y="178" font-size="10" fill="#6D28D9">they verify the user replied</text>
+        <text x="476" y="191" font-size="10" font-weight="700" fill="#6D28D9">→ Not implemented today</text>
+
+        <path d="M730,225 L844,225" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="744" y="216" font-size="10.5" font-weight="600" fill="#2E3946">Resolved</text>
+
+        <path d="M730,246 C790,260 800,330 844,352" fill="none" stroke="#5C7080" stroke-width="1.6" marker-end="url(#a1)"/>
+        <text x="762" y="300" font-size="10.5" font-weight="600" fill="#2E3946">Reject</text>
+
+        <path d="M650,254 L650,344" fill="none" stroke="#5C7080" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a1)"/>
+        <text x="360" y="330" font-size="10.5" font-weight="600" fill="#2E3946">Approve and Create in Jira</text>
+        <text x="360" y="344" font-size="10" fill="#5C7080">saves the ticket number</text>
+
+        <!-- required field note -->
+        <rect x="20" y="360" width="300" height="66" rx="8" fill="#FDF4E8" stroke="#EDD3AA"/>
+        <text x="34" y="382" font-size="11" font-weight="700" fill="#8A4409">Required field on EVERY exit</text>
+        <text x="34" y="399" font-size="10.5" fill="#8A4409">“Resolution Time” (hours and minutes) is</text>
+        <text x="34" y="413" font-size="10.5" fill="#8A4409">required for Resolved, Reject, and Approve.</text>
+      </svg>
+    </div>
+
+    <h3>The states, one by one</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:150px">State</th><th style="width:120px">Who produces it</th><th>Definition (source text)</th><th style="width:230px">Canonical example</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="st st-pend">Pending</span></td>
+            <td><span class="b b-bot">bot</span> automatic</td>
+            <td>“Escalations that have not been taken.” Born when the bot cannot resolve it and the user accepts its creation, or when the user asks for a human.</td>
+            <td>“Carlos reports that the POS isn't printing receipts. The bot can't resolve it and escalates automatically after 3 failed attempts. No agent has taken it from the Inbox yet.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-rev">In Review</span></td>
+            <td><span class="b b-agente">agent</span></td>
+            <td>“Escalations taken by an agent but still in the process of resolution” — not yet resolved, rejected, returned, or ticketed in Jira.</td>
+            <td>“María can't access the billing system… Agent Juan takes it from the Inbox and is investigating the case.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-ret">Returned</span></td>
+            <td><span class="b b-agente">agent</span></td>
+            <td>“If the incident can't move forward because it requires an action from the user who reported it, it changes state to <i>Returned</i>.” It is the only state that <b>requires action from the user</b>.</td>
+            <td>The agent needs a piece of data or a step from the user and explains the reason in the “Return” text box.</td>
+          </tr>
+          <tr>
+            <td><span class="st st-res">Resolved</span></td>
+            <td><span class="b b-agente">agent</span></td>
+            <td>“The agent resolved the ticket without escalating or creating a ticket in Jira.” Adds 1 to the “resolved by me” counter.</td>
+            <td>“A user couldn't reset their password. The agent helps them directly via chat, with no need to create a ticket in Jira, and marks the case as resolved.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-rec">Rejected</span></td>
+            <td><span class="b b-agente">agent</span></td>
+            <td>“For cases where no action of any kind applies (hallucinations or topics that don't correspond).”</td>
+            <td>“A user escalates a query about the weather because the bot misunderstood the question. An agent reviews the case and rejects it because it's not an actual system issue.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-ia">Resolved by AI</span></td>
+            <td><span class="b b-bot">bot</span> / timer</td>
+            <td>“Resolved by the BOT/AI Agent.” <b>Terminal</b> state of a query that never turned into an incident. Requires no action from the user.</td>
+            <td>“A user asks about opening hours. The bot answers correctly from the knowledge base and the user confirms it helped — it never reaches an agent.”</td>
+          </tr>
+          <tr>
+            <td><span class="st st-jira">Ticket Created in Jira</span></td>
+            <td><span class="b b-agente">agent</span> approves</td>
+            <td>The agent can't resolve it and approves routing it to the external ticketing platform. The name was chosen to be <b>tool-independent</b> (it replaced “Escalated to Ticket”).</td>
+            <td>“A user reports that the inventory system is down for their entire store. The agent can't resolve it directly and approves creating a ticket in Jira for IT to handle.”</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Transitions: who, when, under what condition</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:150px">From</th><th style="width:150px">To</th><th style="width:140px">Actor</th><th style="width:170px">Trigger</th><th>Condition / effect</th></tr></thead>
+        <tbody>
+          <tr><td>Open chat</td><td><span class="st st-ia">Resolved by AI</span></td><td><span class="b b-bot">bot</span> + user</td><td>The user answers <b>Yes</b> to “was this helpful?”</td><td>Only if <b>no</b> escalation occurred and the answer came from the KB. A closed ticket is logged in the inbox.</td></tr>
+          <tr><td>Open chat</td><td><span class="st st-ia">Resolved by AI</span></td><td>timer</td><td>Doesn't answer the helpfulness question</td><td><b>45 min</b> → closes, clears context, and <b>assumes it was helpful</b>. (An earlier source set <b>1 minute</b> — see the timer note.)</td></tr>
+          <tr><td>Open chat</td><td><span class="st st-ia">Resolved by AI</span></td><td>timer</td><td>Inactivity in the chat window</td><td><b>60 min</b> → closes and clears history; <b>if there was a KB match</b> it's treated as resolved by the bot.</td></tr>
+          <tr><td>Open chat</td><td><span class="st st-pend">Pending</span></td><td><span class="b b-bot">bot</span></td><td>3 failed KB attempts</td><td>Automatic escalation with reason <code>MAX_ATTEMPTS</code>, attaching an AI summary with the full history. <b>The chat closes at that exact moment</b> and the helpfulness question is not asked.</td></tr>
+          <tr><td>Open chat</td><td><span class="st st-pend">Pending</span></td><td><span class="b b-usuario">user</span></td><td>Explicitly asks to speak with a human</td><td>Same effect: immediate chat closure + entry into the queue.</td></tr>
+          <tr><td>Open chat</td><td><span class="st st-pend">Pending</span></td><td><span class="b b-bot">bot</span></td><td>Critical keyword detected</td><td>Safety net ahead of the LLM: escalates immediately.</td></tr>
+          <tr><td><span class="st st-pend">Pending</span></td><td><span class="st st-rev">In Review</span></td><td><span class="b b-agente">agent</span></td><td><b>Take Case</b> button</td><td><b>First click wins.</b> It shows “Taken by &lt;agent name&gt;”; the second agent sees the error and the button updates. Can only be taken if the client is assigned to them.</td></tr>
+          <tr><td><span class="st st-rev">In Review</span></td><td><span class="st st-res">Resolved</span></td><td><span class="b b-agente">agent</span></td><td><b>Resolved</b> button</td><td>Requires resolution time. Adds 1 to “resolved by me.” Does not open a text box.</td></tr>
+          <tr><td><span class="st st-rev">In Review</span></td><td><span class="st st-rec">Rejected</span></td><td><span class="b b-agente">agent</span></td><td><b>Reject</b> button</td><td>Requires resolution time. <b>The user does not receive an automatic notification</b>: communicating the reason is the agent's responsibility (<code>BR-034</code>).</td></tr>
+          <tr><td><span class="st st-rev">In Review</span></td><td><span class="st st-ret">Returned</span></td><td><span class="b b-agente">agent</span></td><td><b>Return</b> button → <b>Confirm Return</b></td><td>Opens a text box for the reason and what the user needs to do. <b>Does not allow attachments.</b> The user cannot reply from the platform.</td></tr>
+          <tr><td><span class="st st-ret">Returned</span></td><td><span class="st st-rev">In Review</span></td><td><span class="b b-agente">agent</span></td><td><b>Manual</b></td><td>“when the agent verifies that the customer answered what they needed, they manually change the state; we'll evolve this later.” A conscious decision for the POC. <span class="mark m-tbd">Not implemented</span></td></tr>
+          <tr><td><span class="st st-rev">In Review</span></td><td><span class="st st-jira">Ticket Created in Jira</span></td><td><span class="b b-agente">agent</span></td><td><b>Approve and Create in Jira</b> button</td><td>Closes out the interaction at the desk, creates the ticket with the mapped fields, and saves the reference. The user receives confirmation with the number (<code>BR-033</code>).</td></tr>
+          <tr><td colspan="5" style="background:#fafbfc;color:var(--ink3);font-size:12.5px"><b>No documented transition for:</b> reopening a closed incident, cancellation by the user, reassignment between agents, and returning from <span class="st st-rec">Rejected</span> to the queue. <span class="mark m-tbd">TBD</span> — don't invent it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 6. FUNCTIONAL FLOWS ============ -->
+<section id="flows" style="--accent:var(--c-flows)">
+  <div class="shead"><div><h2>Functional Flows <span class="num">06</span></h2><p>What has to functionally happen when someone does something. Format: Actor → Trigger → Steps → Rules → Result.</p></div></div>
+  <div class="sbody">
+
+    <details class="flowcard" open>
+      <summary class="fh"><span class="fh-row"><h5>F1 · Query resolved by AI <span style="font-weight:400;color:var(--ink3)">— the path the product wants to maximize</span></h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-usuario">User</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Types a question</div><div class="a">→</div>
+          <div class="n"><b>System</b>Searches the KB</div><div class="a">→</div>
+          <div class="n"><b>System</b>Answers</div><div class="a">→</div>
+          <div class="n"><b>User</b>Confirms it helped</div><div class="a">→</div>
+          <div class="n"><b>Result</b><span class="st st-ia">Resolved by AI</span></div>
+        </div>
+        <div class="frow"><div class="lab">Steps</div><div><ol>
+          <li>The user writes in the chat. The bot decides which tool to use (there is no fixed pipeline).</li>
+          <li>It calls <code>searchKnowledgeBase</code> against the tenant's KB and their company's.</li>
+          <li>If the result exceeds the confidence threshold, it answers using <b>only what the KB returned</b>.</li>
+          <li>The red "end" button appears. When the user closes the chat, they're asked whether it helped, with Yes / No buttons.</li>
+          <li>Answers <b>Yes</b> → a closed ticket is logged in the inbox with status Resolved by AI.</li>
+        </ol></div></div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li>The KB is the <b>only</b> data source: “NEVER answer questions using data from this summary — ALWAYS call searchKnowledgeBase.”</li>
+          <li>Confidence threshold <b>70%</b>; interpretation guide: <code>0.7+</code> strong, <code>&lt;0.3</code> weak.</li>
+          <li>Only counts as Resolved by AI if <b>no escalation occurred</b>.</li>
+          <li>Not answering the helpfulness question also counts as Yes (45 min).</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Result</div><div><p>Terminal query, no human cost. Feeds the deflection KPI and the KB matching efficiency metric.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard" open>
+      <summary class="fh"><span class="fh-row"><h5>F2 · Escalation to a human</h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-bot">Bot</span> or <span class="b b-usuario">User</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>3 failures, critical keyword, or explicit request</div><div class="a">→</div>
+          <div class="n"><b>System</b>Generates summary + classifies</div><div class="a">→</div>
+          <div class="n"><b>System</b>Closes the chat</div><div class="a">→</div>
+          <div class="n"><b>Result</b><span class="st st-pend">Pending</span> in the queue</div>
+        </div>
+        <div class="frow"><div class="lab">Steps</div><div><ol>
+          <li>One of the three escalation conditions is met.</li>
+          <li>The bot calls <code>escalateToAgent</code>, generating a <b>summary of the entire conversation</b> (“The user asked about…”).</li>
+          <li>Triage enriches the incident with <b>priority, category, and module</b>.</li>
+          <li>The chat closes automatically. The helpfulness question is <b>not</b> shown.</li>
+          <li>The incident enters the corresponding client's shared queue and shows as Pending in My Queries.</li>
+        </ol></div></div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li>Attempt counter: increments when the KB search returns 0 results or all below threshold. On reaching <code>maxAttempts</code> (default <b>3</b>, configurable 2–5 per tenant) it forces escalation with reason <code>MAX_ATTEMPTS</code>.</li>
+          <li>Off-topic queries <b>do not increment</b> the counter: they're a separate category.</li>
+          <li>Per-session message cap: on reaching it the bot notifies the user and <b>only</b> offers to escalate or create a ticket.</li>
+          <li>The summary must always be attached: without a description or context, “the ticket created for the agent arrives with no context, and that creates friction.”</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Defect</div><div><p class="mini" style="color:var(--bad)"><b>Known bug:</b> when escalating, the prior conversation is cleared and restarted, which breaks history continuity toward the human agent (reported 08/12). <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-572" target="_blank">LABS-572</a></p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F3 · Case pickup (assignment)</h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Agent</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Clicks “Take Case”</div><div class="a">→</div>
+          <div class="n"><b>System</b>Exclusive lock in the DB</div><div class="a">→</div>
+          <div class="n"><b>Result</b><span class="st st-rev">In Review</span> · “Taken by &lt;agent&gt;”</div>
+        </div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li><b>There is no automatic assignment or routing.</b> All enabled agents share a single "ticket pool" and take cases on demand. Routing by specialty is deferred to post-MVP (<code>BR-039</code>).</li>
+          <li><b>First click wins.</b> The second agent sees the error message “Taken by &lt;agent name&gt;” and the button updates to the new state at that moment.</li>
+          <li>The inbox is filtered by <code>clientId IN (clients assigned to the agent)</code>. An agent with a single assigned client only sees escalations for that client.</li>
+          <li>The queue is sorted by priority: <b>CRITICAL &gt; HIGH &gt; MEDIUM &gt; LOW</b>.</li>
+          <li>Cannot take cases for <b>closed-out</b> tenants or clients.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F4 · Handling and direct resolution</h5><span class="mark m-open">No in-app communication</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Agent</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Reviews the taken case</div><div class="a">→</div>
+          <div class="n"><b>Outside the app</b>Contacts via Slack / email</div><div class="a">→</div>
+          <div class="n"><b>System</b>Requires resolution time</div><div class="a">→</div>
+          <div class="n"><b>Result</b><span class="st st-res">Resolved</span></div>
+        </div>
+        <div class="frow"><div class="lab">Steps</div><div><ol>
+          <li>Opens the incident (it appears <b>below</b> the list; today you have to scroll).</li>
+          <li>Reads the user's <b>literal query</b> and the <b>AI summary</b>, plus priority, category, module, client, and contact.</li>
+          <li>If they need to talk to the user, they do it <b>outside the platform</b> (Slack or email).</li>
+          <li>Fills in the <b>resolution time</b> (hours and minutes) and marks it <b>Resolved</b>.</li>
+        </ol></div></div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li>Resolution time is <b>mandatory</b> for any of the closing actions.</li>
+          <li>Resolved adds 1 to the “resolved by me” counter. The “resolved with workaround” variant was <b>removed</b>.</li>
+          <li>After every CTA the screen reloads so the action is reflected in the metrics.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Limit</div><div><p class="mini" style="color:var(--bad)">The definition of Resolved says “the agent helps them directly via chat,” but <b>that chat doesn't exist on the platform</b>. In practice the agent can only log hours and change the state. Decision from 08/19: out of scope for V1, documented here.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F5 · Return to the user</h5><span class="mark m-open">In Progress</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Agent</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Needs something from the user</div><div class="a">→</div>
+          <div class="n"><b>System</b>Reason text box</div><div class="a">→</div>
+          <div class="n"><b>System</b>“Confirm Return”</div><div class="a">→</div>
+          <div class="n"><b>Result</b><span class="st st-ret">Returned</span></div>
+        </div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li>It's the <b>only</b> agent CTA that opens a text box — to explain the reason for the return and what the user needs to do. <b>Does not allow file attachments.</b></li>
+          <li>The user <b>has no way to act or reply</b> from the platform.</li>
+          <li>Going back from <span class="st st-ret">Returned</span> to <span class="st st-rev">In Review</span> is <b>manual</b>: the agent changes it once they verify, through whatever channel, that the user replied.</li>
+          <li>It's the only state that "requires action from the user," and so it should appear first in My Queries (decided, not implemented).</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Open items</div><div><p class="mini">The <b>“Confirm Return”</b> button is red, and it was decided to change it to <b>green</b> for semantic consistency with other confirmation CTAs <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-566" target="_blank">LABS-566</a>. <span class="mark m-draft">Draft</span></p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F6 · Rejection</h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Agent</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>The case doesn't apply</div><div class="a">→</div>
+          <div class="n"><b>System</b>Asks for resolution time</div><div class="a">→</div>
+          <div class="n"><b>Result</b><span class="st st-rec">Rejected</span> · no notification</div>
+        </div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li>Applies to “cases where no action of any kind applies (hallucinations or topics that don't correspond).”</li>
+          <li><code>BR-034</code> — <i>“If the agent rejects the ticket, the user does not receive an automatic notification. The agent is responsible for communicating the reason.”</i> This rule is what makes an external channel necessary.</li>
+          <li>Does not open a text box. Resolution time is still mandatory.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F7 · Classification and prioritization (triage) <span style="font-weight:400;color:var(--ink3)">— cross-cutting, no UI of its own</span></h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-bot">Bot (Triage)</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>A draft or an escalation is generated</div><div class="a">→</div>
+          <div class="n"><b>System</b>Applies the priority and category rubric</div><div class="a">→</div>
+          <div class="n"><b>Result</b>priority + category + module</div>
+        </div>
+        <div class="frow"><div class="lab">Canonical use cases</div><div>
+          <div class="tw" style="margin:0">
+            <table>
+              <thead><tr><th style="width:70px">ID</th><th>Query</th><th style="width:110px">Priority</th><th style="width:150px">Category</th></tr></thead>
+              <tbody>
+                <tr><td>UC-T01</td><td>“The billing system is down, we can't operate”</td><td><b>CRITICAL</b></td><td>System error</td></tr>
+                <tr><td>UC-T02</td><td>“I haven't been able to log in for 2 days”</td><td><b>HIGH</b></td><td>Access</td></tr>
+                <tr><td>UC-T04</td><td>“This report is slow but I can use the other one”</td><td><b>MEDIUM</b></td><td>System error</td></tr>
+                <tr><td>UC-T03</td><td>“How do I change my notification settings?”</td><td><b>LOW</b></td><td>Configuration</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div></div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li><b>Single, shared</b> rubric used by the draft generator, the escalation summary generator, and the urgency classifier. Customizing the rubric per tenant is <b>out of scope</b>.</li>
+          <li>The enrichment applies <b>to both the ticket path and the escalation path</b>.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F8 · Knowledge upload and scope</h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-kb">KB Manager</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>Uploads a document</div><div class="a">→</div>
+          <div class="n"><b>Decision</b>Assigned companies?</div><div class="a">→</div>
+          <div class="n"><b>System</b>Indexes</div><div class="a">→</div>
+          <div class="n"><b>System</b>Regenerates the topic summary</div><div class="a">→</div>
+          <div class="n"><b>Result</b>Available with its scope</div>
+        </div>
+        <div class="frow"><div class="lab">Scope rule</div><div><blockquote>“if a document is not assigned a company, it is tenant-wide (general access, all companies in the tenant). If it's assigned to one or more companies, its scope is limited to the assigned company/companies.”<em>LABS-517, Hernán Nadotti · QA-verified on 08/12 with two independent isolation tests</em></blockquote></div></div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li>Indexing states: <code>PENDING → INDEXING → INDEXED / ERROR</code>, with <b>Indexing / Ready / Error</b> labels visible per document.</li>
+          <li>The <b>topic summary regenerates automatically</b> on any KB modification (upload, Drive sync, state change). The admin can also regenerate it by hand.</li>
+          <li>The summary must contain <b>only topic labels, with no data or numbers</b> — e.g. “paid vacation (15-30 days depending on tenure)” becomes “Vacation policy.” It's a safeguard against the bot answering from the summary.</li>
+          <li>Isolation: KB per tenant in a separate namespace (<code>BR-018</code>, <code>BR-083</code>), refined at the company level by this flow.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Open items</div><div><p class="mini">Scope for external sources like Google Drive and per-company indexes: <span class="mark m-tbd">TBD post-POC</span> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-576" target="_blank">LABS-576</a>.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F9 · Organization onboarding (tenant onboarding)</h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-admin">Admin</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>“New Organization”</div><div class="a">→</div>
+          <div class="n"><b>System</b>Validates</div><div class="a">→</div>
+          <div class="n"><b>Result</b>Tenant + initial admin</div>
+        </div>
+        <div class="frow"><div class="lab">Validations</div><div><blockquote>“A form is valid if: the tenant name is not the same as any other · the superadmin's email is not the same as any existing one · the password [has at least] 8 characters.”<em>LABS-532, Hernán Nadotti. A password under 8 characters is the error condition; the bullet is phrased in reverse in the source.</em></blockquote></div></div>
+        <div class="frow"><div class="lab">After onboarding</div><div><ul>
+          <li>The <b>company/business</b> is created within the tenant (e.g. tenant <i>Nybble Labs</i> → company <i>NYBO</i>).</li>
+          <li>Users for each role are created. The <b>KB user</b> is created by the tenant's Admin.</li>
+          <li>The <b>field mapping to Jira</b> is defined, which is part of onboarding (<code>BR-035</code>).</li>
+          <li>The initial KB is uploaded and the topic summary is generated.</li>
+        </ul></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F10 · Attachments</h5><span class="mark m-open">In Progress</span></span></summary>
+      <div class="fb">
+        <div class="frow"><div class="lab">What was requested</div><div><p><b>Ideal:</b> being able to upload and <b>paste</b> images at any time, with the bot reading and interpreting them as one more tool for resolution. <b>Minimum acceptable:</b> allow uploading files without the bot using them, but have them stay attached to the incident and visible in its detail view. Requested by the Business Solutions team as vital to selling the desk as a product <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a>.</p></div></div>
+        <div class="frow"><div class="lab">What exists today</div><div><ul>
+          <li>An attachment can be added <b>only after</b> the bot answers the first message.</li>
+          <li>Only via the <code>+</code> button: <b>an image cannot be pasted</b>.</li>
+          <li><b>The bot does not interpret images</b>, not even screenshots of content that's already in the KB itself.</li>
+          <li>The agent <b>cannot attach</b> anything when returning or resolving <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a>.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Rule that is defined</div><div><p class="mini">Every attachment must record <b>who uploaded it</b> and be visible to <b>any role with permission to view that incident or query</b>. Not yet verifiable.</p></div></div>
+      </div>
+    </details>
+
+    <details class="flowcard">
+      <summary class="fh"><span class="fh-row"><h5>F11 · Routing to Jira</h5><span class="mark m-imp">Implemented</span></span></summary>
+      <div class="fb">
+        <div class="chain">
+          <div class="n"><b>Actor</b><span class="b b-agente">Agent</span></div><div class="a">→</div>
+          <div class="n"><b>Trigger</b>“Approve and Create in Jira”</div><div class="a">→</div>
+          <div class="n"><b>System</b>Maps fields per tenant</div><div class="a">→</div>
+          <div class="n"><b>System</b>Creates the ticket and saves the reference</div><div class="a">→</div>
+          <div class="n"><b>User</b>Receives the ticket number</div>
+        </div>
+        <div class="frow"><div class="lab">Rules</div><div><ul>
+          <li><code>BR-033</code> — <i>“Only once the agent approves is the ticket formally created in Jira with all mapped fields. The user receives confirmation with the Jira ticket number.”</i></li>
+          <li><code>BR-035</code> — <i>“The system maps the draft's fields to the Jira fields. The mapping is configurable per tenant (defined during onboarding).”</i></li>
+          <li>The state name was deliberately chosen to be platform-agnostic: “Escalated to Ticket” was replaced with “created in Jira” to reflect the action regardless of which ticketing tool is used.</li>
+          <li>The ticket relies on <b>the AI-generated summary</b>.</li>
+          <li>This CTA <b>does not open a text box or allow attachments</b>.</li>
+        </ul></div></div>
+        <div class="frow"><div class="lab">Heads up</div><div><p class="mini"><b>Communication between the user and the agent for this ticket happens outside the platform</b> (Slack, email, or another separate application) — there is no in-app chat. The only thing recorded on the desk is the resolution time the agent logs, which is what allows the incident's state to be updated.</p></div></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="pager">
+  <a class="prev" href="index.html#concepts"><span class="d">Previous</span><span class="t">← Product</span></a>
+  <a class="next" href="guia-usuario.html"><span class="d">Next</span><span class="t">Guides →</span></a>
+</div>
+
+<footer>
+  <img src="../assets/nybble-wordmark.svg" alt="Nybble Group" height="16" style="opacity:.55;vertical-align:middle;margin-right:8px">
+  <span style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</span>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Top</a>
+<script src="../assets/steps.js"></script>
+<script src="../assets/lang.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · KB Manager Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <img class="brand-mark" src="../assets/nybble-mark.svg" alt="" width="30" height="30">
+    <div class="brand-text">
+      <b>Nybble AI Help Desk</b>
+      <span>Functional Source of Truth</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <a href="../guia-kb-manager.html" data-lang-link>ES</a>
+    <a href="#" class="is-current">EN</a>
+  </div>
+  <div class="grp">Product</div>
+  <a href="index.html#overview"><i>1</i>Product Vision</a>
+  <a href="index.html#roles"><i>2</i>Users & Roles</a>
+  <a href="index.html#concepts"><i>3</i>Core Concepts</a>
+  <a href="index.html#access"><i>4</i>Guided Tour</a>
+  <div class="grp">Behavior</div>
+  <a href="comportamiento.html#lifecycle"><i>5</i>Incident Lifecycle</a>
+  <a href="comportamiento.html#flows"><i>6</i>Functional Flows</a>
+  <div class="grp is-here">Guides</div>
+  <a href="guia-usuario.html"><i>★</i>User</a>
+  <a href="guia-operador.html"><i>★</i>Operator</a>
+  <a href="guia-kb-manager.html"><i>★</i>KB Manager</a>
+  <a href="guia-admin.html"><i>★</i>Admin</a>
+  <div class="grp">Current Status</div>
+  <a href="estado-actual.html#e2e"><i>·</i>End-to-End Logic</a>
+  <a href="estado-actual.html#limits"><i>·</i>Known Limits V1</a>
+  <a href="estado-actual.html#feedback"><i>·</i>Feedback</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · KB Manager Guide</div>
+    <h1>Quick Guide · KB Manager <span class="b b-kb" style="vertical-align:middle">kb</span></h1>
+    <p>How to upload and maintain the Knowledge Base the bot uses to answer. Meant to stay open in one tab while you work in the platform on the other — no need to read it end to end before getting started.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="callout c-info">
+  <b>Why what you upload here matters</b>
+  The bot <b>only answers with what it finds in the Knowledge Base</b> — it never makes up an answer or fills in gaps with general knowledge. If a document isn't loaded, or is out of date, that query will end up escalated to a human operator. Clear, current documentation is what makes the desk assertive.
+</div>
+
+<h3>Step by Step</h3>
+<div class="steps" data-steps>
+  <div class="steps-nav" role="tablist" aria-label="Steps to load the Knowledge Base">
+    <button class="steps-tab is-active" role="tab" aria-selected="true" data-step="1"><span class="steps-tab-n">1</span>Enter the KB</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="2"><span class="steps-tab-n">2</span>Upload a document</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="3"><span class="steps-tab-n">3</span>Set the scope</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="4"><span class="steps-tab-n">4</span>Confirm indexing</button>
+    <button class="steps-tab" role="tab" aria-selected="false" data-step="5"><span class="steps-tab-n">5</span>Keep it current</button>
+  </div>
+
+  <div class="steps-body">
+  <div class="steps-panel is-active" role="tabpanel" data-step-panel="1">
+    <h5>Step 1 · Enter the Knowledge Base <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>Log in with your <b>KB Manager</b> user.</li>
+      <li>From the menu, go to the <b>Knowledge Base</b> section.</li>
+      <li>There you'll see the list of everything already loaded, with its <b>indexing status</b> per document.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">If this section doesn't show up in your menu, your user doesn't have the KB Manager role assigned — ask the Tenant Admin to enable it for you.</p>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="2">
+    <h5>Step 2 · Upload a document <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>From the Knowledge Base, find the option to <b>upload a new document</b> and select the file.</li>
+      <li>Recommended format: <code>.doc</code> / <code>.docx</code> / <code>PDF</code> for now.</li>
+      <li>Upload happens <b>one document at a time</b>. Repeat the step for each file.</li>
+      <li>After uploading, the desk triggers indexing on its own — no additional action needed on your part.</li>
+    </ol>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="3">
+    <h5>Step 3 · Set the scope <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>When uploading, you can <b>assign the document to one or more Companies</b> in the tenant.</li>
+      <li>If you <b>don't assign any</b>, the document stays <b>tenant-wide</b>: available to all Companies in the tenant.</li>
+      <li>If you assign it to one or more Companies, the bot will <b>only</b> use it to answer queries from those specific Companies.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">Use this to separate content that shouldn't cross between clients or areas — for example, internal policies specific to one Company.</p>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="4">
+    <h5>Step 4 · Confirm it indexed correctly <span class="b b-kb">kb</span></h5>
+    <ol>
+      <li>Every document goes through: <b>Pending → Indexing → Ready</b> (or <b>Error</b>).</li>
+      <li>A newly uploaded document <b>isn't available to the bot until it reaches "Ready"</b>.</li>
+      <li>If it ends up in <b>Error</b>: it won't be used to answer. Check the file format and try the upload again.</li>
+    </ol>
+    <p class="mini" style="color:var(--ink3)">The KB topic summary (what the bot sees to know what's out of scope) regenerates on its own every time you upload, sync, or a document's status changes — you don't need to do anything manually for that.</p>
+  </div>
+
+  <div class="steps-panel" role="tabpanel" data-step-panel="5">
+    <h5>Step 5 · Keep it current <span class="b b-kb">kb</span></h5>
+    <ul>
+      <li><b>Clear, current content:</b> the bot answers literally with what's in there, so an ambiguous document produces an ambiguous answer.</li>
+      <li><b>Avoid contradictory content</b> between two documents on the same topic — the bot has no way to choose which one is correct.</li>
+      <li><b>Did a policy or process change?</b> Re-upload the updated version; there's no inline editing of content already loaded.</li>
+      <li>Check every so often that no documents are left unresolved in <b>Error</b> status.</li>
+    </ul>
+  </div>
+  </div>
+
+  <div class="steps-footer">
+    <button class="steps-prev" disabled>← Previous</button>
+    <span class="steps-progress">Step <b data-step-current>1</b> of 5</span>
+    <button class="steps-next">Next →</button>
+  </div>
+</div>
+
+<h3>Before You Upload, Keep This in Mind</h3>
+<div class="callout c-warn">
+  <b>Known issues during the pilot</b>
+  <ul style="margin:6px 0 0">
+    <li>Loading the KB from external sources (Google Drive) is not yet defined for the pilot. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-576" target="_blank">LABS-576</a></li>
+  </ul>
+</div>
+
+<h3>Quick Checklist</h3>
+<div class="grid g2">
+  <div class="card acc">
+    <h5>Do This</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Upload as <code>.doc</code> / <code>.docx</code> / <code>PDF</code></li>
+      <li>One document per topic, no contradictions between files</li>
+      <li>Verify that the document reached <b>Ready</b> status</li>
+      <li>Keep your own copy of every file you upload</li>
+    </ul>
+  </div>
+  <div class="card" style="border-left:4px solid var(--bad)">
+    <h5>Avoid This</h5>
+    <ul class="mini" style="margin-bottom:0">
+      <li>Assuming a document is loaded when it's stuck in <b>Error</b></li>
+    </ul>
+  </div>
+</div>
+
+<div class="pager">
+  <a class="prev" href="guia-operador.html"><span class="d">Previous</span><span class="t">← Operator Guide</span></a>
+  <a class="next" href="guia-admin.html"><span class="d">Next</span><span class="t">Admin Guide →</span></a>
+</div>
+
+<footer>
+  <img src="../assets/nybble-wordmark.svg" alt="Nybble Group" height="16" style="opacity:.55;vertical-align:middle;margin-right:8px">
+  <span style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</span>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Top</a>
+<script src="../assets/steps.js"></script>
+<script src="../assets/lang.js"></script>
+</body>
+</html>

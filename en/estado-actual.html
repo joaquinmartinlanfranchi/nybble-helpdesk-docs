@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nybble AI Help Desk · Current Status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand">
+    <img class="brand-mark" src="../assets/nybble-mark.svg" alt="" width="30" height="30">
+    <div class="brand-text">
+      <b>Nybble AI Help Desk</b>
+      <span>Functional Source of Truth</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <a href="../estado-actual.html" data-lang-link>ES</a>
+    <a href="#" class="is-current">EN</a>
+  </div>
+  <div class="grp">Product</div>
+  <a href="index.html#overview"><i>1</i>Product Vision</a>
+  <a href="index.html#roles"><i>2</i>Users & Roles</a>
+  <a href="index.html#concepts"><i>3</i>Core Concepts</a>
+  <a href="index.html#access"><i>4</i>Guided Tour</a>
+  <div class="grp">Behavior</div>
+  <a href="comportamiento.html#lifecycle"><i>5</i>Incident Lifecycle</a>
+  <a href="comportamiento.html#flows"><i>6</i>Functional Flows</a>
+  <div class="grp">Guides</div>
+  <a href="guia-usuario.html"><i>★</i>User</a>
+  <a href="guia-operador.html"><i>★</i>Operator</a>
+  <a href="guia-kb-manager.html"><i>★</i>KB Manager</a>
+  <a href="guia-admin.html"><i>★</i>Admin</a>
+  <div class="grp is-here">Current Status</div>
+  <a href="#e2e"><i>·</i>End-to-End Logic</a>
+  <a href="#limits"><i>·</i>Known Limits V1</a>
+  <a href="#feedback"><i>·</i>Feedback</a>
+</nav>
+
+<main>
+<header class="pagehead">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Nybble AI Help Desk</a> · Current Status</div>
+    <h1>Current Status</h1>
+    <p>How the HelpDesk works as a whole today, end to end, and what known limits this version has — what a new dev is going to discover in the first hour and should already know.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ E2E ============ -->
+<section id="e2e" style="--accent:var(--c-e2e)">
+  <div class="shead"><div><h2>End-to-End Logic</h2><p>Visual overview: how the HelpDesk works as a whole, end to end.</p></div></div>
+  <div class="sbody">
+
+    <div class="diagbox">
+      <svg viewBox="0 0 1140 430" xmlns="http://www.w3.org/2000/svg" font-family="Sora, Montserrat, -apple-system, Segoe UI, sans-serif">
+        <defs><marker id="a3" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5 z" fill="#5C7080"/></marker></defs>
+
+        <!-- lane labels -->
+        <text x="14" y="46" font-size="10.5" fill="#A4B5C2" letter-spacing=".9">CONFIGURATION</text>
+        <text x="14" y="118" font-size="10.5" fill="#A4B5C2" letter-spacing=".9">FIRST LINE · AI</text>
+        <text x="14" y="230" font-size="10.5" fill="#A4B5C2" letter-spacing=".9">SECOND LINE · HUMAN</text>
+        <text x="14" y="353" font-size="10.5" fill="#A4B5C2" letter-spacing=".9">MEASUREMENT</text>
+        <line x1="14" y1="100" x2="1126" y2="100" stroke="#EAEFF3"/>
+        <line x1="14" y1="212" x2="1126" y2="212" stroke="#EAEFF3"/>
+        <line x1="14" y1="340" x2="1126" y2="340" stroke="#EAEFF3"/>
+
+        <!-- lane 1: setup -->
+        <rect x="14" y="56" width="150" height="34" rx="7" fill="#E7EEF4" stroke="#BCCEDC"/><text x="89" y="78" text-anchor="middle" font-size="11.5" fill="#0F4569" font-weight="600">Tenant + companies</text>
+        <rect x="186" y="56" width="150" height="34" rx="7" fill="#F1EBFD" stroke="#D6C7F7"/><text x="261" y="78" text-anchor="middle" font-size="11.5" fill="#6D28D9" font-weight="600">Users and roles</text>
+        <rect x="358" y="56" width="150" height="34" rx="7" fill="#E4F3F1" stroke="#ADDCD5"/><text x="433" y="78" text-anchor="middle" font-size="11.5" fill="#0F766E" font-weight="600">KB upload</text>
+        <rect x="530" y="56" width="170" height="34" rx="7" fill="#E4F3F1" stroke="#ADDCD5"/><text x="615" y="78" text-anchor="middle" font-size="11.5" fill="#0F766E" font-weight="600">Indexing + summary</text>
+        <rect x="722" y="56" width="180" height="34" rx="7" fill="#E7EEF4" stroke="#BCCEDC"/><text x="812" y="78" text-anchor="middle" font-size="11.5" fill="#0F4569" font-weight="600">Field mapping to Jira</text>
+        <rect x="924" y="56" width="200" height="34" rx="7" fill="#F2F5F7" stroke="#C3D0D9"/><text x="1024" y="78" text-anchor="middle" font-size="11.5" fill="#2E3946" font-weight="600">Bot config and thresholds</text>
+        <line x1="164" y1="73" x2="182" y2="73" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="336" y1="73" x2="354" y2="73" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="508" y1="73" x2="526" y2="73" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="700" y1="73" x2="718" y2="73" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="902" y1="73" x2="920" y2="73" stroke="#5C7080" marker-end="url(#a3)"/>
+
+        <!-- lane 2: AI -->
+        <rect x="14" y="128" width="140" height="60" rx="8" fill="#E7F1F8" stroke="#B5D3E6"/><text x="84" y="152" text-anchor="middle" font-size="12" font-weight="700" fill="#1873A8">User</text><text x="84" y="170" text-anchor="middle" font-size="10.5" fill="#1873A8">asks in the chat</text>
+        <rect x="180" y="128" width="150" height="60" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="255" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#157F4B">Bot</text><text x="255" y="163" text-anchor="middle" font-size="10.5" fill="#157F4B">searches its company's</text><text x="255" y="177" text-anchor="middle" font-size="10.5" fill="#157F4B">KB</text>
+        <rect x="356" y="128" width="150" height="60" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="431" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#157F4B">Triage</text><text x="431" y="163" text-anchor="middle" font-size="10.5" fill="#157F4B">priority · category</text><text x="431" y="177" text-anchor="middle" font-size="10.5" fill="#157F4B">module · summary</text>
+        <rect x="532" y="128" width="170" height="60" rx="8" fill="#E4F4F8" stroke="#AEDFEA"/><text x="617" y="152" text-anchor="middle" font-size="12" font-weight="700" fill="#0E7490">Answered from the KB?</text><text x="617" y="172" text-anchor="middle" font-size="10.5" fill="#0E7490">yes → closes · no → escalates</text>
+        <rect x="728" y="122" width="180" height="34" rx="7" fill="#E4F4F8" stroke="#0E7490"/><text x="818" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0E7490">Resolved by AI · end</text>
+        <line x1="154" y1="158" x2="176" y2="158" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="330" y1="158" x2="352" y2="158" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="506" y1="158" x2="528" y2="158" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="702" y1="146" x2="724" y2="140" stroke="#5C7080" marker-end="url(#a3)"/>
+        <text x="708" y="128" font-size="9.5" fill="#5C7080">yes</text>
+
+        <!-- to lane 3 -->
+        <path d="M617,188 L617,236" fill="none" stroke="#5C7080" marker-end="url(#a3)"/>
+        <text x="624" y="212" font-size="10" fill="#5C7080">no · 3 attempts / keyword / explicit request → the chat closes</text>
+
+        <!-- lane 3: human -->
+        <rect x="532" y="240" width="170" height="56" rx="8" fill="#FDF1E4" stroke="#C2610A"/><text x="617" y="262" text-anchor="middle" font-size="12" font-weight="700" fill="#C2610A">Pending</text><text x="617" y="280" text-anchor="middle" font-size="10.5" fill="#C2610A">customer's shared queue</text>
+        <rect x="728" y="240" width="170" height="56" rx="8" fill="#E7F1F8" stroke="#1873A8"/><text x="813" y="262" text-anchor="middle" font-size="12" font-weight="700" fill="#1873A8">In Review</text><text x="813" y="280" text-anchor="middle" font-size="10.5" fill="#1873A8">taken by an operator</text>
+        <line x1="702" y1="268" x2="724" y2="268" stroke="#5C7080" marker-end="url(#a3)"/>
+        <text x="700" y="308" font-size="9.5" fill="#5C7080">Take case · first click</text>
+
+        <rect x="924" y="222" width="200" height="26" rx="6" fill="#E6F4EC" stroke="#B4DCC4"/><text x="1024" y="239" text-anchor="middle" font-size="11" font-weight="600" fill="#157F4B">Resolved</text>
+        <rect x="924" y="254" width="200" height="26" rx="6" fill="#E7EEF4" stroke="#BCCEDC"/><text x="1024" y="271" text-anchor="middle" font-size="11" font-weight="600" fill="#0F4569">Ticket created in Jira</text>
+        <rect x="924" y="286" width="200" height="26" rx="6" fill="#F1EBFD" stroke="#D6C7F7"/><text x="1024" y="303" text-anchor="middle" font-size="11" font-weight="600" fill="#6D28D9">Returned → external channel</text>
+        <rect x="924" y="318" width="200" height="26" rx="6" fill="#FDEBEB" stroke="#f6c8c8"/><text x="1024" y="335" text-anchor="middle" font-size="11" font-weight="600" fill="#b91c1c">Rejected · no notification</text>
+        <line x1="898" y1="258" x2="920" y2="238" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="898" y1="266" x2="920" y2="266" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="898" y1="274" x2="920" y2="296" stroke="#5C7080" marker-end="url(#a3)"/>
+        <line x1="898" y1="282" x2="920" y2="326" stroke="#5C7080" marker-end="url(#a3)"/>
+        <text x="532" y="332" font-size="9.5" fill="#C2610A">resolution time mandatory on all 4 exits</text>
+
+        <!-- lane 4 -->
+        <rect x="14" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="124" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">Deflection (Resolved by AI)</text><text x="124" y="396" text-anchor="middle" font-size="10" fill="#157F4B">business target ≤70%</text>
+        <rect x="254" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="364" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">Operator metrics</text><text x="364" y="396" text-anchor="middle" font-size="10" fill="#157F4B">resolution type + times</text>
+        <rect x="494" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="604" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">Tenant metrics</text><text x="604" y="396" text-anchor="middle" font-size="10" fill="#157F4B">by customer and by agent</text>
+        <rect x="734" y="358" width="220" height="50" rx="8" fill="#E6F4EC" stroke="#B4DCC4"/><text x="844" y="378" text-anchor="middle" font-size="11.5" font-weight="700" fill="#157F4B">AI Observability</text><text x="844" y="396" text-anchor="middle" font-size="10" fill="#157F4B">tokens · cost · quality</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIMITS ============ -->
+<section id="limits" style="--accent:#B91C1C">
+  <div class="shead"><div><h2>Known Limits of V1</h2></div></div>
+  <div class="sbody">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:270px">Limit</th><th>What it means functionally</th><th style="width:150px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><b>No operator ↔ user chat</b></td><td>The conversation after escalation happens over Slack or email. The definition of "Resolved" that says "the agent helps them directly via chat" doesn't reflect the app. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a></td><td><span class="mark m-nogo">out of V1</span> per the 8/19 decision</td></tr>
+          <tr><td><b>"Returned" is a dead end</b></td><td>The user sees the request but has no way to act on it or reply. Moving it back to In Review would be done manually by the operator, but that manual change is <span class="mark m-tbd">not implemented</span> today. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-547" target="_blank">LABS-547</a></td><td><span class="mark m-open">known</span></td></tr>
+          <tr><td><b>The bot doesn't read images</b></td><td>Attachments are possible (only via <code>+</code>, only after the first response) but the bot doesn't interpret the content, not even screenshots of material that's in the KB. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-515" target="_blank">LABS-515</a></td><td><span class="mark m-open">Re-open</span></td></tr>
+          <tr><td><b>The operator can't attach anything</b></td><td>Only "Return" opens a text box, and without attachments. No way to leave evidence. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-516" target="_blank">LABS-516</a></td><td><span class="mark m-open">Re-open</span></td></tr>
+          <tr><td><b>No notifications</b></td><td>No status change notifies the user. The email preference existed, didn't work, and the panel was hidden. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-552" target="_blank">LABS-552</a> <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-511" target="_blank">LABS-511</a></td><td><span class="mark m-tbd">doesn't exist</span></td></tr>
+          <tr><td><b>No SLA</b></td><td>No clocks, thresholds, or time-based alerts. Explicit decision.</td><td><span class="mark m-nogo">not planned</span></td></tr>
+          <tr><td><b>Times entered manually</b></td><td>Every time-based KPI depends on the operator filling in the field correctly. There's no automatic measurement.</td><td><span class="mark m-imp">by design</span></td></tr>
+          <tr><td><b>The quality score doesn't cover the main chat</b></td><td>The highest-volume feature has no LLM-judge-style quality score. <a class="tag" href="https://nybblegroup.atlassian.net/browse/LABS-529" target="_blank">LABS-529</a></td><td><span class="mark m-open">Re-open</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEEDBACK ============ -->
+<section id="feedback" style="--accent:#1873A8">
+  <div class="shead"><div><h2>Share Your Feedback or Suggestions</h2><p>Did you find something missing, a bug, or do you have an idea to improve the product or this document? Write to us here.</p></div></div>
+  <div class="sbody">
+    <form id="feedback-form">
+      <textarea id="feedback-text" name="feedback" rows="7" maxlength="2000" placeholder="Tell us your suggestion, problem, or improvement idea (up to 2000 characters)…" required></textarea>
+      <div class="feedback-meta"><span id="feedback-count">0 / 2000</span></div>
+      <button type="submit" id="feedback-submit">Send Feedback</button>
+      <p id="feedback-status" class="mini" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<div class="pager">
+  <a class="prev" href="guia-admin.html"><span class="d">Previous</span><span class="t">← Admin Guide</span></a>
+  <span></span>
+</div>
+
+<footer>
+  <img src="../assets/nybble-wordmark.svg" alt="Nybble Group" height="16" style="opacity:.55;vertical-align:middle;margin-right:8px">
+  <span style="color:#8FA3B1">© Nybble Group 2026 · Confidential &amp; Proprietary</span>
+</footer>
+
+</div><!-- /wrap -->
+</main>
+</div><!-- /shell -->
+<a class="toplink" href="#">↑ Top</a>
+<script src="../assets/steps.js"></script>
+<script src="../assets/feedback.en.js"></script>
+<script src="../assets/lang.js"></script>
+</body>
+</html>
